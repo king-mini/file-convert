@@ -1,0 +1,7 @@
+# Google AdSense
+# 승인 후 아래 형식으로 추가:
+# google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
+
+# 현재는 승인 대기 중
+# AdSense 승인 후 Publisher ID를 여기에 추가하세요
+
