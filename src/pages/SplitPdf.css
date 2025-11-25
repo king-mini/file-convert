@@ -1,0 +1,114 @@
+/* SplitPdf는 PdfToJpg.css를 기본으로 사용하고 추가 스타일만 정의 */
+.split-pdf {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* 분할 방식 버튼 */
+.split-modes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.mode-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  background: #f5f7fa;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.mode-btn:hover:not(:disabled) {
+  background: #e8eaf6;
+  border-color: #667eea;
+  transform: translateY(-2px);
+}
+
+.mode-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.mode-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mode-icon {
+  font-size: 2.5rem;
+}
+
+.mode-title {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.mode-desc {
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+.mode-btn.active .mode-desc {
+  opacity: 0.95;
+}
+
+/* 입력 필드 */
+.option-group input[type='text'] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.option-group input[type='text']:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.option-group small {
+  display: block;
+  margin-top: 0.5rem;
+  color: #999;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .split-modes {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .mode-btn {
+    padding: 1.25rem 1rem;
+  }
+
+  .mode-icon {
+    font-size: 2rem;
+  }
+
+  .mode-title {
+    font-size: 0.95rem;
+  }
+
+  .mode-desc {
+    font-size: 0.8rem;
+  }
+}
+

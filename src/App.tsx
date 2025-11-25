@@ -5,6 +5,9 @@ import PdfToJpg from './pages/PdfToJpg';
 import PdfToPng from './pages/PdfToPng';
 import PdfToText from './pages/PdfToText';
 import ImageToPdf from './pages/ImageToPdf';
+import MergePdf from './pages/MergePdf';
+import SplitPdf from './pages/SplitPdf';
+import RotatePdf from './pages/RotatePdf';
 
 const App = () => {
   return (
@@ -16,6 +19,9 @@ const App = () => {
           <Route path="pdf-to-png" element={<PdfToPng />} />
           <Route path="pdf-to-text" element={<PdfToText />} />
           <Route path="image-to-pdf" element={<ImageToPdf />} />
+          <Route path="merge-pdf" element={<MergePdf />} />
+          <Route path="split-pdf" element={<SplitPdf />} />
+          <Route path="rotate-pdf" element={<RotatePdf />} />
           {/* 추가 라우트는 여기에 */}
         </Route>
       </Routes>

@@ -1,0 +1,96 @@
+/* RotatePdf는 PdfToJpg.css를 기본으로 사용하고 추가 스타일만 정의 */
+.rotate-pdf {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* 회전 버튼 그룹 */
+.rotation-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.rotation-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  background: #f5f7fa;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.rotation-btn:hover:not(:disabled) {
+  background: #e8eaf6;
+  border-color: #667eea;
+  transform: translateY(-2px);
+}
+
+.rotation-btn.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-color: #667eea;
+  color: white;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.rotation-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.rotation-icon {
+  font-size: 2rem;
+}
+
+/* 페이지 선택 */
+.page-selection {
+  margin-top: 0.75rem;
+}
+
+.page-selection input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.page-selection input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.page-selection small {
+  color: #999;
+  font-size: 0.85rem;
+  line-height: 1.4;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .rotation-buttons {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .rotation-btn {
+    padding: 1.25rem 1rem;
+  }
+
+  .rotation-icon {
+    font-size: 1.75rem;
+  }
+}
+
