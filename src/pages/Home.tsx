@@ -64,7 +64,7 @@ const features: FeatureCard[] = [
     icon: '📦',
     description: 'PDF 파일 크기 압축',
     path: '/compress-pdf',
-    available: false,
+    available: true,
   },
 ];
 

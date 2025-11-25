@@ -8,6 +8,7 @@ import ImageToPdf from './pages/ImageToPdf';
 import MergePdf from './pages/MergePdf';
 import SplitPdf from './pages/SplitPdf';
 import RotatePdf from './pages/RotatePdf';
+import CompressPdf from './pages/CompressPdf';
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
           <Route path="merge-pdf" element={<MergePdf />} />
           <Route path="split-pdf" element={<SplitPdf />} />
           <Route path="rotate-pdf" element={<RotatePdf />} />
-          {/* 추가 라우트는 여기에 */}
+          <Route path="compress-pdf" element={<CompressPdf />} />
         </Route>
       </Routes>
     </BrowserRouter>
