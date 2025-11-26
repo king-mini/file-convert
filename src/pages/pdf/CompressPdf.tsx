@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { compressPdf, formatFileSize } from '../utils/pdfCompressor';
-import type { CompressOptions, CompressProgress } from '../utils/pdfCompressor';
+import { compressPdf, formatFileSize } from '../../utils/pdfCompressor';
+import type { CompressOptions, CompressProgress } from '../../utils/pdfCompressor';
 import './CompressPdf.css';
 
 type CompressionLevel = 'low' | 'medium' | 'high' | 'extreme';

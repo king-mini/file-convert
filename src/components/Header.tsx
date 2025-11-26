@@ -3,7 +3,9 @@ import './Header.css';
 
 const Header = () => {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const isHub = location.pathname === '/';
+  const isPdfSection = location.pathname.startsWith('/pdf');
+  const isImageSection = location.pathname.startsWith('/image');
 
   return (
     <header className="header">
@@ -11,9 +13,26 @@ const Header = () => {
         <Link to="/" className="logo">
           🔄 Lokit
         </Link>
-        {!isHome && (
+        
+        <nav className="nav">
+          <Link 
+            to="/pdf" 
+            className={`nav-link ${isPdfSection ? 'active' : ''}`}
+          >
+            📄 PDF 도구
+          </Link>
+          <Link 
+            to="/image" 
+            className={`nav-link ${isImageSection ? 'active' : ''}`}
+          >
+            🖼️ 이미지 도구
+            <span className="badge">BETA</span>
+          </Link>
+        </nav>
+
+        {!isHub && (
           <Link to="/" className="home-btn">
-            ← 홈으로
+            ← 홈
           </Link>
         )}
       </div>

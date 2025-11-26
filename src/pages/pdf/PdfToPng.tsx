@@ -1,17 +1,17 @@
 import { useState, useCallback } from 'react';
-import { convertPdfToImages } from '../utils/pdfConverter';
-import type { ConvertOptions, ConvertProgress } from '../utils/pdfConverter';
+import { convertPdfToPngImages } from '../../utils/pngConverter';
+import type { ConvertOptions, ConvertProgress } from '../../utils/pngConverter';
 import './PdfToJpg.css';
 
-const PdfToJpg = () => {
+const PdfToPng = () => {
   const [file, setFile] = useState<File | null>(null);
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState<ConvertProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
 
   // 변환 옵션
-  const [quality, setQuality] = useState(0.9);
   const [scale, setScale] = useState(2);
+  const [transparentBg, setTransparentBg] = useState(false);
   const [usePageRange, setUsePageRange] = useState(false);
   const [startPage, setStartPage] = useState(1);
   const [endPage, setEndPage] = useState(1);
@@ -42,27 +42,27 @@ const PdfToJpg = () => {
     setProgress({ current: 0, total: 1, status: '시작 중...' });
 
     const options: ConvertOptions = {
-      quality,
       scale,
+      backgroundColor: transparentBg ? undefined : '#FFFFFF',
       ...(usePageRange && { pageRange: { start: startPage, end: endPage } }),
     };
 
     try {
-      await convertPdfToImages(file, options, setProgress);
+      await convertPdfToPngImages(file, options, setProgress);
     } catch (error) {
       console.error('변환 실패:', error);
       alert('변환 중 오류가 발생했습니다.');
     } finally {
       setConverting(false);
     }
-  }, [file, quality, scale, usePageRange, startPage, endPage]);
+  }, [file, scale, transparentBg, usePageRange, startPage, endPage]);
 
   return (
     <div className="pdf-to-jpg">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>📄 PDF to JPG Converter</h1>
-        <p>브라우저에서 안전하게 변환 · 서버 업로드 없음</p>
+        <h1>🎨 PDF to PNG Converter</h1>
+        <p>브라우저에서 안전하게 변환 · 투명 배경 지원</p>
       </div>
 
       {/* 광고 영역 - 상단 */}
@@ -115,21 +115,6 @@ const PdfToJpg = () => {
 
           <div className="option-group">
             <label>
-              JPG 품질: <strong>{Math.round(quality * 100)}%</strong>
-            </label>
-            <input
-              type="range"
-              min="0.5"
-              max="1"
-              step="0.05"
-              value={quality}
-              onChange={(e) => setQuality(parseFloat(e.target.value))}
-              disabled={converting}
-            />
-          </div>
-
-          <div className="option-group">
-            <label>
               해상도: <strong>{scale === 1 ? '72dpi' : scale === 2 ? '144dpi' : '216dpi'}</strong>
             </label>
             <input
@@ -141,6 +126,18 @@ const PdfToJpg = () => {
               onChange={(e) => setScale(parseFloat(e.target.value))}
               disabled={converting}
             />
+          </div>
+
+          <div className="option-group">
+            <label>
+              <input
+                type="checkbox"
+                checked={transparentBg}
+                onChange={(e) => setTransparentBg(e.target.checked)}
+                disabled={converting}
+              />
+              투명 배경 (흰색 배경 제거)
+            </label>
           </div>
 
           <div className="option-group">
@@ -204,5 +201,5 @@ const PdfToJpg = () => {
   );
 };
 
-export default PdfToJpg;
+export default PdfToPng;
 

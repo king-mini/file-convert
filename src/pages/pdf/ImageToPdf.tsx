@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { convertImagesToPdf, createImagePreview } from '../utils/imageToPdfConverter';
-import type { ImageFile, PageSize, ConvertOptions } from '../utils/imageToPdfConverter';
+import { convertImagesToPdf, createImagePreview } from '../../utils/imageToPdfConverter';
+import type { ImageFile, PageSize, ConvertOptions } from '../../utils/imageToPdfConverter';
 import { saveAs } from 'file-saver';
 import './ImageToPdf.css';
 

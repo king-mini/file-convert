@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { splitPdf } from '../utils/pdfSplitter';
-import type { SplitMode, SplitOptions, SplitProgress } from '../utils/pdfSplitter';
+import { splitPdf } from '../../utils/pdfSplitter';
+import type { SplitMode, SplitOptions, SplitProgress } from '../../utils/pdfSplitter';
 import './SplitPdf.css';
 
 const SplitPdf = () => {

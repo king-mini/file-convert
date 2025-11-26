@@ -10,25 +10,35 @@
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  padding: 2rem 1rem;
+  padding: 0.5rem 0.5rem 0.75rem;
 }
 
 .footer {
   background: rgba(0, 0, 0, 0.2);
   color: white;
   text-align: center;
-  padding: 1.5rem;
-  margin-top: 2rem;
+  padding: 0.75rem;
+  margin-top: auto;
 }
 
 .footer p {
-  font-size: 0.9rem;
-  opacity: 0.8;
+  font-size: 0.75rem;
+  opacity: 0.85;
+  margin: 0;
 }
 
-@media (max-width: 768px) {
+/* 모바일 - 좁은 화면 */
+@media (max-width: 500px) {
   .layout-main {
-    padding: 1rem;
+    padding: 0.5rem 0.5rem 0.65rem;
+  }
+
+  .footer {
+    padding: 0.65rem 0.75rem;
+  }
+
+  .footer p {
+    font-size: 0.7rem;
   }
 }
 

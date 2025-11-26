@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './Home.css';
+import './PdfHome.css';
 
 interface FeatureCard {
   title: string;
@@ -14,66 +14,66 @@ const features: FeatureCard[] = [
     title: 'PDF to JPG',
     icon: '🖼️',
     description: 'PDF를 JPG 이미지로 변환',
-    path: '/pdf-to-jpg',
+    path: '/pdf/to-jpg',
     available: true,
   },
   {
     title: 'PDF to PNG',
     icon: '🎨',
     description: 'PDF를 PNG 이미지로 변환',
-    path: '/pdf-to-png',
+    path: '/pdf/to-png',
     available: true,
   },
   {
     title: 'PDF to Text',
     icon: '📝',
     description: 'PDF에서 텍스트 추출',
-    path: '/pdf-to-text',
+    path: '/pdf/to-text',
     available: true,
   },
   {
     title: 'Image to PDF',
     icon: '🖼️',
     description: '이미지를 PDF로 변환',
-    path: '/image-to-pdf',
+    path: '/pdf/image-to-pdf',
     available: true,
   },
   {
     title: 'Merge PDF',
     icon: '🔗',
     description: '여러 PDF 파일 병합',
-    path: '/merge-pdf',
+    path: '/pdf/merge',
     available: true,
   },
   {
     title: 'Split PDF',
     icon: '✂️',
     description: 'PDF 페이지 분할',
-    path: '/split-pdf',
+    path: '/pdf/split',
     available: true,
   },
   {
     title: 'Rotate PDF',
     icon: '🔄',
     description: 'PDF 페이지 회전',
-    path: '/rotate-pdf',
+    path: '/pdf/rotate',
     available: true,
   },
   {
     title: 'Compress PDF',
     icon: '📦',
     description: 'PDF 파일 크기 압축',
-    path: '/compress-pdf',
+    path: '/pdf/compress',
     available: true,
   },
 ];
 
-const Home = () => {
+const PdfHome = () => {
   return (
     <div className="home">
       {/* Hero Section */}
       <section className="hero">
-        <h1 className="hero-title">📄 무료 PDF 변환 도구</h1>
+        <h1 className="hero-title">📄 PDF 도구</h1>
         <p className="hero-subtitle">브라우저에서 안전하게 변환하세요</p>
       </section>
 
@@ -124,5 +124,5 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default PdfHome;
 

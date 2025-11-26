@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { extractTextFromPdf, downloadAsTextFile } from '../utils/textExtractor';
-import type { ExtractProgress, ExtractedText } from '../utils/textExtractor';
+import { extractTextFromPdf, downloadAsTextFile } from '../../utils/textExtractor';
+import type { ExtractProgress, ExtractedText } from '../../utils/textExtractor';
 import './PdfToText.css';
 
 const PdfToText = () => {

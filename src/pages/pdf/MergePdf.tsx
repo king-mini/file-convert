@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { mergePdfs, getPageCount } from '../utils/pdfMerger';
-import type { PdfFile, MergeProgress } from '../utils/pdfMerger';
+import { mergePdfs, getPageCount } from '../../utils/pdfMerger';
+import type { PdfFile, MergeProgress } from '../../utils/pdfMerger';
 import './MergePdf.css';
 
 const MergePdf = () => {

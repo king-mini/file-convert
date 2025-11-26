@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { rotatePdf } from '../utils/pdfRotator';
-import type { RotationAngle, RotateProgress } from '../utils/pdfRotator';
+import { rotatePdf } from '../../utils/pdfRotator';
+import type { RotationAngle, RotateProgress } from '../../utils/pdfRotator';
 import './RotatePdf.css';
 
 const RotatePdf = () => {
