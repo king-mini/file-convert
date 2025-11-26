@@ -90,23 +90,22 @@
 
 ## ☁️ 5. Cloudflare Pages 설정
 
-- [ ] Cloudflare Pages 새 프로젝트 생성
+- [x] Cloudflare Pages 새 프로젝트 생성 ✅
   - 프로젝트명: `file-convert`
-  - GitHub 연결: `king-mini/file-convert`
+  - wrangler CLI로 배포 완료
+  - 배포 URL: https://file-convert-445.pages.dev
   
-- [ ] 빌드 설정
+- [x] 빌드 설정 ✅
   ```
   Project name: file-convert
-  Build command: npm run build
+  Build command: npm run build (로컬)
   Build output directory: dist
   ```
 
-- [ ] 커스텀 도메인 연결
-  - [ ] `lokit.tools` DNS 설정
+- [ ] 커스텀 도메인 연결 (선택사항)
+  - [ ] `lokit.tools` 도메인 구매
   - [ ] Cloudflare에서 도메인 추가
   - [ ] SSL 인증서 자동 생성 확인
-
-**⚠️ 주의**: 이전 프로젝트 연결은 모두 제거
 
 ---
 
@@ -130,8 +129,9 @@
 
 ## 🧪 7. 테스트
 
-- [ ] 로컬 빌드 확인: `npm run build`
+- [x] 로컬 빌드 확인: `npm run build` ✅
 - [ ] 로컬 프리뷰: `npm run preview`
+- [ ] 배포된 사이트 접속: https://file-convert-445.pages.dev
 - [ ] 모든 기능 작동 확인
   - [ ] PDF to JPG
   - [ ] PDF to PNG
@@ -146,9 +146,11 @@
 
 ## 🚀 8. 배포
 
-- [ ] GitHub에 푸시
-- [ ] Cloudflare Pages 자동 배포 확인
-- [ ] `lokit.tools` 도메인 접속 테스트
+- [x] Cloudflare Pages 첫 배포 완료 ✅
+  - URL: https://file-convert-445.pages.dev
+  - 방법: wrangler CLI (`npm run deploy`)
+- [ ] GitHub 저장소 생성 (선택사항 - 백업용)
+- [ ] `lokit.tools` 도메인 연결 (나중에)
 - [ ] 브라우저별 테스트 (Chrome, Firefox, Safari)
 - [ ] 모바일 테스트
 
@@ -185,16 +187,49 @@
 
 ## ✅ 완료된 작업 (2025-11-26)
 
+### 코드 변경
 - [x] package.json 브랜드명 및 author 변경
 - [x] index.html 메타태그 및 title 업데이트
 - [x] Header.tsx 브랜드명 변경
 - [x] Layout.tsx 브랜드명 변경
 - [x] build.bat 메시지 업데이트
 - [x] deploy.bat 프로젝트명 변경
+
+### 문서 업데이트
 - [x] README.md 전체 업데이트
 - [x] develop.md 프로젝트 정보 업데이트
 - [x] expansion-plan.md 브랜드 정보 업데이트
 - [x] DEPLOYMENT_GUIDE.md GitHub 정보 업데이트
 
-**다음 단계**: wrangler 설정 및 Cloudflare Pages 새 프로젝트 생성
+### 배포 설정
+- [x] wrangler.toml 생성
+- [x] package.json에 deploy 스크립트 추가
+- [x] Cloudflare 로그인 및 인증
+- [x] 프로젝트 빌드 (npm run build)
+- [x] Cloudflare Pages 첫 배포 완료
+
+### 배포 정보
+- **프로젝트명**: file-convert
+- **배포 URL**: https://file-connect-445.pages.dev
+- **배포 방식**: wrangler CLI (수동)
+
+---
+
+## 🎯 다음 단계
+
+1. **사이트 테스트** (가장 중요!)
+   - 배포된 URL 접속
+   - 모든 기능 작동 확인
+
+2. **GitHub 백업** (선택사항)
+   - 저장소 생성
+   - 코드 백업용
+
+3. **커스텀 도메인** (나중에)
+   - lokit.tools 구매
+   - Cloudflare 연결
+
+4. **최적화** (나중에)
+   - Analytics 설정
+   - AdSense 추가
 
