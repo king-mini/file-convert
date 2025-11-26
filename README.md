@@ -1,14 +1,17 @@
-# 📄 PDF to JPG Converter
+# 🔄 Lokit - File Tools
 
-브라우저에서 안전하게 PDF를 JPG 이미지로 변환하는 웹 애플리케이션
+빠르고 안전한 파일 도구 - 브라우저에서 바로 변환하세요
+
+**도메인:** [lokit.tools](https://lokit.tools)  
+**개발자:** king-mini
 
 ## ✨ 특징
 
 - **100% 클라이언트 사이드 변환**: 서버에 파일 업로드 없이 브라우저에서 직접 변환
 - **개인정보 보호**: 모든 파일은 사용자의 브라우저에서만 처리됩니다
-- **커스터마이징 가능**: JPG 품질, 해상도, 페이지 범위 설정
+- **다양한 변환 도구**: PDF ↔ 이미지, PDF 편집 등
 - **진행률 표시**: 실시간 변환 진행 상황 확인
-- **ZIP 다운로드**: 여러 페이지를 하나의 ZIP 파일로 다운로드
+- **무료 & 제한 없음**: 파일 크기나 개수 제한 없이 사용
 
 ## 🛠️ 기술 스택
 
@@ -41,22 +44,28 @@ npm run preview
 1. [Cloudflare Dashboard](https://dash.cloudflare.com/)에 로그인
 2. **Pages** 메뉴 선택
 3. **Create a project** 클릭
-4. GitHub/GitLab 저장소 연결
+4. GitHub 저장소 연결 (king-mini/file-convert)
 
 ### 2. 빌드 설정
 
+- **Project name**: file-convert
 - **Framework preset**: Vite
 - **Build command**: `npm run build`
 - **Build output directory**: `dist`
 - **Node version**: 18 이상
 
-### 3. 배포
+### 3. 커스텀 도메인 설정
+
+- Cloudflare에서 **lokit.tools** 도메인 추가
+- DNS 설정 및 SSL 인증서 자동 생성 확인
+
+### 4. 배포
 
 Git에 푸시하면 자동으로 배포됩니다.
 
 ```bash
 git add .
-git commit -m "Deploy PDF converter"
+git commit -m "Deploy Lokit"
 git push
 ```
 
@@ -90,10 +99,11 @@ google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
 
 ## 📝 사용 방법
 
-1. PDF 파일을 드래그하거나 선택
-2. 변환 옵션 설정 (품질, 해상도, 페이지 범위)
-3. "변환 시작" 버튼 클릭
-4. 완료 후 ZIP 파일 자동 다운로드
+1. 원하는 변환 도구 선택 (PDF to JPG, Image to PDF 등)
+2. 파일을 드래그하거나 선택
+3. 변환 옵션 설정
+4. "변환 시작" 버튼 클릭
+5. 완료 후 파일 자동 다운로드
 
 ## 🔒 개인정보 보호
 

@@ -1,6 +1,6 @@
 @echo off
 echo ===================================
-echo Building PDF Converter...
+echo Building Lokit...
 echo ===================================
 call npm run build
 echo.

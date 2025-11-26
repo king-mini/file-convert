@@ -10,28 +10,31 @@
 
 ## 🎨 2. 브랜드명 변경 (코드)
 
-### package.json
+### package.json ✅
 ```json
 - "name": "pdf-converter",
 + "name": "lokit",
++ "author": "king-mini",
 ```
 
-### index.html
+### index.html ✅
 ```html
 - <title>Vite + React + TS</title>
 + <title>Lokit - File Tools</title>
 
 - <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 + <link rel="icon" type="image/svg+xml" href="/lokit-icon.svg" />
+
++ 메타 태그 추가 (OG, description 등)
 ```
 
-### src/components/Header.tsx (라인 12)
+### src/components/Header.tsx (라인 12) ✅
 ```tsx
 - 🔄 PDF Converter
 + 🔄 Lokit
 ```
 
-### src/components/Layout.tsx (라인 13)
+### src/components/Layout.tsx (라인 13) ✅
 ```tsx
 - © 2025 PDF Converter · 모든 변환은 브라우저에서 처리됩니다
 + © 2025 Lokit · 모든 변환은 브라우저에서 처리됩니다
@@ -41,34 +44,46 @@
 
 ## 📄 3. 문서 업데이트
 
-### README.md
-- [ ] 제목: `Lokit - File Tools`
-- [ ] 설명: "빠르고 안전한 파일 도구"
-- [ ] URL: `https://lokit.tools`
-- [ ] 로고/이미지 교체
+### README.md ✅
+- [x] 제목: `Lokit - File Tools`
+- [x] 설명: "빠르고 안전한 파일 도구"
+- [x] URL: `https://lokit.tools`
+- [x] 개발자: `king-mini`
+- [x] GitHub 저장소: `king-mini/file-convert`
+- [ ] 로고/이미지 교체 (나중에)
 
-### develop.md
-- [ ] 프로젝트명 변경
-- [ ] 브랜드 컨셉 업데이트
+### develop.md ✅
+- [x] 프로젝트명 변경
+- [x] 개발자 정보 추가
+- [x] 브랜드 컨셉 업데이트
 
-### expansion-plan.md
-- [ ] 브랜드명 변경
-- [ ] 도메인 정보 업데이트: `lokit.tools`
+### expansion-plan.md ✅
+- [x] 브랜드명 변경
+- [x] 도메인 정보 업데이트: `lokit.tools`
+- [x] GitHub 저장소 정보 추가
+
+### DEPLOYMENT_GUIDE.md ✅
+- [x] 프로젝트명 변경
+- [x] GitHub URL 업데이트
+- [x] 개발자 정보 추가
 
 ---
 
 ## 🛠️ 4. 빌드/배포 스크립트
 
-### build.bat
+### build.bat ✅
 ```batch
 - echo Building PDF Converter...
 + echo Building Lokit...
 ```
 
-### deploy.bat
+### deploy.bat ✅
 ```batch
 - echo Deploying PDF Converter...
 + echo Deploying Lokit...
+
+- --project-name=pdf-converter
++ --project-name=file-convert
 ```
 
 ---
@@ -76,11 +91,12 @@
 ## ☁️ 5. Cloudflare Pages 설정
 
 - [ ] Cloudflare Pages 새 프로젝트 생성
-  - 프로젝트명: `lokit`
-  - GitHub 연결: 새 `lokit` 레포
+  - 프로젝트명: `file-convert`
+  - GitHub 연결: `king-mini/file-convert`
   
 - [ ] 빌드 설정
   ```
+  Project name: file-convert
   Build command: npm run build
   Build output directory: dist
   ```
@@ -89,6 +105,8 @@
   - [ ] `lokit.tools` DNS 설정
   - [ ] Cloudflare에서 도메인 추가
   - [ ] SSL 인증서 자동 생성 확인
+
+**⚠️ 주의**: 이전 프로젝트 연결은 모두 제거
 
 ---
 
@@ -156,7 +174,27 @@
 
 ## 📝 참고사항
 
-- 기존 배포 URL (`pdf-converter-73u.pages.dev`)은 유지해도 되지만, 새 브랜드로 시작하는 게 깔끔함
-- `lokit.tools` 도메인 구매 완료 후 DNS 설정 필요
+- **프로젝트명**: `file-convert` (pdf-convert 아님!)
+- **GitHub**: `king-mini/file-convert`
+- **개발자**: `king-mini`
+- **도메인**: `lokit.tools`
+- 이전 연결 모두 제거하고 새로 시작
 - Cloudflare Pages는 무료이므로 새 프로젝트 만들어도 비용 없음
+
+---
+
+## ✅ 완료된 작업 (2025-11-26)
+
+- [x] package.json 브랜드명 및 author 변경
+- [x] index.html 메타태그 및 title 업데이트
+- [x] Header.tsx 브랜드명 변경
+- [x] Layout.tsx 브랜드명 변경
+- [x] build.bat 메시지 업데이트
+- [x] deploy.bat 프로젝트명 변경
+- [x] README.md 전체 업데이트
+- [x] develop.md 프로젝트 정보 업데이트
+- [x] expansion-plan.md 브랜드 정보 업데이트
+- [x] DEPLOYMENT_GUIDE.md GitHub 정보 업데이트
+
+**다음 단계**: wrangler 설정 및 Cloudflare Pages 새 프로젝트 생성
 

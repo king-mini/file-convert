@@ -9,7 +9,7 @@ const Header = () => {
     <header className="header">
       <div className="header-content">
         <Link to="/" className="logo">
-          🔄 PDF Converter
+          🔄 Lokit
         </Link>
         {!isHome && (
           <Link to="/" className="home-btn">

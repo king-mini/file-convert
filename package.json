@@ -1,8 +1,9 @@
 {
-	"name": "pdf-converter",
+	"name": "lokit",
 	"private": true,
 	"version": "0.0.0",
 	"type": "module",
+	"author": "king-mini",
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",

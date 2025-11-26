@@ -1,7 +1,9 @@
-# 🚀 PDF Converter 확장 계획
+# 🚀 Lokit 확장 계획
 
 > 이미지 처리 기능 추가를 위한 전략 문서
 
+**프로젝트**: Lokit (file-convert)  
+**개발자**: king-mini  
 **작성일**: 2025-11-26  
 **현재 상태**: PDF 변환 기능 8개 완성 (Phase 1-4 완료)  
 **문서 버전**: 2.0 (GPT-5.1 의견 통합)
@@ -12,7 +14,8 @@
 
 ### 전략
 ✅ **한 사이트 통합 + 카테고리 분리**  
-✅ **브랜딩**: `PDF Converter` → `File Tools`  
+✅ **브랜딩**: `Lokit - File Tools`  
+✅ **도메인**: `lokit.tools`  
 ✅ **루트 허브 전환**: `/` → 카테고리 선택 페이지  
 ✅ **점진적 확장**: 1~2개씩, 데이터 기반 의사결정
 
@@ -117,9 +120,10 @@ PDF 도구 | 이미지 도구(베타)
 #### 1. 브랜딩 문제 ⚠️
 
 **현재 상태:**
-- 사이트명: `PDF Converter`
-- 헤더: `🔄 PDF Converter`
-- 도메인: `pdf-converter-73u.pages.dev`
+- 사이트명: `Lokit`
+- 헤더: `🔄 Lokit`
+- 도메인: `lokit.tools` (예정)
+- GitHub: `king-mini/file-convert`
 
 **문제점:**
 - 이미지 기능 추가 시 브랜드와 충돌

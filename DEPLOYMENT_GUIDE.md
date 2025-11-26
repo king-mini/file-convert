@@ -1,4 +1,8 @@
-# Cloudflare Pages 배포 가이드
+# Cloudflare Pages 배포 가이드 - Lokit
+
+**프로젝트**: file-convert  
+**개발자**: king-mini  
+**도메인**: lokit.tools
 
 ## 🚀 빠른 시작
 
@@ -7,9 +11,9 @@
 ```bash
 git init
 git add .
-git commit -m "Initial commit: PDF to JPG converter"
+git commit -m "Initial commit: Lokit file converter"
 git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+git remote add origin https://github.com/king-mini/file-convert.git
 git push -u origin main
 ```
 
@@ -26,6 +30,7 @@ git push -u origin main
 다음과 같이 설정:
 
 ```
+Project name: file-convert
 Framework preset: Vite
 Build command: npm run build
 Build output directory: dist
