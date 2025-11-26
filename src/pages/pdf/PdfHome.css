@@ -1,7 +1,7 @@
 .home {
-  max-width: 1600px;
+  max-width: 2000px;
   margin: 0 auto;
-  padding: 0.75rem 2.5rem 0.85rem;
+  padding: 0.75rem 3rem 0.85rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -42,9 +42,12 @@
 
 .feature-grid {
   display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 0.85rem !important;
+  grid-template-columns: repeat(4, minmax(220px, 1fr)) !important;
+  gap: 1.25rem !important;
   align-items: start;
+  justify-content: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .feature-card-wrapper {
@@ -59,7 +62,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 1.25rem 1rem;
+  padding: 1.5rem 1.25rem;
   background: white;
   border: 2px solid #e5e7eb;
   border-radius: 12px;
@@ -67,7 +70,7 @@
   color: #333;
   transition: all 0.3s ease;
   cursor: pointer;
-  min-height: 150px;
+  min-height: 160px;
 }
 
 .feature-card:hover {
@@ -165,8 +168,8 @@
   }
 
   .feature-grid {
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 0.7rem !important;
+    grid-template-columns: repeat(3, minmax(180px, 1fr)) !important;
+    gap: 0.85rem !important;
   }
 
   .feature-card {
@@ -246,8 +249,8 @@
   }
 
   .feature-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 0.65rem !important;
+    grid-template-columns: repeat(2, minmax(150px, 1fr)) !important;
+    gap: 0.75rem !important;
   }
 
   .feature-card {
