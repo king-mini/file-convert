@@ -134,10 +134,16 @@ const extractExif = async (file: File): Promise<ExifData | null> => {
   }
 };
 
-// EXIF 데이터 삽입
+// EXIF 데이터 삽입 (Orientation은 1로 리셋 - 브라우저가 이미 회전 적용함)
 const insertExif = (dataUrl: string, exifData: ExifData): string => {
   try {
     if (!window.piexif) return dataUrl;
+    
+    // Orientation을 1(정상)로 설정 - 브라우저가 이미 회전을 적용했으므로
+    if (exifData['0th']) {
+      exifData['0th'][274] = 1; // 274 = Orientation 태그
+    }
+    
     const exifBytes = window.piexif.dump(exifData);
     return window.piexif.insert(exifBytes, dataUrl);
   } catch {
@@ -310,10 +316,11 @@ export const blurBackground = async (
   await yieldToMain();
   onProgress?.(90);
 
-  // 11. 결과 반환 (EXIF 유지)
+  // 11. 결과 반환 (EXIF 유지, Orientation은 1로 리셋)
   let resultBlob: Blob;
 
   if (exifData) {
+    // EXIF 보존 (Orientation만 1로 리셋)
     const dataUrl = resultCanvas.toDataURL('image/jpeg', 0.92);
     const exifInsertedDataUrl = insertExif(dataUrl, exifData);
     resultBlob = dataUrlToBlob(exifInsertedDataUrl);
