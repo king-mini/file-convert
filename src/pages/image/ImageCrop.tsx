@@ -166,7 +166,6 @@ const ImageCrop = () => {
         if (ratio !== null) {
           const pixelWidth = (newArea.width / 100) * imageSize.width;
           const pixelHeight = (newArea.height / 100) * imageSize.height;
-          const currentRatio = pixelWidth / pixelHeight;
 
           if (isResizing.includes('e') || isResizing.includes('w')) {
             const targetHeight = pixelWidth / ratio;

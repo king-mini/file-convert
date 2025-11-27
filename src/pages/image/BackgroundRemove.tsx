@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
-import { removeBackground, formatFileSize, RemoveBackgroundOptions, copyImageToClipboard } from '../../utils/imageProcessor';
+import { removeBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
+import type { RemoveBackgroundOptions } from '../../utils/imageProcessor';
 import './BackgroundRemove.css';
 
 const BackgroundRemove = () => {
