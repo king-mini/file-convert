@@ -10,7 +10,6 @@ interface FeatureCard {
 }
 
 const features: FeatureCard[] = [
-  // 사용 가능
   {
     title: 'Portrait Blur',
     icon: '🎭',
@@ -25,34 +24,33 @@ const features: FeatureCard[] = [
     path: '/image/bg-remove',
     available: true,
   },
-  // 향후 개발 예정
   {
     title: 'Image Resize',
     icon: '📐',
     description: '이미지 크기 조정',
     path: '/image/resize',
-    available: false,
+    available: true,
   },
   {
     title: 'Image Compress',
-    icon: '📦',
+    icon: '🗜️',
     description: '이미지 용량 압축',
     path: '/image/compress',
-    available: false,
+    available: true,
   },
   {
     title: 'Format Convert',
     icon: '🔄',
     description: 'PNG/JPG/WebP 변환',
-    path: '/image/convert',
-    available: false,
+    path: '/image/format',
+    available: true,
   },
   {
     title: 'Image Crop',
     icon: '✂️',
     description: '이미지 자르기',
     path: '/image/crop',
-    available: false,
+    available: true,
   },
 ];
 

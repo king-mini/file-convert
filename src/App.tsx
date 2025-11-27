@@ -13,6 +13,10 @@ import CompressPdf from './pages/pdf/CompressPdf';
 import ImageHome from './pages/image/ImageHome';
 import PortraitBlur from './pages/image/PortraitBlur';
 import BackgroundRemove from './pages/image/BackgroundRemove';
+import ImageResize from './pages/image/ImageResize';
+import ImageCompress from './pages/image/ImageCompress';
+import FormatConvert from './pages/image/FormatConvert';
+import ImageCrop from './pages/image/ImageCrop';
 
 const App = () => {
   return (
@@ -37,6 +41,10 @@ const App = () => {
           <Route path="image" element={<ImageHome />} />
           <Route path="image/portrait-blur" element={<PortraitBlur />} />
           <Route path="image/bg-remove" element={<BackgroundRemove />} />
+          <Route path="image/resize" element={<ImageResize />} />
+          <Route path="image/compress" element={<ImageCompress />} />
+          <Route path="image/format" element={<FormatConvert />} />
+          <Route path="image/crop" element={<ImageCrop />} />
           
           {/* Redirects - Old URLs to New URLs */}
           <Route path="pdf-to-jpg" element={<Navigate to="/pdf/to-jpg" replace />} />
