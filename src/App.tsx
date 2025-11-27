@@ -11,6 +11,8 @@ import SplitPdf from './pages/pdf/SplitPdf';
 import RotatePdf from './pages/pdf/RotatePdf';
 import CompressPdf from './pages/pdf/CompressPdf';
 import ImageHome from './pages/image/ImageHome';
+import PortraitBlur from './pages/image/PortraitBlur';
+import BackgroundRemove from './pages/image/BackgroundRemove';
 
 const App = () => {
   return (
@@ -33,6 +35,8 @@ const App = () => {
           
           {/* Image Routes */}
           <Route path="image" element={<ImageHome />} />
+          <Route path="image/portrait-blur" element={<PortraitBlur />} />
+          <Route path="image/bg-remove" element={<BackgroundRemove />} />
           
           {/* Redirects - Old URLs to New URLs */}
           <Route path="pdf-to-jpg" element={<Navigate to="/pdf/to-jpg" replace />} />

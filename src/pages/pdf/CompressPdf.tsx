@@ -67,11 +67,6 @@ const CompressPdf = () => {
         <p>PDF 파일 크기를 압축하세요</p>
       </div>
 
-      {/* 광고 영역 - 상단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 상단 ]</p>
-      </div>
-
       {/* 경고 메시지 */}
       <div className="warning-box">
         <span className="warning-icon">⚠️</span>
@@ -199,10 +194,6 @@ const CompressPdf = () => {
         </div>
       )}
 
-      {/* 광고 영역 - 하단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 하단 ]</p>
-      </div>
     </div>
   );
 };

@@ -89,11 +89,6 @@ const RotatePdf = () => {
         <p>PDF 페이지를 회전하세요</p>
       </div>
 
-      {/* 광고 영역 - 상단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 상단 ]</p>
-      </div>
-
       {/* 파일 업로드 영역 */}
       <div
         className={`upload-zone ${dragOver ? 'drag-over' : ''} ${file ? 'has-file' : ''}`}
@@ -213,10 +208,6 @@ const RotatePdf = () => {
         </div>
       )}
 
-      {/* 광고 영역 - 하단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 하단 ]</p>
-      </div>
     </div>
   );
 };

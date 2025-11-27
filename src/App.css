@@ -39,18 +39,6 @@
   gap: 1.5rem;
 }
 
-/* 광고 영역 */
-.ad-placeholder {
-  background: rgba(255, 255, 255, 0.1);
-  border: 2px dashed rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  padding: 2rem;
-  text-align: center;
-  color: white;
-  font-size: 0.9rem;
-  opacity: 0.7;
-}
-
 /* 파일 업로드 영역 */
 .upload-zone {
   background: white;

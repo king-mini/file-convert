@@ -110,11 +110,6 @@ const ImageToPdf = () => {
         <p>여러 이미지를 하나의 PDF로 변환하세요</p>
       </div>
 
-      {/* 광고 영역 - 상단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 상단 ]</p>
-      </div>
-
       {/* 파일 업로드 영역 */}
       <div
         className={`upload-zone ${dragOver ? 'drag-over' : ''}`}
@@ -226,10 +221,6 @@ const ImageToPdf = () => {
         </div>
       )}
 
-      {/* 광고 영역 - 하단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 하단 ]</p>
-      </div>
     </div>
   );
 };

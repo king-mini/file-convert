@@ -22,9 +22,8 @@ const categories: CategoryCard[] = [
     icon: '🖼️',
     title: '이미지 편집',
     description: '배경 흐리기, 배경 제거 등',
-    count: '준비 중',
+    count: '6개 도구',
     path: '/image',
-    badge: 'BETA',
   },
 ];
 

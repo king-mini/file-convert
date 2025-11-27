@@ -79,7 +79,6 @@ const PdfHome = () => {
 
       {/* Feature Grid */}
       <section className="features">
-        <h2 className="features-title">변환 기능</h2>
         <div className="feature-grid">
           {features.map((feature) => (
             <div key={feature.path} className="feature-card-wrapper">

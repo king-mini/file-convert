@@ -93,11 +93,6 @@ const MergePdf = () => {
         <p>여러 PDF를 하나로 병합하세요</p>
       </div>
 
-      {/* 광고 영역 - 상단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 상단 ]</p>
-      </div>
-
       {/* 파일 업로드 영역 */}
       <div
         className={`upload-zone ${dragOver ? 'drag-over' : ''}`}
@@ -199,10 +194,6 @@ const MergePdf = () => {
         </div>
       )}
 
-      {/* 광고 영역 - 하단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 하단 ]</p>
-      </div>
     </div>
   );
 };

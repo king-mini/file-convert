@@ -65,11 +65,6 @@ const PdfToJpg = () => {
         <p>브라우저에서 안전하게 변환 · 서버 업로드 없음</p>
       </div>
 
-      {/* 광고 영역 - 상단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 상단 ]</p>
-      </div>
-
       {/* 파일 업로드 영역 */}
       <div
         className={`upload-zone ${dragOver ? 'drag-over' : ''} ${file ? 'has-file' : ''}`}
@@ -196,10 +191,6 @@ const PdfToJpg = () => {
         </div>
       )}
 
-      {/* 광고 영역 - 하단 */}
-      <div className="ad-placeholder">
-        <p>[ AdSense 광고 영역 - 하단 ]</p>
-      </div>
     </div>
   );
 };

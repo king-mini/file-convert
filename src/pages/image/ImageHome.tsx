@@ -10,35 +10,63 @@ interface FeatureCard {
 }
 
 const features: FeatureCard[] = [
+  // 사용 가능
   {
     title: 'Portrait Blur',
     icon: '🎭',
-    description: '인물 배경 흐리기 (곧 출시)',
+    description: '인물 배경 흐리기',
     path: '/image/portrait-blur',
-    available: false,
+    available: true,
   },
   {
     title: 'Background Remove',
     icon: '✨',
-    description: '배경 제거 (곧 출시)',
+    description: '이미지 배경 제거',
     path: '/image/bg-remove',
+    available: true,
+  },
+  // 향후 개발 예정
+  {
+    title: 'Image Resize',
+    icon: '📐',
+    description: '이미지 크기 조정',
+    path: '/image/resize',
+    available: false,
+  },
+  {
+    title: 'Image Compress',
+    icon: '📦',
+    description: '이미지 용량 압축',
+    path: '/image/compress',
+    available: false,
+  },
+  {
+    title: 'Format Convert',
+    icon: '🔄',
+    description: 'PNG/JPG/WebP 변환',
+    path: '/image/convert',
+    available: false,
+  },
+  {
+    title: 'Image Crop',
+    icon: '✂️',
+    description: '이미지 자르기',
+    path: '/image/crop',
     available: false,
   },
 ];
 
 const ImageHome = () => {
   return (
-    <div className="image-home">
+    <div className="home">
       {/* Hero Section */}
       <section className="hero">
         <h1 className="hero-title">🖼️ 이미지 도구</h1>
         <p className="hero-subtitle">브라우저에서 안전하게 편집하세요</p>
-        <span className="beta-badge">BETA</span>
       </section>
 
       {/* Feature Grid */}
       <section className="features">
-        <h2 className="features-title">편집 기능</h2>
         <div className="feature-grid">
           {features.map((feature) => (
             <div key={feature.path} className="feature-card-wrapper">
@@ -61,12 +89,22 @@ const ImageHome = () => {
         </div>
       </section>
 
-      {/* Coming Soon Notice */}
-      <section className="coming-soon-notice">
-        <div className="notice-card">
-          <h3>🚀 곧 만나요!</h3>
-          <p>이미지 편집 기능을 열심히 준비하고 있습니다.</p>
-          <p>조금만 기다려주세요! 😊</p>
+      {/* Benefits Section */}
+      <section className="benefits">
+        <div className="benefit-card">
+          <div className="benefit-icon">✅</div>
+          <h3>100% 클라이언트 사이드</h3>
+          <p>서버 업로드 없이 브라우저에서 직접 처리</p>
+        </div>
+        <div className="benefit-card">
+          <div className="benefit-icon">🔒</div>
+          <h3>개인정보 보호</h3>
+          <p>모든 파일은 사용자의 브라우저에서만 처리</p>
+        </div>
+        <div className="benefit-card">
+          <div className="benefit-icon">💰</div>
+          <h3>무료 무제한</h3>
+          <p>제한 없이 무료로 사용 가능</p>
         </div>
       </section>
     </div>
@@ -74,4 +112,3 @@ const ImageHome = () => {
 };
 
 export default ImageHome;
-

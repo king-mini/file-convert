@@ -26,7 +26,6 @@ const Header = () => {
             className={`nav-link ${isImageSection ? 'active' : ''}`}
           >
             🖼️ 이미지 도구
-            <span className="badge">BETA</span>
           </Link>
         </nav>
 
