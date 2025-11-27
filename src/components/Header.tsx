@@ -9,22 +9,6 @@ const Header = () => {
   const isPdfTool = location.pathname.startsWith('/pdf/');
   const isImageTool = location.pathname.startsWith('/image/');
 
-  // 뒤로가기 버튼 텍스트와 경로 결정
-  const getBackButton = () => {
-    if (isPdfTool) {
-      return { to: '/pdf', label: '← PDF 도구' };
-    }
-    if (isImageTool) {
-      return { to: '/image', label: '← 이미지 도구' };
-    }
-    if (isPdfHome || isImageHome) {
-      return { to: '/', label: '← 홈' };
-    }
-    return null;
-  };
-
-  const backButton = getBackButton();
-
   return (
     <header className="header">
       <div className="header-content">
@@ -49,16 +33,9 @@ const Header = () => {
             </Link>
           </nav>
         )}
-
-        {backButton && (
-          <Link to={backButton.to} className="home-btn">
-            {backButton.label}
-          </Link>
-        )}
       </div>
     </header>
   );
 };
 
 export default Header;
-
