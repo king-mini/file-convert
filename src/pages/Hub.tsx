@@ -61,18 +61,18 @@ const Hub = () => {
       <section className="hub-features">
         <div className="feature-item">
           <div className="feature-icon">✅</div>
-          <h3>클라이언트 사이드</h3>
-          <p>브라우저에서 직접 처리</p>
+          <h3>100% 클라이언트 사이드</h3>
+          <p>서버 업로드 없이 브라우저에서 직접 처리</p>
         </div>
         <div className="feature-item">
           <div className="feature-icon">🔒</div>
           <h3>개인정보 보호</h3>
-          <p>파일 업로드 없음</p>
+          <p>모든 파일은 사용자의 브라우저에서만 처리</p>
         </div>
         <div className="feature-item">
           <div className="feature-icon">💰</div>
           <h3>무료 무제한</h3>
-          <p>제한 없이 사용 가능</p>
+          <p>제한 없이 무료로 사용 가능</p>
         </div>
       </section>
     </div>

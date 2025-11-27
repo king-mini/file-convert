@@ -10,7 +10,7 @@ const Layout = () => {
         <Outlet />
       </main>
       <footer className="footer">
-        <p>© 2025 Lokit · 모든 변환은 브라우저에서 처리됩니다</p>
+        <p>© 2025 Lokit · 모든 작업은 서버에 업로드되지 않고 안전하게 처리됩니다</p>
       </footer>
     </div>
   );

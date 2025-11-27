@@ -106,7 +106,7 @@ const PdfHome = () => {
         <div className="benefit-card">
           <div className="benefit-icon">✅</div>
           <h3>100% 클라이언트 사이드</h3>
-          <p>서버 업로드 없이 브라우저에서 직접 변환</p>
+          <p>서버 업로드 없이 브라우저에서 직접 처리</p>
         </div>
         <div className="benefit-card">
           <div className="benefit-icon">🔒</div>
