@@ -1,8 +1,24 @@
-// MediaPipe는 CDN에서 로드되므로 전역 타입 선언
+// 전역 타입 선언
 declare global {
   interface Window {
     SelfieSegmentation: new (config: { locateFile: (file: string) => string }) => SelfieSegmentationInstance;
+    piexif: PiexifModule;
   }
+}
+
+interface PiexifModule {
+  load: (dataUrl: string) => ExifData;
+  dump: (exifData: ExifData) => string;
+  insert: (exifBytes: string, dataUrl: string) => string;
+}
+
+interface ExifData {
+  '0th': Record<number, unknown>;
+  Exif: Record<number, unknown>;
+  GPS: Record<number, unknown>;
+  Interop: Record<number, unknown>;
+  '1st': Record<number, unknown>;
+  thumbnail: string | null;
 }
 
 interface SelfieSegmentationInstance {
@@ -29,6 +45,21 @@ const loadMediaPipeScript = (): Promise<void> =>
     script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js';
     script.onload = () => resolve();
     script.onerror = () => reject(new Error('MediaPipe 로드 실패'));
+    document.head.appendChild(script);
+  });
+
+// Piexif 스크립트 로드
+const loadPiexifScript = (): Promise<void> =>
+  new Promise((resolve, reject) => {
+    if (window.piexif) {
+      resolve();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/piexifjs@1.0.6/piexif.min.js';
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error('Piexif 로드 실패'));
     document.head.appendChild(script);
   });
 
@@ -70,16 +101,31 @@ const fileToDataUrl = (file: File): Promise<string> =>
     reader.readAsDataURL(file);
   });
 
-// EXIF 데이터 추출 (향후 구현 예정)
-const extractExif = async (_file: File): Promise<object | null> => {
-  // TODO: EXIF 라이브러리 추가 후 구현
-  return null;
+// EXIF 데이터 추출
+const extractExif = async (file: File): Promise<ExifData | null> => {
+  try {
+    // JPG 파일만 EXIF 지원
+    if (!file.type.includes('jpeg') && !file.type.includes('jpg')) {
+      return null;
+    }
+    
+    await loadPiexifScript();
+    const dataUrl = await fileToDataUrl(file);
+    return window.piexif.load(dataUrl);
+  } catch {
+    return null;
+  }
 };
 
-// EXIF 데이터 삽입 (향후 구현 예정)
-const insertExif = (dataUrl: string, _exifData: object): string => {
-  // TODO: EXIF 라이브러리 추가 후 구현
-  return dataUrl;
+// EXIF 데이터 삽입
+const insertExif = (dataUrl: string, exifData: ExifData): string => {
+  try {
+    if (!window.piexif) return dataUrl;
+    const exifBytes = window.piexif.dump(exifData);
+    return window.piexif.insert(exifBytes, dataUrl);
+  } catch {
+    return dataUrl;
+  }
 };
 
 // Data URL을 Blob으로 변환
