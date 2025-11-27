@@ -38,8 +38,19 @@
 
 .upload-zone:hover {
   border-color: #667eea;
-  transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.upload-zone:hover:not(:has(.btn-primary:hover)) {
+  transform: translateY(-2px);
+}
+
+.upload-zone .btn-primary {
+  transition: all 0.2s ease;
+}
+
+.upload-zone .btn-primary:hover {
+  transform: none;
 }
 
 .upload-zone.drag-over {

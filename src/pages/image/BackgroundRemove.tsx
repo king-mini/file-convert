@@ -15,7 +15,7 @@ const BackgroundRemove = () => {
   
   // 옵션
   const [modelSelection, setModelSelection] = useState<0 | 1>(1);
-  const [edgeBlur, setEdgeBlur] = useState(0);
+  const [edgeBlur, setEdgeBlur] = useState(3);
   const [copied, setCopied] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
 
@@ -296,7 +296,7 @@ const BackgroundRemove = () => {
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
-                  {copied ? '✓ 복사됨' : '📋 클립보드'}
+                  {copied ? '✓ 복사됨' : '📋 복사'}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
                   💾 PNG 다운로드

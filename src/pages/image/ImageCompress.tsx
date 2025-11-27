@@ -331,7 +331,7 @@ const ImageCompress = () => {
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
-                  {copied ? '✓ 복사됨' : '📋 클립보드'}
+                  {copied ? '✓ 복사됨' : '📋 복사'}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
                   💾 다운로드

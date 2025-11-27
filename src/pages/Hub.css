@@ -54,7 +54,8 @@
 .category-card:hover {
   transform: translateY(-4px);
   border-color: #667eea;
-  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.15);
+  border-width: 2px;
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
 }
 
 .category-icon {

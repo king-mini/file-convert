@@ -12,6 +12,7 @@ const PortraitBlur = () => {
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [modalIndex, setModalIndex] = useState(0); // 0: 원본, 1: 결과
   const [copied, setCopied] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
 
@@ -170,17 +171,37 @@ const PortraitBlur = () => {
               <h3>원본</h3>
               <div 
                 className="image-container clickable"
-                onClick={() => preview && setModalImage(preview)}
+                onClick={() => {
+                  if (preview) {
+                    setModalIndex(0);
+                    setModalImage(preview);
+                  }
+                }}
                 title="클릭하여 크게 보기"
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
+                <button 
+                  className="image-remove-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNewImage();
+                  }}
+                  title="다른 이미지 선택"
+                >
+                  ✕
+                </button>
               </div>
             </div>
             <div className="image-panel">
               <h3>결과</h3>
               <div 
                 className={`image-container ${result ? 'clickable' : ''}`}
-                onClick={() => result && setModalImage(result)}
+                onClick={() => {
+                  if (result) {
+                    setModalIndex(1);
+                    setModalImage(result);
+                  }
+                }}
                 title={result ? "클릭하여 크게 보기" : undefined}
               >
                 {result ? (
@@ -262,7 +283,7 @@ const PortraitBlur = () => {
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
-                  {copied ? '✓ 복사됨' : '📋 클립보드'}
+                  {copied ? '✓ 복사됨' : '📋 복사'}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
                   💾 다운로드
@@ -280,7 +301,41 @@ const PortraitBlur = () => {
             <button className="modal-close" onClick={() => setModalImage(null)}>
               ✕
             </button>
-            <img src={modalImage} alt="확대 이미지" />
+            <div className="modal-image-wrapper">
+              <img src={modalIndex === 0 ? preview! : result!} alt={modalIndex === 0 ? '원본' : '결과'} />
+            </div>
+            {result && (
+              <div className="modal-nav">
+                <button
+                  className={`modal-nav-btn ${modalIndex === 0 ? 'active' : ''}`}
+                  onClick={() => setModalIndex(0)}
+                >
+                  원본
+                </button>
+                <button
+                  className={`modal-nav-btn ${modalIndex === 1 ? 'active' : ''}`}
+                  onClick={() => setModalIndex(1)}
+                >
+                  결과
+                </button>
+              </div>
+            )}
+            {result && (
+              <>
+                <button
+                  className="modal-arrow modal-arrow-left"
+                  onClick={() => setModalIndex(modalIndex === 0 ? 1 : 0)}
+                >
+                  ‹
+                </button>
+                <button
+                  className="modal-arrow modal-arrow-right"
+                  onClick={() => setModalIndex(modalIndex === 0 ? 1 : 0)}
+                >
+                  ›
+                </button>
+              </>
+            )}
           </div>
         </div>
       )}
