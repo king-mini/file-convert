@@ -477,12 +477,12 @@ After:
 /image/portrait-blur
 ```
 
-- [ ] `App.tsx` 라우트 재구성
-- [ ] 301 리다이렉트 설정 (기존 URL → 새 URL)
-- [ ] 내부 링크 업데이트
+- [x] `App.tsx` 라우트 재구성
+- [x] 301 리다이렉트 설정 (기존 URL → 새 URL)
+- [x] 내부 링크 업데이트
 
 **Day 2: 루트 허브 페이지 생성** (GPT-5.1 핵심 제안 ⭐)
-- [ ] `src/pages/Hub.tsx` 생성
+- [x] `src/pages/Hub.tsx` 생성
   ```tsx
   <div className="hub">
     <h1>무엇을 도와드릴까요?</h1>
@@ -503,13 +503,13 @@ After:
     </div>
   </div>
   ```
-- [ ] 기존 Home → PdfHome으로 이동
-- [ ] `/pdf` 페이지 생성 (기존 Home 컨텐츠)
-- [ ] `/image` 페이지 생성 (빈 그리드)
+- [x] 기존 Home → PdfHome으로 이동
+- [x] `/pdf` 페이지 생성 (기존 Home 컨텐츠)
+- [x] `/image` 페이지 생성 (빈 그리드)
 
 **Day 3: 브랜딩 업데이트**
-- [ ] 사이트 타이틀: `File Tools - PDF & Image Converter`
-- [ ] 헤더 컴포넌트 확장
+- [x] 사이트 타이틀: `File Tools - PDF & Image Converter`
+- [x] 헤더 컴포넌트 확장
   ```tsx
   <Header>
     <Logo to="/">📁 File Tools</Logo>
@@ -519,7 +519,7 @@ After:
     </Nav>
   </Header>
   ```
-- [ ] `index.html` 메타 태그 업데이트
+- [x] `index.html` 메타 태그 업데이트
 - [ ] Favicon 생성 (📁 아이콘)
 
 **Day 4: Code Splitting 설정**
@@ -556,8 +556,8 @@ After:
   npm install @mediapipe/selfie_segmentation
   npm install @mediapipe/camera_utils
   ```
-- [ ] 타입 정의 추가
-- [ ] CDN 설정 확인
+- [x] 타입 정의 추가
+- [x] CDN 설정 확인
 - [ ] 분석 이벤트 설정
   ```typescript
   trackEvent('image_portrait_blur_started');
@@ -566,26 +566,26 @@ After:
   ```
 
 **Day 2-3: 핵심 로직 구현**
-- [ ] `src/utils/imageProcessor.ts` 생성
+- [x] `src/utils/imageProcessor.ts` 생성
   - `blurBackground()` 함수
   - 마스크 생성
   - Canvas 블러 처리
   - 에러 핸들링 강화
-- [ ] 진행률 콜백 구현
-- [ ] 파일 크기 제한 (10MB)
+- [x] 진행률 콜백 구현
+- [x] 파일 크기 제한 (10MB)
 - [ ] 단위 테스트
 
 **Day 4-6: UI 구현**
-- [ ] `src/pages/image/PortraitBlur.tsx` 생성
-- [ ] 이미지 업로드 UI (접근성 고려)
+- [x] `src/pages/image/PortraitBlur.tsx` 생성
+- [x] 이미지 업로드 UI (접근성 고려)
   - `aria-label` 추가
   - 키보드 네비게이션
-- [ ] 블러 강도 슬라이더 (0~50px)
-- [ ] Before/After 비교 뷰
-- [ ] 진행률 표시 (`aria-live="polite"`)
-- [ ] 에러 메시지 (색+아이콘+해결책)
-- [ ] 결과 다운로드
-- [ ] CSS 스타일링
+- [x] 블러 강도 슬라이더 (0~50px)
+- [x] Before/After 비교 뷰
+- [x] 진행률 표시 (`aria-live="polite"`)
+- [x] 에러 메시지 (색+아이콘+해결책)
+- [x] 결과 다운로드
+- [x] CSS 스타일링
 
 **Day 7: 테스트 & 최적화**
 - [ ] 다양한 이미지 테스트 (인물 수, 해상도)
@@ -623,10 +623,10 @@ After:
 - [ ] 번들 크기 확인
 
 **Day 3-5: Background Remove 준비 (80% 완성)**
-- [ ] `removeBackground()` 유틸리티 작성
-- [ ] `src/pages/image/BackgroundRemove.tsx` 생성
-- [ ] PNG 투명 배경 지원
-- [ ] 기본 UI 구현
+- [x] `removeBackground()` 유틸리티 작성
+- [x] `src/pages/image/BackgroundRemove.tsx` 생성
+- [x] PNG 투명 배경 지원
+- [x] 기본 UI 구현
 - [ ] **배포는 하지 않음** (데이터 보고 판단)
 
 **Day 6-7: 문서화 & 피드백**
@@ -873,24 +873,31 @@ After:
 - [x] 빌드 에러 0개
 - [x] 배포 파이프라인 정상 작동 (Cloudflare Pages)
 - [ ] Git 백업 완료
-- [ ] develop.md 문서 검토
+- [x] develop.md 문서 검토
 
 **시작 가능 여부**: ✅ **준비 완료, 바로 시작 가능!**
 
 ### Phase 7 시작 조건
 
-- [ ] 라우팅 구조 변경 완료 (/ → /pdf, /image)
-- [ ] 루트 허브 페이지 생성
-- [ ] 브랜딩 업데이트 완료 (File Tools)
+- [x] 라우팅 구조 변경 완료 (/ → /pdf, /image)
+- [x] 루트 허브 페이지 생성
+- [x] 브랜딩 업데이트 완료 (File Tools)
 - [ ] Code Splitting 설정 완료
 - [ ] 정책 문서 작성 완료
 - [ ] 접근성 개선 완료
 - [ ] 분석 이벤트 설정 완료
 - [ ] 성능 기준치 측정 완료
 
+#### 다국어(i18n) 준비
+- [ ] 다국어 전략 수립 (기본 ko/en)
+- [ ] i18n 라이브러리 선택 및 도입 (예: react-i18next)
+- [ ] 언어 토글 UI 추가 (헤더/푸터)
+- [ ] 핵심 페이지 번역 키 추출 및 적용 (Hub, PDF/Image Home, 변환 페이지 공통 문구)
+- [ ] SEO 대비 hreflang/meta locale 설정 검토
+
 ### Phase 8 배포 조건
 
-- [ ] Portrait Blur 기능 완성
+- [x] Portrait Blur 기능 완성
 - [ ] 전체 기능 통합 테스트 통과
 - [ ] 접근성 테스트 통과
 - [ ] Lighthouse 점수 목표 달성

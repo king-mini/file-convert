@@ -296,23 +296,23 @@
 
 ### Phase 1: 기본 인프라 (1주)
 - [x] PDF to JPG (완료)
-- [ ] React Router 설정
-- [ ] 메인 페이지 디자인
-- [ ] 공통 컴포넌트 분리
+- [x] React Router 설정
+- [x] 메인 페이지 디자인
+- [x] 공통 컴포넌트 분리
 
 ### Phase 2: 이미지 변환 (1주)
-- [ ] PDF to PNG
-- [ ] Image to PDF (JPG, PNG)
-- [ ] PDF to Text
+- [x] PDF to PNG
+- [x] Image to PDF (JPG, PNG)
+- [x] PDF to Text
 
 ### Phase 3: PDF 조작 (2주)
-- [ ] Merge PDF
-- [ ] Split PDF
-- [ ] Rotate PDF
+- [x] Merge PDF
+- [x] Split PDF
+- [x] Rotate PDF
 
 ### Phase 4: 고급 기능 (2주)
-- [ ] Compress PDF
-- [ ] 다중 이미지 포맷 지원 (WebP, GIF)
+- [x] Compress PDF
+- [ ] 다중 이미지 포맷 지원 (WebP 완료, GIF 미지원)
 - [ ] 썸네일 미리보기
 
 ### Phase 5: 최적화 & 배포 (1주)

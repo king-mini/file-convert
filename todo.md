@@ -164,6 +164,21 @@
 
 ---
 
+## 🖼️ 10. 이미지 도구 진행 상황
+
+- [x] Portrait Blur (EXIF 유지, iOS fallback 포함)
+- [x] Background Remove (PNG 투명 배경, 복사 기능)
+- [x] Image Resize (비율/해상도 옵션)
+- [x] Image Compress (품질 조정)
+- [x] Format Convert (JPG/PNG/WebP)
+- [x] Image Crop (비율 프리셋, 결과 미리보기)
+- [ ] 이미지 도구 Code-splitting (MediaPipe 등 지연 로드)
+- [ ] GA4 이벤트/전환 추적 연결
+- [ ] 정책/약관 페이지 작성 및 푸터 링크
+- [ ] 모바일(iOS/Android) 장기 모니터링 및 크래시 로그 체계화
+
+---
+
 ## 🎨 브랜드 참고
 
 **브랜드명:** Lokit  
