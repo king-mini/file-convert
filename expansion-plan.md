@@ -1278,3 +1278,13 @@ Footer에 링크 추가:
 **다음 업데이트**: Phase 6 완료 후  
 **작성자**: AI Assistant + User + GPT-5.1 Collaboration
 - [ ] 번들 사이즈 모니터링: `vite build --report` 결과로 큰 의존성을 파악하고 PDF/이미지 툴별 lazy-loaded 모듈을 더 세분화할 수 있는지 확인 (성능 개선)
+- [ ] SEO 개선: sitemap/robots 정교화
+    - 실제 라우팅(`/pdf`, `/image` 등)과 sitemap URL 슬래시 유무 일치 여부 확인
+    - robots.txt에 `Sitemap: https://lokit.tools/sitemap.xml` 유지
+    - 필요 시 lastmod/changefreq/priority 필드 자동 생성 방안 검토 (빌드 단계에서 생성 스크립트 추가)
+- [ ] 한/영 분리 전략 검토
+    - 현재는 한 페이지에 한국어/영어를 동시에 제공 → 번역 관리가 간단하고 로딩도 한 번이라 유지
+    - 영문 비중을 본격적으로 키우거나 언어별 UX를 따로 최적화해야 한다면 /ko, /en 등 분리 URL 구조를 고려
+    - 분리하면 Search Console, hreflang, 국가/언어별 SEO 타기팅이 정확해짐
+    - 반대로 페이지가 간단한 툴 설명+UI 수준이면 통합 구조 유지로도 충분
+    - 추후 결정 포인트: 해외 트래픽 목표, 콘텐츠 규모 증가 여부, 언어별 광고/CTA 차별 필요성
