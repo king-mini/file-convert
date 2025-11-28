@@ -1,0 +1,72 @@
+.lang-switcher {
+  position: relative;
+  display: inline-block;
+}
+
+.lang-toggle-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.lang-toggle-btn:hover,
+.lang-toggle-btn:focus-visible {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.lang-menu {
+  position: absolute;
+  right: 0;
+  top: 40px;
+  min-width: 120px;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  background: rgba(17, 24, 39, 0.96);
+  z-index: 1000;
+}
+
+.lang-menu-hidden {
+  display: none;
+}
+
+.lang-option {
+  padding: 6px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #f9fafb;
+  transition: background-color 0.15s;
+}
+
+.lang-option:hover {
+  background: rgba(59, 130, 246, 0.35);
+}
+
+.lang-option-active {
+  font-weight: 600;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .lang-toggle-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 16px;
+  }
+
+  .lang-menu {
+    top: 36px;
+  }
+}
+
