@@ -4,8 +4,8 @@ import ko from './locales/ko';
 import en from './locales/en';
 
 export const availableLanguages = [
-  { code: 'ko', label: '한국어' },
   { code: 'en', label: 'English' },
+  { code: 'ko', label: '한국어' },
 ];
 
 const resolveStoredLanguage = () => {
