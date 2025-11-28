@@ -192,7 +192,7 @@ const supportsCanvasFilter = (): boolean => {
   }
 };
 
-// iOS fallback: 축소-확대 방식 블러 (모든 브라우저 호환)
+// iOS fallback: ImageData 직접 조작 StackBlur
 const applyBlurFallback = (
   canvas: HTMLCanvasElement, 
   radius: number
@@ -203,36 +203,93 @@ const applyBlurFallback = (
   const width = canvas.width;
   const height = canvas.height;
   
-  // 블러 강도에 따라 축소 비율 계산 (radius가 클수록 더 많이 축소)
-  // radius 15px -> 약 1/8 크기, radius 50px -> 약 1/16 크기
-  const scaleFactor = Math.max(0.02, 1 / (radius * 0.8));
-  const smallWidth = Math.max(1, Math.round(width * scaleFactor));
-  const smallHeight = Math.max(1, Math.round(height * scaleFactor));
+  // 블러 반경 제한
+  const r = Math.min(Math.max(1, Math.round(radius)), 100);
   
-  // 임시 캔버스 생성
-  const tempCanvas = document.createElement('canvas');
-  tempCanvas.width = smallWidth;
-  tempCanvas.height = smallHeight;
-  const tempCtx = tempCanvas.getContext('2d')!;
+  // 원본 이미지 데이터 가져오기
+  const imageData = ctx.getImageData(0, 0, width, height);
+  const pixels = imageData.data;
   
-  // 1단계: 원본을 작은 크기로 축소 (smoothing으로 평균화)
-  tempCtx.imageSmoothingEnabled = true;
-  tempCtx.imageSmoothingQuality = 'high';
-  tempCtx.drawImage(canvas, 0, 0, smallWidth, smallHeight);
+  // 복사본 생성 (읽기용)
+  const copy = new Uint8ClampedArray(pixels);
   
-  // 2단계: 작은 이미지를 원본 크기로 확대 (smoothing으로 블러 효과)
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
-  ctx.clearRect(0, 0, width, height);
-  ctx.drawImage(tempCanvas, 0, 0, width, height);
+  const wm = width - 1;
+  const hm = height - 1;
+  const div = r + r + 1;
   
-  // 3단계: 한번 더 반복하면 더 부드러운 블러
-  tempCtx.clearRect(0, 0, smallWidth, smallHeight);
-  tempCtx.drawImage(canvas, 0, 0, smallWidth, smallHeight);
-  ctx.drawImage(tempCanvas, 0, 0, width, height);
+  // 수평 블러
+  for (let y = 0; y < height; y++) {
+    let rSum = 0, gSum = 0, bSum = 0, aSum = 0;
+    
+    // 초기 윈도우 합계
+    for (let i = -r; i <= r; i++) {
+      const x = Math.min(wm, Math.max(0, i));
+      const idx = (y * width + x) * 4;
+      rSum += copy[idx];
+      gSum += copy[idx + 1];
+      bSum += copy[idx + 2];
+      aSum += copy[idx + 3];
+    }
+    
+    for (let x = 0; x < width; x++) {
+      const idx = (y * width + x) * 4;
+      pixels[idx] = (rSum / div) | 0;
+      pixels[idx + 1] = (gSum / div) | 0;
+      pixels[idx + 2] = (bSum / div) | 0;
+      pixels[idx + 3] = (aSum / div) | 0;
+      
+      // 윈도우 슬라이드: 왼쪽 픽셀 빼고 오른쪽 픽셀 추가
+      const leftX = Math.max(0, x - r);
+      const rightX = Math.min(wm, x + r + 1);
+      const leftIdx = (y * width + leftX) * 4;
+      const rightIdx = (y * width + rightX) * 4;
+      
+      rSum += copy[rightIdx] - copy[leftIdx];
+      gSum += copy[rightIdx + 1] - copy[leftIdx + 1];
+      bSum += copy[rightIdx + 2] - copy[leftIdx + 2];
+      aSum += copy[rightIdx + 3] - copy[leftIdx + 3];
+    }
+  }
   
-  // 임시 캔버스 정리
-  clearCanvas(tempCanvas);
+  // 수평 블러 결과를 복사본에 저장
+  copy.set(pixels);
+  
+  // 수직 블러
+  for (let x = 0; x < width; x++) {
+    let rSum = 0, gSum = 0, bSum = 0, aSum = 0;
+    
+    // 초기 윈도우 합계
+    for (let i = -r; i <= r; i++) {
+      const y = Math.min(hm, Math.max(0, i));
+      const idx = (y * width + x) * 4;
+      rSum += copy[idx];
+      gSum += copy[idx + 1];
+      bSum += copy[idx + 2];
+      aSum += copy[idx + 3];
+    }
+    
+    for (let y = 0; y < height; y++) {
+      const idx = (y * width + x) * 4;
+      pixels[idx] = (rSum / div) | 0;
+      pixels[idx + 1] = (gSum / div) | 0;
+      pixels[idx + 2] = (bSum / div) | 0;
+      pixels[idx + 3] = (aSum / div) | 0;
+      
+      // 윈도우 슬라이드
+      const topY = Math.max(0, y - r);
+      const bottomY = Math.min(hm, y + r + 1);
+      const topIdx = (topY * width + x) * 4;
+      const bottomIdx = (bottomY * width + x) * 4;
+      
+      rSum += copy[bottomIdx] - copy[topIdx];
+      gSum += copy[bottomIdx + 1] - copy[topIdx + 1];
+      bSum += copy[bottomIdx + 2] - copy[topIdx + 2];
+      aSum += copy[bottomIdx + 3] - copy[topIdx + 3];
+    }
+  }
+  
+  // 결과 적용
+  ctx.putImageData(imageData, 0, 0);
 };
 
 // 클립보드에 이미지 복사
@@ -367,7 +424,7 @@ export const blurBackground = async (
     // 9. 블러된 배경 그리기 (resultCanvas에)
     step = 'applyBlur';
     const useCanvasFilter = supportsCanvasFilter();
-    console.log('[DEBUG] useCanvasFilter:', useCanvasFilter, 'isIOS:', isIOS());
+    
     
     if (useCanvasFilter) {
       // PC/Android: Canvas filter 사용 (빠름)
