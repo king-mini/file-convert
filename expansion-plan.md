@@ -1277,3 +1277,4 @@ Footer에 링크 추가:
 **문서 상태**: GPT-5.1 의견 통합 완료  
 **다음 업데이트**: Phase 6 완료 후  
 **작성자**: AI Assistant + User + GPT-5.1 Collaboration
+- [ ] 번들 사이즈 모니터링: `vite build --report` 결과로 큰 의존성을 파악하고 PDF/이미지 툴별 lazy-loaded 모듈을 더 세분화할 수 있는지 확인 (성능 개선)
