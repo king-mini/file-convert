@@ -117,6 +117,12 @@ google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
 - **많은 페이지** (500+ 페이지): 페이지 범위를 나누어 변환 권장
 - **복잡한 PDF**: 일부 특수 폰트나 효과는 제대로 렌더링되지 않을 수 있음
 
+## 📚 문서
+
+- [doc/PROJECT.md](./doc/PROJECT.md) - 프로젝트 구조 및 설계
+- [doc/CHANGELOG.md](./doc/CHANGELOG.md) - 완료된 작업 내역
+- [doc/ROADMAP.md](./doc/ROADMAP.md) - 앞으로의 개발 계획
+
 ## 📄 라이선스
 
 MIT

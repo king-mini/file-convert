@@ -89,6 +89,18 @@ const en = {
   },
   meta: {
     description: 'Lokit - Fast and safe PDF & image tools. Convert directly in your browser.',
+    privacy: {
+      title: 'Privacy Policy - Lokit',
+      description: 'Lokit Privacy Policy. All files are processed only in your browser and are not uploaded to any server.',
+    },
+    terms: {
+      title: 'Terms of Service - Lokit',
+      description: 'Lokit Terms of Service. Check service usage conditions and restrictions.',
+    },
+    licenses: {
+      title: 'Open Source Licenses - Lokit',
+      description: 'Open source libraries and license information used by Lokit.',
+    },
   },
   locale: 'en-US',
   hub: {
@@ -155,6 +167,94 @@ const en = {
   },
   footer: {
     notice: '© 2025 Lokit · Everything is processed safely in your browser without uploads',
+    privacy: 'Privacy Policy',
+    terms: 'Terms of Service',
+    licenses: 'Open Source Licenses',
+  },
+  policy: {
+    privacy: {
+      title: 'Privacy Policy',
+      updated: 'Last updated: 2025-01-27',
+      sections: {
+        overview: {
+          title: '1. Overview',
+          content: 'Lokit ("Service") takes your privacy very seriously. This Privacy Policy explains what information we collect when you use our Service and how we use it.',
+        },
+        fileProcessing: {
+          title: '2. File Processing',
+          content: 'This Service operates 100% client-side:',
+          item1: 'All files are processed only in your browser',
+          item2: 'Files are not uploaded to any server',
+          item3: 'Files are immediately deleted from memory after processing',
+          item4: 'Files are not stored in cookies or local storage',
+        },
+        dataCollection: {
+          title: '3. Information We Collect',
+          content: 'This Service may collect the following information:',
+          analytics: {
+            title: 'Google Analytics',
+            content: 'We collect anonymous analytics data such as page visits and usage patterns. No personally identifiable information is included.',
+          },
+          ads: {
+            title: 'Google AdSense',
+            content: 'We collect information about ad impressions and clicks. Cookies may be used to collect advertising-related data.',
+          },
+        },
+        cookies: {
+          title: '4. Cookie Usage',
+          content: 'This Service may use cookies for the following purposes:',
+          item1: 'Analytics cookies: Usage pattern analysis through Google Analytics',
+          item2: 'Advertising cookies: Personalized ads through Google AdSense',
+          item3: 'Settings cookies: Storing user preferences (optional)',
+          note: 'You can delete or block cookies at any time through your browser settings.',
+        },
+        contact: {
+          title: '5. Contact',
+          content: 'If you have any questions about this Privacy Policy, please contact us through the GitHub repository issues.',
+        },
+      },
+    },
+    terms: {
+      title: 'Terms of Service',
+      updated: 'Last updated: 2025-01-27',
+      sections: {
+        acceptance: {
+          title: '1. Acceptance of Terms',
+          content: 'By using this Service, you agree to these Terms of Service. If you do not agree, you may not use the Service.',
+        },
+        service: {
+          title: '2. Service Provision',
+          content: 'This Service is provided as follows:',
+          item1: 'This Service is provided "AS-IS"',
+          item2: 'We do not guarantee the quality or results of conversions',
+          item3: 'Please backup important documents before processing',
+        },
+        restrictions: {
+          title: '3. Usage Restrictions',
+          content: 'The following activities are prohibited:',
+          item1: 'Processing illegal content',
+          item2: 'Processing content that infringes copyright',
+          item3: 'Excessive use that harms service stability',
+          item4: 'Attempts to bypass technical security of the Service',
+        },
+        disclaimer: {
+          title: '4. Disclaimer',
+          content: 'This Service is not responsible for:',
+          item1: 'Data loss or conversion failures',
+          item2: 'Service interruptions or errors',
+          item3: 'Direct or indirect damages resulting from use of the Service',
+        },
+        changes: {
+          title: '5. Changes to Terms',
+          content: 'These Terms may be changed without prior notice. Changes will be posted on this page, and continued use of the Service constitutes acceptance of the modified Terms.',
+        },
+      },
+    },
+    licenses: {
+      title: 'Open Source Licenses',
+      updated: 'Last updated: 2025-01-27',
+      intro: 'This Service uses the following open source libraries. Each library follows its respective project license.',
+    },
   },
   pages: {
     pdf: {

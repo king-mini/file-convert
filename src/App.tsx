@@ -25,6 +25,11 @@ const ImageCompress = lazy(() => import('./pages/image/ImageCompress'));
 const FormatConvert = lazy(() => import('./pages/image/FormatConvert'));
 const ImageCrop = lazy(() => import('./pages/image/ImageCrop'));
 
+// Policy
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const Licenses = lazy(() => import('./pages/Licenses'));
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -53,6 +58,11 @@ const App = () => {
             <Route path="image/compress" element={<ImageCompress />} />
             <Route path="image/format" element={<FormatConvert />} />
             <Route path="image/crop" element={<ImageCrop />} />
+            
+            {/* Policy Routes */}
+            <Route path="privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="terms" element={<Terms />} />
+            <Route path="licenses" element={<Licenses />} />
             
             {/* Redirects - Old URLs to New URLs */}
             <Route path="pdf-to-jpg" element={<Navigate to="/pdf/to-jpg" replace />} />

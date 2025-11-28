@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from './Header';
 import MetaUpdater from './MetaUpdater';
@@ -16,6 +16,13 @@ const Layout = () => {
       </main>
       <footer className="footer">
         <p>{t('footer.notice')}</p>
+        <div className="footer-links">
+          <Link to="/privacy-policy">{t('footer.privacy')}</Link>
+          <span className="footer-separator">·</span>
+          <Link to="/terms">{t('footer.terms')}</Link>
+          <span className="footer-separator">·</span>
+          <Link to="/licenses">{t('footer.licenses')}</Link>
+        </div>
       </footer>
     </div>
   );
