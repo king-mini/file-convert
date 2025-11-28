@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { compressPdf, formatFileSize } from '../../utils/pdfCompressor';
 import type { CompressOptions, CompressProgress } from '../../utils/pdfCompressor';
 import './CompressPdf.css';
@@ -17,6 +18,7 @@ const CompressPdf = () => {
   const [compressing, setCompressing] = useState(false);
   const [progress, setProgress] = useState<CompressProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const { t } = useTranslation();
 
   // 압축 옵션
   const [compressionLevel, setCompressionLevel] = useState<CompressionLevel>('medium');
@@ -26,9 +28,9 @@ const CompressPdf = () => {
       setFile(selectedFile);
       setProgress(null);
     } else if (selectedFile) {
-      alert('PDF 파일만 업로드 가능합니다.');
+      alert(t('common.validation.pdfOnly'));
     }
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -44,35 +46,40 @@ const CompressPdf = () => {
     if (!file) return;
 
     setCompressing(true);
-    setProgress({ current: 0, total: 1, status: '시작 중...', originalSize: file.size });
+    setProgress({
+      current: 0,
+      total: 1,
+      status: t('common.status.starting'),
+      originalSize: file.size,
+    });
 
     const options = compressionPresets[compressionLevel];
 
     try {
       await compressPdf(file, options, setProgress);
-      alert('PDF 압축이 완료되었습니다!');
+      alert(t('common.success.compress'));
     } catch (error) {
       console.error('압축 실패:', error);
-      alert('압축 중 오류가 발생했습니다.');
+      alert(t('common.errors.compress'));
     } finally {
       setCompressing(false);
     }
-  }, [file, compressionLevel]);
+  }, [file, compressionLevel, t]);
 
   return (
     <div className="compress-pdf">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>📦 Compress PDF</h1>
-        <p>PDF 파일 크기를 압축하세요</p>
+        <h1>{t('pages.pdf.compress.hero.title')}</h1>
+        <p>{t('pages.pdf.compress.hero.description')}</p>
       </div>
 
       {/* 경고 메시지 */}
       <div className="warning-box">
         <span className="warning-icon">⚠️</span>
         <div className="warning-content">
-          <strong>주의사항</strong>
-          <p>압축 시 텍스트 선택 및 복사 기능이 제거됩니다. (이미지 기반 PDF로 변환)</p>
+          <strong>{t('pages.pdf.compress.warning.title')}</strong>
+          <p>{t('pages.pdf.compress.warning.description')}</p>
         </div>
       </div>
 
@@ -89,7 +96,7 @@ const CompressPdf = () => {
         {!file ? (
           <>
             <div className="upload-icon">📁</div>
-            <p>PDF 파일을 드래그하거나 클릭하여 선택</p>
+            <p>{t('common.dropzone.pdf')}</p>
             <input
               type="file"
               accept="application/pdf"
@@ -98,7 +105,7 @@ const CompressPdf = () => {
               id="file-input"
             />
             <label htmlFor="file-input" className="btn btn-primary">
-              파일 선택
+              {t('common.buttons.selectFile')}
             </label>
           </>
         ) : (
@@ -107,7 +114,9 @@ const CompressPdf = () => {
               <span className="file-icon">📄</span>
               <div className="file-details">
                 <span className="file-name">{file.name}</span>
-                <span className="file-size">원본 크기: {formatFileSize(file.size)}</span>
+                <span className="file-size">
+                  {t('pages.pdf.compress.fileInfo.original', { size: formatFileSize(file.size) })}
+                </span>
               </div>
               <button className="btn-remove" onClick={() => setFile(null)}>
                 ✕
@@ -120,7 +129,7 @@ const CompressPdf = () => {
       {/* 압축 옵션 */}
       {file && (
         <div className="options">
-          <h3>압축 수준</h3>
+          <h3>{t('pages.pdf.compress.options.title')}</h3>
 
           <div className="compression-levels">
             <button
@@ -129,9 +138,13 @@ const CompressPdf = () => {
               disabled={compressing}
             >
               <span className="level-icon">🟢</span>
-              <span className="level-title">낮음</span>
-              <span className="level-desc">품질 우선 (90%)</span>
-              <span className="level-info">약 20-30% 압축</span>
+              <span className="level-title">
+                {t('pages.pdf.compress.options.levels.low.title')}
+              </span>
+              <span className="level-desc">{t('pages.pdf.compress.options.levels.low.desc')}</span>
+              <span className="level-info">
+                {t('pages.pdf.compress.options.levels.low.info')}
+              </span>
             </button>
             <button
               className={`level-btn ${compressionLevel === 'medium' ? 'active' : ''}`}
@@ -139,9 +152,15 @@ const CompressPdf = () => {
               disabled={compressing}
             >
               <span className="level-icon">🟡</span>
-              <span className="level-title">중간</span>
-              <span className="level-desc">균형 (70%)</span>
-              <span className="level-info">약 40-60% 압축</span>
+              <span className="level-title">
+                {t('pages.pdf.compress.options.levels.medium.title')}
+              </span>
+              <span className="level-desc">
+                {t('pages.pdf.compress.options.levels.medium.desc')}
+              </span>
+              <span className="level-info">
+                {t('pages.pdf.compress.options.levels.medium.info')}
+              </span>
             </button>
             <button
               className={`level-btn ${compressionLevel === 'high' ? 'active' : ''}`}
@@ -149,9 +168,13 @@ const CompressPdf = () => {
               disabled={compressing}
             >
               <span className="level-icon">🟠</span>
-              <span className="level-title">높음</span>
-              <span className="level-desc">크기 우선 (50%)</span>
-              <span className="level-info">약 60-80% 압축</span>
+              <span className="level-title">
+                {t('pages.pdf.compress.options.levels.high.title')}
+              </span>
+              <span className="level-desc">{t('pages.pdf.compress.options.levels.high.desc')}</span>
+              <span className="level-info">
+                {t('pages.pdf.compress.options.levels.high.info')}
+              </span>
             </button>
             <button
               className={`level-btn ${compressionLevel === 'extreme' ? 'active' : ''}`}
@@ -159,14 +182,22 @@ const CompressPdf = () => {
               disabled={compressing}
             >
               <span className="level-icon">🔴</span>
-              <span className="level-title">최대</span>
-              <span className="level-desc">최소 크기 (30%)</span>
-              <span className="level-info">약 80-90% 압축</span>
+              <span className="level-title">
+                {t('pages.pdf.compress.options.levels.extreme.title')}
+              </span>
+              <span className="level-desc">
+                {t('pages.pdf.compress.options.levels.extreme.desc')}
+              </span>
+              <span className="level-info">
+                {t('pages.pdf.compress.options.levels.extreme.info')}
+              </span>
             </button>
           </div>
 
           <button className="btn btn-convert" onClick={handleCompress} disabled={compressing}>
-            {compressing ? '압축 중...' : '📦 PDF 압축'}
+            {compressing
+              ? t('pages.pdf.compress.actions.compressing')
+              : t('pages.pdf.compress.actions.compress')}
           </button>
         </div>
       )}
@@ -182,9 +213,9 @@ const CompressPdf = () => {
             />
           </div>
           <div className="progress-info">
-            <p className="progress-text">
-              {progress.current} / {progress.total} 페이지
-            </p>
+          <p className="progress-text">
+            {progress.current} / {progress.total} {t('common.units.page')}
+          </p>
             {progress.originalSize && progress.currentSize && (
               <p className="size-info">
                 {formatFileSize(progress.originalSize)} → {formatFileSize(progress.currentSize)}

@@ -1,5 +1,6 @@
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
+import i18n from '../i18n';
 
 export interface MergeProgress {
   current: number;
@@ -18,10 +19,14 @@ export const mergePdfs = async (
   onProgress?: (progress: MergeProgress) => void
 ): Promise<void> => {
   if (files.length === 0) {
-    throw new Error('병합할 PDF가 없습니다.');
+    throw new Error(i18n.t('pages.pdf.merge.errors.noFiles'));
   }
 
-  onProgress?.({ current: 0, total: files.length, status: 'PDF 병합 시작...' });
+  onProgress?.({
+    current: 0,
+    total: files.length,
+    status: i18n.t('common.status.pdfMergeStart'),
+  });
 
   // 병합된 PDF 문서 생성
   const mergedPdf = await PDFDocument.create();
@@ -31,7 +36,7 @@ export const mergePdfs = async (
     onProgress?.({
       current: i + 1,
       total: files.length,
-      status: `${files[i].file.name} 병합 중...`,
+      status: i18n.t('common.status.pdfMergingFile', { fileName: files[i].file.name }),
     });
 
     const arrayBuffer = await files[i].file.arrayBuffer();
@@ -50,7 +55,7 @@ export const mergePdfs = async (
   onProgress?.({
     current: files.length,
     total: files.length,
-    status: 'PDF 생성 중...',
+    status: i18n.t('common.status.pdfGenerating'),
   });
 
   const pdfBytes = await mergedPdf.save();
@@ -60,7 +65,7 @@ export const mergePdfs = async (
   onProgress?.({
     current: files.length,
     total: files.length,
-    status: '완료!',
+    status: i18n.t('common.status.done'),
   });
 };
 

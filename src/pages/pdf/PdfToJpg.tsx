@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { convertPdfToImages } from '../../utils/pdfConverter';
 import type { ConvertOptions, ConvertProgress } from '../../utils/pdfConverter';
 import './PdfToJpg.css';
@@ -8,6 +9,7 @@ const PdfToJpg = () => {
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState<ConvertProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const { t } = useTranslation();
 
   // 변환 옵션
   const [quality, setQuality] = useState(0.9);
@@ -21,9 +23,9 @@ const PdfToJpg = () => {
       setFile(selectedFile);
       setProgress(null);
     } else if (selectedFile) {
-      alert('PDF 파일만 업로드 가능합니다.');
+      alert(t('common.validation.pdfOnly'));
     }
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -39,7 +41,7 @@ const PdfToJpg = () => {
     if (!file) return;
 
     setConverting(true);
-    setProgress({ current: 0, total: 1, status: '시작 중...' });
+    setProgress({ current: 0, total: 1, status: t('common.status.starting') });
 
     const options: ConvertOptions = {
       quality,
@@ -51,18 +53,18 @@ const PdfToJpg = () => {
       await convertPdfToImages(file, options, setProgress);
     } catch (error) {
       console.error('변환 실패:', error);
-      alert('변환 중 오류가 발생했습니다.');
+      alert(t('common.errors.convert'));
     } finally {
       setConverting(false);
     }
-  }, [file, quality, scale, usePageRange, startPage, endPage]);
+  }, [file, quality, scale, usePageRange, startPage, endPage, t]);
 
   return (
     <div className="pdf-to-jpg">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>📄 PDF to JPG Converter</h1>
-        <p>브라우저에서 안전하게 변환 · 서버 업로드 없음</p>
+        <h1>{t('pages.pdf.toJpg.hero.title')}</h1>
+        <p>{t('pages.pdf.toJpg.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -78,7 +80,7 @@ const PdfToJpg = () => {
         {!file ? (
           <>
             <div className="upload-icon">📁</div>
-            <p>PDF 파일을 드래그하거나 클릭하여 선택</p>
+            <p>{t('common.dropzone.pdf')}</p>
             <input
               type="file"
               accept="application/pdf"
@@ -87,7 +89,7 @@ const PdfToJpg = () => {
               id="file-input"
             />
             <label htmlFor="file-input" className="btn btn-primary">
-              파일 선택
+              {t('common.buttons.selectFile')}
             </label>
           </>
         ) : (
@@ -106,11 +108,11 @@ const PdfToJpg = () => {
       {/* 변환 옵션 */}
       {file && (
         <div className="options">
-          <h3>변환 옵션</h3>
+          <h3>{t('pages.pdf.toJpg.options.title')}</h3>
 
           <div className="option-group">
             <label>
-              JPG 품질: <strong>{Math.round(quality * 100)}%</strong>
+              {t('pages.pdf.toJpg.options.quality', { value: Math.round(quality * 100) })}
             </label>
             <input
               type="range"
@@ -125,7 +127,8 @@ const PdfToJpg = () => {
 
           <div className="option-group">
             <label>
-              해상도: <strong>{scale === 1 ? '72dpi' : scale === 2 ? '144dpi' : '216dpi'}</strong>
+              {t('pages.pdf.toJpg.options.resolution')}:{' '}
+              <strong>{scale === 1 ? '72dpi' : scale === 2 ? '144dpi' : '216dpi'}</strong>
             </label>
             <input
               type="range"
@@ -146,7 +149,7 @@ const PdfToJpg = () => {
                 onChange={(e) => setUsePageRange(e.target.checked)}
                 disabled={converting}
               />
-              페이지 범위 지정
+              {t('pages.pdf.toJpg.options.pageRange')}
             </label>
             {usePageRange && (
               <div className="page-range">
@@ -170,7 +173,7 @@ const PdfToJpg = () => {
           </div>
 
           <button className="btn btn-convert" onClick={handleConvert} disabled={converting}>
-            {converting ? '변환 중...' : '🚀 변환 시작'}
+            {converting ? t('common.status.converting') : t('pages.pdf.toJpg.actions.start')}
           </button>
         </div>
       )}

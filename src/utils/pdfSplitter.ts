@@ -1,6 +1,7 @@
 import { PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import i18n from '../i18n';
 
 export interface SplitProgress {
   current: number;
@@ -50,7 +51,11 @@ export const splitPdf = async (
   const pdfDoc = await PDFDocument.load(arrayBuffer);
 
   const totalPages = pdfDoc.getPageCount();
-  onProgress?.({ current: 0, total: totalPages, status: 'PDF 로딩 완료' });
+  onProgress?.({
+    current: 0,
+    total: totalPages,
+    status: i18n.t('common.status.pdfLoadingComplete'),
+  });
 
   const zip = new JSZip();
   const baseName = file.name.replace(/\.pdf$/i, '');
@@ -61,7 +66,10 @@ export const splitPdf = async (
       onProgress?.({
         current: i + 1,
         total: totalPages,
-        status: `페이지 ${i + 1}/${totalPages} 분할 중...`,
+        status: i18n.t('common.status.pageSplitting', {
+          current: i + 1,
+          total: totalPages,
+        }),
       });
 
       const pdfBytes = await createSinglePagePdf(pdfDoc, i);
@@ -78,7 +86,10 @@ export const splitPdf = async (
       onProgress?.({
         current: i + 1,
         total: options.ranges.length,
-        status: `범위 ${i + 1}/${options.ranges.length} 생성 중...`,
+        status: i18n.t('common.status.rangeCreating', {
+          current: i + 1,
+          total: options.ranges.length,
+        }),
       });
 
       const pdfBytes = await createRangePdf(pdfDoc, startIndex, endIndex);
@@ -96,7 +107,7 @@ export const splitPdf = async (
       onProgress?.({
         current: i + 1,
         total: options.extractPages.length,
-        status: `페이지 ${pageNum} 추출 중...`,
+        status: i18n.t('common.status.pageExtractSingle', { page: pageNum }),
       });
 
       const pdfBytes = await createSinglePagePdf(pdfDoc, pageIndex);
@@ -109,7 +120,7 @@ export const splitPdf = async (
   onProgress?.({
     current: totalPages,
     total: totalPages,
-    status: 'ZIP 파일 생성 중...',
+    status: i18n.t('common.status.zipPreparing'),
   });
 
   const zipBlob = await zip.generateAsync({ type: 'blob' });
@@ -119,7 +130,7 @@ export const splitPdf = async (
   onProgress?.({
     current: totalPages,
     total: totalPages,
-    status: '완료!',
+    status: i18n.t('common.status.done'),
   });
 };
 

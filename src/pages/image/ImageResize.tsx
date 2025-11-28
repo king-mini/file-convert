@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './ImageResize.css';
 
@@ -14,6 +15,7 @@ const ImageResize = () => {
   const [error, setError] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
 
   // 원본 크기
   const [originalWidth, setOriginalWidth] = useState(0);
@@ -29,12 +31,12 @@ const ImageResize = () => {
 
   const handleFile = useCallback((selectedFile: File) => {
     if (!selectedFile.type.startsWith('image/')) {
-      setError('이미지 파일만 업로드 가능합니다.');
+      setError(t('common.validation.imageOnly'));
       return;
     }
 
     if (selectedFile.size > 20 * 1024 * 1024) {
-      setError('20MB 이하의 파일만 지원합니다.');
+      setError(t('common.validation.maxImageSize', { limit: 20 }));
       return;
     }
 
@@ -55,7 +57,7 @@ const ImageResize = () => {
       setTargetHeight(Math.round(img.height * 0.5));
     };
     img.src = url;
-  }, []);
+  }, [t]);
 
   // 비율 유지
   useEffect(() => {
@@ -150,11 +152,22 @@ const ImageResize = () => {
       setCopied(false);
     } catch (err) {
       console.error('Processing error:', err);
-      setError('처리 중 오류가 발생했습니다.');
+      setError(t('common.errors.process'));
     } finally {
       setProcessing(false);
     }
-  }, [file, preview, resizeMode, percentage, targetWidth, targetHeight, originalWidth, originalHeight, quality]);
+  }, [
+    file,
+    preview,
+    resizeMode,
+    percentage,
+    targetWidth,
+    targetHeight,
+    originalWidth,
+    originalHeight,
+    quality,
+    t,
+  ]);
 
   const handleDownload = useCallback(() => {
     if (!result || !file) return;
@@ -188,9 +201,9 @@ const ImageResize = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      setError('클립보드 복사에 실패했습니다.');
+      setError(t('common.errors.clipboard'));
     }
-  }, [resultBlob]);
+  }, [resultBlob, t]);
 
   const getResultDimensions = () => {
     if (resizeMode === 'percentage') {
@@ -205,8 +218,8 @@ const ImageResize = () => {
   return (
     <div className="image-resize">
       <div className="page-header">
-        <h1>📐 Image Resize</h1>
-        <p>이미지 크기를 자유롭게 조정하세요</p>
+        <h1>{t('pages.image.imageResize.hero.title')}</h1>
+        <p>{t('pages.image.imageResize.hero.description')}</p>
       </div>
 
       {!file && (
@@ -228,8 +241,8 @@ const ImageResize = () => {
           />
           <label htmlFor="file-input" className="upload-content">
             <div className="upload-icon">🖼️</div>
-            <p>이미지를 드래그하거나 클릭하여 선택하세요</p>
-            <span className="upload-hint">JPG, PNG, WebP (최대 20MB)</span>
+            <p>{t('pages.image.imageResize.upload.hint')}</p>
+            <span className="upload-hint">{t('pages.image.imageResize.upload.support')}</span>
           </label>
         </div>
       )}
@@ -245,7 +258,12 @@ const ImageResize = () => {
         <div className="editor">
           <div className="image-compare">
             <div className="image-panel">
-              <h3>원본 ({originalWidth} × {originalHeight})</h3>
+              <h3>
+                {t('pages.image.imageResize.panels.original', {
+                  width: originalWidth,
+                  height: originalHeight,
+                })}
+              </h3>
               <div
                 className="image-container clickable"
                 onClick={() => preview && setModalImage(preview)}
@@ -257,14 +275,19 @@ const ImageResize = () => {
                     e.stopPropagation();
                     handleNewImage();
                   }}
-                  title="다른 이미지 선택"
+                title={t('common.hints.chooseAnother')}
                 >
                   ✕
                 </button>
               </div>
             </div>
             <div className="image-panel">
-              <h3>결과 ({getResultDimensions().width} × {getResultDimensions().height})</h3>
+              <h3>
+                {t('pages.image.imageResize.panels.result', {
+                  width: getResultDimensions().width,
+                  height: getResultDimensions().height,
+                })}
+              </h3>
               <div
                 className={`image-container ${result ? 'clickable' : ''}`}
                 onClick={() => result && setModalImage(result)}
@@ -273,7 +296,9 @@ const ImageResize = () => {
                   <img src={result} alt="리사이즈된 이미지" />
                 ) : (
                   <div className="placeholder">
-                    {processing ? '처리 중...' : '크기 조정 후 결과가 표시됩니다'}
+                    {processing
+                      ? t('common.status.processing')
+                      : t('pages.image.imageResize.placeholders.result')}
                   </div>
                 )}
               </div>
@@ -282,7 +307,7 @@ const ImageResize = () => {
 
           <div className="options">
             <div className="option-group">
-              <label>크기 조정 방식</label>
+              <label>{t('pages.image.imageResize.options.mode')}</label>
               <div className="radio-group">
                 <label className={`radio-option ${resizeMode === 'percentage' ? 'active' : ''}`}>
                   <input
@@ -290,7 +315,7 @@ const ImageResize = () => {
                     checked={resizeMode === 'percentage'}
                     onChange={() => setResizeMode('percentage')}
                   />
-                  <span>📊 비율</span>
+                  <span>{t('pages.image.imageResize.options.percentage')}</span>
                 </label>
                 <label className={`radio-option ${resizeMode === 'dimensions' ? 'active' : ''}`}>
                   <input
@@ -298,16 +323,14 @@ const ImageResize = () => {
                     checked={resizeMode === 'dimensions'}
                     onChange={() => setResizeMode('dimensions')}
                   />
-                  <span>📏 직접 입력</span>
+                  <span>{t('pages.image.imageResize.options.dimensions')}</span>
                 </label>
               </div>
             </div>
 
             {resizeMode === 'percentage' ? (
               <div className="option-group">
-                <label>
-                  크기: <strong>{percentage}%</strong>
-                </label>
+                <label>{t('pages.image.imageResize.options.sizeLabel', { value: percentage })}</label>
                 <input
                   type="range"
                   min="10"
@@ -316,14 +339,14 @@ const ImageResize = () => {
                   onChange={(e) => setPercentage(Number(e.target.value))}
                 />
                 <div className="range-labels">
-                  <span>10%</span>
-                  <span>200%</span>
+                <span>{t('pages.image.imageResize.options.sizeRangeMin')}</span>
+                <span>{t('pages.image.imageResize.options.sizeRangeMax')}</span>
                 </div>
               </div>
             ) : (
               <div className="dimension-inputs">
                 <div className="dimension-input">
-                  <label>너비 (px)</label>
+                  <label>{t('pages.image.imageResize.options.widthLabel')}</label>
                   <input
                     type="number"
                     value={targetWidth}
@@ -336,13 +359,17 @@ const ImageResize = () => {
                   <button
                     className={`link-btn ${maintainAspectRatio ? 'active' : ''}`}
                     onClick={() => setMaintainAspectRatio(!maintainAspectRatio)}
-                    title={maintainAspectRatio ? '비율 고정 해제' : '비율 고정'}
+                    title={
+                      maintainAspectRatio
+                        ? t('pages.image.imageResize.options.linkOn')
+                        : t('pages.image.imageResize.options.linkOff')
+                    }
                   >
                     {maintainAspectRatio ? '🔗' : '⛓️‍💥'}
                   </button>
                 </div>
                 <div className="dimension-input">
-                  <label>높이 (px)</label>
+                  <label>{t('pages.image.imageResize.options.heightLabel')}</label>
                   <input
                     type="number"
                     value={targetHeight}
@@ -356,9 +383,7 @@ const ImageResize = () => {
             )}
 
             <div className="option-group">
-              <label>
-                품질: <strong>{quality}%</strong>
-              </label>
+              <label>{t('pages.image.imageResize.options.qualityLabel', { value: quality })}</label>
               <input
                 type="range"
                 min="10"
@@ -367,8 +392,8 @@ const ImageResize = () => {
                 onChange={(e) => setQuality(Number(e.target.value))}
               />
               <div className="range-labels">
-                <span>낮음</span>
-                <span>높음</span>
+                <span>{t('pages.image.imageResize.options.qualityLow')}</span>
+                <span>{t('pages.image.imageResize.options.qualityHigh')}</span>
               </div>
             </div>
 
@@ -383,7 +408,7 @@ const ImageResize = () => {
 
           <div className="actions">
             <button className="btn btn-secondary" onClick={handleNewImage}>
-              🖼️ 다른 이미지
+              {t('common.buttons.otherImage')}
             </button>
             {result && (
               <button
@@ -391,7 +416,7 @@ const ImageResize = () => {
                 onClick={handleProcess}
                 disabled={processing}
               >
-                🔄 다시 적용
+                {t('common.buttons.retry')}
               </button>
             )}
             {!result ? (
@@ -400,7 +425,9 @@ const ImageResize = () => {
                 onClick={handleProcess}
                 disabled={processing}
               >
-                {processing ? '처리 중...' : '📐 크기 조정'}
+                {processing
+                  ? t('common.status.processing')
+                  : t('pages.image.imageResize.actions.resize')}
               </button>
             ) : (
               <>
@@ -408,10 +435,10 @@ const ImageResize = () => {
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
-                  {copied ? '✓ 복사됨' : '📋 복사'}
+                  {copied ? t('common.buttons.copied') : t('common.buttons.copy')}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
-                  💾 저장
+                  {t('common.buttons.save')}
                 </button>
               </>
             )}
@@ -425,7 +452,7 @@ const ImageResize = () => {
             <button className="modal-close" onClick={() => setModalImage(null)}>
               ✕
             </button>
-            <img src={modalImage} alt="확대 이미지" />
+            <img src={modalImage} alt={t('pages.image.imageResize.modal.title')} />
           </div>
         </div>
       )}

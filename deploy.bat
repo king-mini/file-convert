@@ -6,7 +6,6 @@ call npm run build
 if errorlevel 1 (
     echo.
     echo Build failed!
-    pause
     exit /b 1
 )
 echo.
@@ -16,7 +15,6 @@ call npx wrangler pages deploy dist --project-name=file-convert
 if errorlevel 1 (
     echo.
     echo Deployment failed!
-    pause
     exit /b 1
 )
 echo.

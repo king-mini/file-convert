@@ -1,13 +1,14 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './FormatConvert.css';
 
 type OutputFormat = 'jpeg' | 'png' | 'webp';
 
-const formatInfo: Record<OutputFormat, { name: string; ext: string; mime: string; desc: string }> = {
-  jpeg: { name: 'JPEG', ext: 'jpg', mime: 'image/jpeg', desc: '사진에 최적, 작은 용량' },
-  png: { name: 'PNG', ext: 'png', mime: 'image/png', desc: '투명 배경 지원, 무손실' },
-  webp: { name: 'WebP', ext: 'webp', mime: 'image/webp', desc: '최신 포맷, 최고의 압축률' },
+const formatInfo: Record<OutputFormat, { ext: string; mime: string }> = {
+  jpeg: { ext: 'jpg', mime: 'image/jpeg' },
+  png: { ext: 'png', mime: 'image/png' },
+  webp: { ext: 'webp', mime: 'image/webp' },
 };
 
 const FormatConvert = () => {
@@ -20,6 +21,7 @@ const FormatConvert = () => {
   const [error, setError] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
 
   // 변환 옵션
   const [outputFormat, setOutputFormat] = useState<OutputFormat>('webp');
@@ -27,12 +29,12 @@ const FormatConvert = () => {
 
   const handleFile = useCallback((selectedFile: File) => {
     if (!selectedFile.type.startsWith('image/')) {
-      setError('이미지 파일만 업로드 가능합니다.');
+      setError(t('common.validation.imageOnly'));
       return;
     }
 
     if (selectedFile.size > 50 * 1024 * 1024) {
-      setError('50MB 이하의 파일만 지원합니다.');
+      setError(t('common.validation.maxImageSize', { limit: 50 }));
       return;
     }
 
@@ -43,7 +45,7 @@ const FormatConvert = () => {
 
     const url = URL.createObjectURL(selectedFile);
     setPreview(url);
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -107,11 +109,11 @@ const FormatConvert = () => {
       setCopied(false);
     } catch (err) {
       console.error('Processing error:', err);
-      setError('처리 중 오류가 발생했습니다.');
+      setError(t('common.errors.process'));
     } finally {
       setProcessing(false);
     }
-  }, [file, preview, outputFormat, quality]);
+  }, [file, preview, outputFormat, quality, t]);
 
   const handleDownload = useCallback(() => {
     if (!result || !file) return;
@@ -143,9 +145,9 @@ const FormatConvert = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      setError('클립보드 복사에 실패했습니다.');
+      setError(t('common.errors.clipboard'));
     }
-  }, [resultBlob]);
+  }, [resultBlob, t]);
 
   const getOriginalFormat = () => {
     if (!file) return '';
@@ -155,14 +157,14 @@ const FormatConvert = () => {
     if (type.includes('webp')) return 'WebP';
     if (type.includes('gif')) return 'GIF';
     if (type.includes('bmp')) return 'BMP';
-    return type.split('/')[1]?.toUpperCase() || '알 수 없음';
+    return type.split('/')[1]?.toUpperCase() || t('pages.image.formatConvert.flow.unknown');
   };
 
   return (
     <div className="format-convert">
       <div className="page-header">
-        <h1>🔄 Format Convert</h1>
-        <p>이미지 포맷을 자유롭게 변환하세요</p>
+        <h1>{t('pages.image.formatConvert.hero.title')}</h1>
+        <p>{t('pages.image.formatConvert.hero.description')}</p>
       </div>
 
       {!file && (
@@ -184,8 +186,8 @@ const FormatConvert = () => {
           />
           <label htmlFor="file-input" className="upload-content">
             <div className="upload-icon">🖼️</div>
-            <p>이미지를 드래그하거나 클릭하여 선택하세요</p>
-            <span className="upload-hint">모든 이미지 포맷 지원 (최대 50MB)</span>
+            <p>{t('pages.image.formatConvert.upload.hint')}</p>
+            <span className="upload-hint">{t('pages.image.formatConvert.upload.support')}</span>
           </label>
         </div>
       )}
@@ -201,14 +203,16 @@ const FormatConvert = () => {
         <div className="editor">
           <div className="conversion-flow">
             <div className="format-badge original">
-              <span className="format-label">원본</span>
+              <span className="format-label">{t('pages.image.formatConvert.flow.original')}</span>
               <span className="format-name">{getOriginalFormat()}</span>
               <span className="format-size">{formatFileSize(file.size)}</span>
             </div>
             <div className="flow-arrow">→</div>
             <div className="format-badge target">
-              <span className="format-label">변환</span>
-              <span className="format-name">{formatInfo[outputFormat].name}</span>
+              <span className="format-label">{t('pages.image.formatConvert.flow.target')}</span>
+              <span className="format-name">
+                {t(`pages.image.formatConvert.formatInfo.${outputFormat}.name`)}
+              </span>
               {resultBlob && (
                 <span className="format-size">{formatFileSize(resultBlob.size)}</span>
               )}
@@ -229,8 +233,8 @@ const FormatConvert = () => {
                   e.stopPropagation();
                   handleNewImage();
                 }}
-                title="다른 이미지 선택"
-              >
+              title={t('common.hints.chooseAnother')}
+            >
                 ✕
               </button>
             </div>
@@ -238,7 +242,7 @@ const FormatConvert = () => {
 
           <div className="options">
             <div className="option-group">
-              <label>출력 포맷</label>
+              <label>{t('pages.image.formatConvert.options.title')}</label>
               <div className="format-buttons">
                 {(Object.keys(formatInfo) as OutputFormat[]).map((format) => (
                   <button
@@ -246,8 +250,12 @@ const FormatConvert = () => {
                     className={`format-btn ${outputFormat === format ? 'active' : ''}`}
                     onClick={() => setOutputFormat(format)}
                   >
-                    <span className="format-btn-name">{formatInfo[format].name}</span>
-                    <span className="format-btn-desc">{formatInfo[format].desc}</span>
+                    <span className="format-btn-name">
+                      {t(`pages.image.formatConvert.formatInfo.${format}.name`)}
+                    </span>
+                    <span className="format-btn-desc">
+                      {t(`pages.image.formatConvert.formatInfo.${format}.desc`)}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -255,9 +263,7 @@ const FormatConvert = () => {
 
             {outputFormat !== 'png' && (
               <div className="option-group">
-                <label>
-                  품질: <strong>{quality}%</strong>
-                </label>
+                <label>{t('pages.image.formatConvert.options.qualityLabel', { value: quality })}</label>
                 <input
                   type="range"
                   min="10"
@@ -266,8 +272,8 @@ const FormatConvert = () => {
                   onChange={(e) => setQuality(Number(e.target.value))}
                 />
                 <div className="range-labels">
-                  <span>저용량</span>
-                  <span>고품질</span>
+                  <span>{t('pages.image.formatConvert.options.rangeLabels.min')}</span>
+                  <span>{t('pages.image.formatConvert.options.rangeLabels.max')}</span>
                 </div>
               </div>
             )}
@@ -279,7 +285,7 @@ const FormatConvert = () => {
 
           <div className="actions">
             <button className="btn btn-secondary" onClick={handleNewImage}>
-              🖼️ 다른 이미지
+              {t('common.buttons.otherImage')}
             </button>
             {result && (
               <button
@@ -287,7 +293,7 @@ const FormatConvert = () => {
                 onClick={handleProcess}
                 disabled={processing}
               >
-                🔄 다시 적용
+                {t('common.buttons.retry')}
               </button>
             )}
             {!result ? (
@@ -296,7 +302,9 @@ const FormatConvert = () => {
                 onClick={handleProcess}
                 disabled={processing}
               >
-                {processing ? '처리 중...' : '🔄 변환하기'}
+                {processing
+                  ? t('common.status.processing')
+                  : t('pages.image.formatConvert.actions.convert')}
               </button>
             ) : (
               <>
@@ -304,10 +312,10 @@ const FormatConvert = () => {
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
-                  {copied ? '✓ 복사됨' : '📋 복사'}
+                  {copied ? t('common.buttons.copied') : t('common.buttons.copy')}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
-                  💾 저장
+                  {t('common.buttons.save')}
                 </button>
               </>
             )}

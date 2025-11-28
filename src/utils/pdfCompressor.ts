@@ -1,6 +1,7 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
+import i18n from '../i18n';
 
 // PDF.js worker 설정
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -88,7 +89,7 @@ export const compressPdf = async (
   onProgress?.({
     current: 0,
     total: totalPages,
-    status: 'PDF 로딩 완료',
+    status: i18n.t('common.status.pdfLoadingComplete'),
     originalSize,
   });
 
@@ -102,7 +103,10 @@ export const compressPdf = async (
     onProgress?.({
       current: pageNum,
       total: totalPages,
-      status: `페이지 ${pageNum}/${totalPages} 압축 중...`,
+      status: i18n.t('common.status.pageCompressing', {
+        current: pageNum,
+        total: totalPages,
+      }),
       originalSize,
       currentSize: totalCompressedSize,
     });
@@ -151,7 +155,7 @@ export const compressPdf = async (
   onProgress?.({
     current: totalPages,
     total: totalPages,
-    status: 'PDF 생성 중...',
+    status: i18n.t('common.status.pdfGenerating'),
     originalSize,
     currentSize: totalCompressedSize,
   });
@@ -167,7 +171,7 @@ export const compressPdf = async (
   onProgress?.({
     current: totalPages,
     total: totalPages,
-    status: `완료! (${compressionRatio}% 압축)`,
+    status: i18n.t('common.status.doneWithRatio', { ratio: compressionRatio }),
     originalSize,
     currentSize: finalSize,
   });

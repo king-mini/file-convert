@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { mergePdfs, getPageCount } from '../../utils/pdfMerger';
 import type { PdfFile, MergeProgress } from '../../utils/pdfMerger';
 import './MergePdf.css';
@@ -8,6 +9,7 @@ const MergePdf = () => {
   const [merging, setMerging] = useState(false);
   const [progress, setProgress] = useState<MergeProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const { t } = useTranslation();
 
   const handleFileSelect = useCallback(async (selectedFiles: FileList | null) => {
     if (!selectedFiles || selectedFiles.length === 0) return;
@@ -17,7 +19,7 @@ const MergePdf = () => {
     );
 
     if (pdfFiles.length === 0) {
-      alert('PDF 파일만 선택할 수 있습니다.');
+      alert(t('common.validation.pdfOnlySelect'));
       return;
     }
 
@@ -36,7 +38,7 @@ const MergePdf = () => {
     });
 
     setFiles((prev) => [...prev, ...newFiles]);
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -67,30 +69,30 @@ const MergePdf = () => {
 
   const handleMerge = useCallback(async () => {
     if (files.length < 2) {
-      alert('최소 2개의 PDF 파일이 필요합니다.');
+      alert(t('common.validation.minPdfFiles'));
       return;
     }
 
     setMerging(true);
-    setProgress({ current: 0, total: files.length, status: '시작 중...' });
+    setProgress({ current: 0, total: files.length, status: t('common.status.starting') });
 
     try {
       await mergePdfs(files, setProgress);
-      alert('PDF 병합이 완료되었습니다!');
+      alert(t('common.success.merge'));
     } catch (error) {
       console.error('병합 실패:', error);
-      alert('병합 중 오류가 발생했습니다.');
+      alert(t('common.errors.merge'));
     } finally {
       setMerging(false);
     }
-  }, [files]);
+  }, [files, t]);
 
   return (
     <div className="merge-pdf">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>🔗 Merge PDF</h1>
-        <p>여러 PDF를 하나로 병합하세요</p>
+        <h1>{t('pages.pdf.merge.hero.title')}</h1>
+        <p>{t('pages.pdf.merge.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -104,7 +106,7 @@ const MergePdf = () => {
         onDragLeave={() => setDragOver(false)}
       >
         <div className="upload-icon">📁</div>
-        <p>PDF 파일을 드래그하거나 클릭하여 선택 (여러 파일 가능)</p>
+        <p>{t('pages.pdf.merge.upload.hint')}</p>
         <input
           type="file"
           accept="application/pdf"
@@ -114,14 +116,14 @@ const MergePdf = () => {
           id="file-input"
         />
         <label htmlFor="file-input" className="btn btn-primary">
-          PDF 선택
+          {t('common.buttons.selectPdf')}
         </label>
       </div>
 
       {/* PDF 목록 */}
       {files.length > 0 && (
         <div className="file-list">
-          <h3>선택된 PDF ({files.length}개)</h3>
+          <h3>{t('pages.pdf.merge.list.title', { count: files.length })}</h3>
           <div className="files-container">
             {files.map((pdfFile, index) => (
               <div key={pdfFile.id} className="file-item">
@@ -130,22 +132,22 @@ const MergePdf = () => {
                   <span className="file-name">{pdfFile.file.name}</span>
                   <span className="file-info">
                     {pdfFile.pageCount !== undefined
-                      ? `${pdfFile.pageCount} 페이지`
-                      : '로딩 중...'}
+                      ? t('pages.pdf.merge.list.pageCount', { count: pdfFile.pageCount })
+                      : t('common.loading')}
                   </span>
                 </div>
                 <div className="file-actions">
                   <button
                     onClick={() => handleMoveFile(pdfFile.id, 'up')}
                     disabled={index === 0 || merging}
-                    title="위로"
+                    title={t('pages.pdf.merge.list.moveUp')}
                   >
                     ↑
                   </button>
                   <button
                     onClick={() => handleMoveFile(pdfFile.id, 'down')}
                     disabled={index === files.length - 1 || merging}
-                    title="아래로"
+                    title={t('pages.pdf.merge.list.moveDown')}
                   >
                     ↓
                   </button>
@@ -153,7 +155,7 @@ const MergePdf = () => {
                     onClick={() => handleRemoveFile(pdfFile.id)}
                     className="btn-delete"
                     disabled={merging}
-                    title="삭제"
+                    title={t('pages.pdf.merge.list.delete')}
                   >
                     ✕
                   </button>
@@ -164,7 +166,9 @@ const MergePdf = () => {
 
           <div className="merge-summary">
             <p>
-              총 {files.reduce((sum, f) => sum + (f.pageCount || 0), 0)} 페이지가 병합됩니다
+              {t('pages.pdf.merge.list.summary', {
+                count: files.reduce((sum, f) => sum + (f.pageCount || 0), 0),
+              })}
             </p>
           </div>
 
@@ -173,7 +177,12 @@ const MergePdf = () => {
             onClick={handleMerge}
             disabled={merging || files.length < 2}
           >
-            {merging ? `병합 중... (${progress?.current}/${progress?.total})` : '🔗 PDF 병합'}
+            {merging
+              ? t('pages.pdf.merge.actions.merging', {
+                  current: progress?.current ?? 0,
+                  total: progress?.total ?? files.length,
+                })
+              : t('pages.pdf.merge.actions.merge')}
           </button>
         </div>
       )}

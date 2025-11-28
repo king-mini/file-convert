@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { blurBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './PortraitBlur.css';
 
@@ -15,6 +16,7 @@ const PortraitBlur = () => {
   const [modalIndex, setModalIndex] = useState(0); // 0: 원본, 1: 결과
   const [copied, setCopied] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
+  const { t } = useTranslation();
 
   // 모달 키보드 단축키 (ESC: 닫기, 좌우 방향키: 토글)
   useEffect(() => {
@@ -37,12 +39,12 @@ const PortraitBlur = () => {
   const handleFile = useCallback((selectedFile: File) => {
     // 파일 유효성 검사
     if (!selectedFile.type.startsWith('image/')) {
-      setError('이미지 파일만 업로드 가능합니다.');
+      setError(t('common.validation.imageOnly'));
       return;
     }
 
     if (selectedFile.size > 10 * 1024 * 1024) {
-      setError('10MB 이하의 파일만 지원합니다.');
+      setError(t('common.validation.maxImageSize', { limit: 10 }));
       return;
     }
 
@@ -53,7 +55,7 @@ const PortraitBlur = () => {
     // 미리보기 생성
     const url = URL.createObjectURL(selectedFile);
     setPreview(url);
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -128,9 +130,9 @@ const PortraitBlur = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      setError('클립보드 복사에 실패했습니다.');
+      setError(t('common.errors.clipboard'));
     }
-  }, [resultBlob]);
+  }, [resultBlob, t]);
 
   const handleReapply = useCallback(async () => {
     if (!file) return;
@@ -146,8 +148,8 @@ const PortraitBlur = () => {
   return (
     <div className="portrait-blur">
       <div className="page-header">
-        <h1>🎭 Portrait Blur</h1>
-        <p>인물은 선명하게, 배경은 흐리게</p>
+        <h1>{t('pages.image.portraitBlur.hero.title')}</h1>
+        <p>{t('pages.image.portraitBlur.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -170,8 +172,8 @@ const PortraitBlur = () => {
           />
           <label htmlFor="file-input" className="upload-content">
             <div className="upload-icon">🖼️</div>
-            <p>이미지를 드래그하거나 클릭하여 선택하세요</p>
-            <span className="upload-hint">JPG, PNG, WebP (최대 10MB)</span>
+            <p>{t('pages.image.portraitBlur.upload.hint')}</p>
+            <span className="upload-hint">{t('pages.image.portraitBlur.upload.support')}</span>
           </label>
         </div>
       )}
@@ -190,7 +192,7 @@ const PortraitBlur = () => {
           {/* 이미지 비교 뷰 */}
           <div className="image-compare">
             <div className="image-panel">
-              <h3>원본</h3>
+              <h3>{t('pages.image.portraitBlur.panels.original')}</h3>
               <div 
                 className="image-container clickable"
                 onClick={() => {
@@ -199,7 +201,7 @@ const PortraitBlur = () => {
                     setModalImage(preview);
                   }
                 }}
-                title="클릭하여 크게 보기"
+                title={t('common.hints.viewLarge')}
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
                 <button 
@@ -208,14 +210,14 @@ const PortraitBlur = () => {
                     e.stopPropagation();
                     handleNewImage();
                   }}
-                  title="다른 이미지 선택"
+                  title={t('common.hints.chooseAnother')}
                 >
                   ✕
                 </button>
               </div>
             </div>
             <div className="image-panel">
-              <h3>결과</h3>
+              <h3>{t('pages.image.portraitBlur.panels.result')}</h3>
               <div 
                 className={`image-container ${result ? 'clickable' : ''}`}
                 onClick={() => {
@@ -224,13 +226,15 @@ const PortraitBlur = () => {
                     setModalImage(result);
                   }
                 }}
-                title={result ? "클릭하여 크게 보기" : undefined}
+                title={result ? t('common.hints.viewLarge') : undefined}
               >
                 {result ? (
                   <img src={result} alt="처리된 이미지" />
                 ) : (
                   <div className="placeholder">
-                    {processing ? '처리 중...' : '블러 적용 후 결과가 표시됩니다'}
+                    {processing
+                      ? t('common.status.processing')
+                      : t('pages.image.portraitBlur.placeholders.result')}
                   </div>
                 )}
               </div>
@@ -240,9 +244,7 @@ const PortraitBlur = () => {
           {/* 옵션 */}
           <div className="options">
             <div className="option-group">
-              <label>
-                블러 강도: <strong>{blurAmount}px</strong>
-              </label>
+              <label>{t('pages.image.portraitBlur.options.blurStrength', { value: blurAmount })}</label>
               <input
                 type="range"
                 min="5"
@@ -252,8 +254,8 @@ const PortraitBlur = () => {
                 disabled={processing}
               />
               <div className="range-labels">
-                <span>약하게</span>
-                <span>강하게</span>
+                <span>{t('pages.image.portraitBlur.options.rangeSoft')}</span>
+                <span>{t('pages.image.portraitBlur.options.rangeStrong')}</span>
               </div>
             </div>
 
@@ -266,7 +268,7 @@ const PortraitBlur = () => {
           {/* 진행률 */}
           {processing && (
             <div className="progress" aria-live="polite">
-              <p>배경 블러 처리 중...</p>
+              <p>{t('pages.image.portraitBlur.progress.label')}</p>
               <div className="progress-bar">
                 <div
                   className="progress-fill"
@@ -280,7 +282,7 @@ const PortraitBlur = () => {
           {/* 액션 버튼 */}
           <div className="actions">
             <button className="btn btn-secondary" onClick={handleNewImage}>
-              🖼️ 다른 이미지
+              {t('common.buttons.otherImage')}
             </button>
             {result && (
               <button
@@ -288,7 +290,7 @@ const PortraitBlur = () => {
                 onClick={handleReapply}
                 disabled={processing}
               >
-                🔄 다시 적용
+                {t('common.buttons.retry')}
               </button>
             )}
             {!result ? (
@@ -297,7 +299,7 @@ const PortraitBlur = () => {
                 onClick={handleProcess}
                 disabled={processing}
               >
-                {processing ? '처리 중...' : '✨ 배경 블러 적용'}
+                {processing ? t('common.status.processing') : t('pages.image.portraitBlur.actions.apply')}
               </button>
             ) : (
               <>
@@ -305,10 +307,10 @@ const PortraitBlur = () => {
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
-                  {copied ? '✓ 복사됨' : '📋 복사'}
+                  {copied ? t('common.buttons.copied') : t('common.buttons.copy')}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
-                  💾 저장
+                  {t('common.buttons.save')}
                 </button>
               </>
             )}
@@ -332,13 +334,13 @@ const PortraitBlur = () => {
                   className={`modal-toggle-btn ${modalIndex === 0 ? 'active' : ''}`}
                   onClick={() => setModalIndex(0)}
                 >
-                  원본
+                  {t('pages.image.portraitBlur.modal.original')}
                 </button>
                 <button
                   className={`modal-toggle-btn ${modalIndex === 1 ? 'active' : ''}`}
                   onClick={() => setModalIndex(1)}
                 >
-                  결과
+                  {t('pages.image.portraitBlur.modal.result')}
                 </button>
               </div>
             )}

@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { splitPdf } from '../../utils/pdfSplitter';
 import type { SplitMode, SplitOptions, SplitProgress } from '../../utils/pdfSplitter';
 import './SplitPdf.css';
@@ -8,6 +9,7 @@ const SplitPdf = () => {
   const [splitting, setSplitting] = useState(false);
   const [progress, setProgress] = useState<SplitProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const { t } = useTranslation();
 
   // 분할 옵션
   const [splitMode, setSplitMode] = useState<SplitMode>('each');
@@ -19,9 +21,9 @@ const SplitPdf = () => {
       setFile(selectedFile);
       setProgress(null);
     } else if (selectedFile) {
-      alert('PDF 파일만 업로드 가능합니다.');
+      alert(t('common.validation.pdfOnly'));
     }
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -80,39 +82,39 @@ const SplitPdf = () => {
     if (splitMode === 'range') {
       const ranges = parseRanges(rangesInput);
       if (ranges.length === 0) {
-        alert('유효한 범위를 입력하세요. (예: 1-5, 6-10)');
+        alert(t('common.validation.validRanges', { example: '1-5, 6-10' }));
         return;
       }
       options.ranges = ranges;
     } else if (splitMode === 'extract') {
       const pages = parsePages(extractInput);
       if (pages.length === 0) {
-        alert('유효한 페이지 번호를 입력하세요. (예: 1,3,5-7)');
+        alert(t('common.validation.validPages', { example: '1,3,5-7' }));
         return;
       }
       options.extractPages = pages;
     }
 
     setSplitting(true);
-    setProgress({ current: 0, total: 1, status: '시작 중...' });
+    setProgress({ current: 0, total: 1, status: t('common.status.starting') });
 
     try {
       await splitPdf(file, options, setProgress);
-      alert('PDF 분할이 완료되었습니다!');
+      alert(t('common.success.split'));
     } catch (error) {
       console.error('분할 실패:', error);
-      alert('분할 중 오류가 발생했습니다.');
+      alert(t('common.errors.split'));
     } finally {
       setSplitting(false);
     }
-  }, [file, splitMode, rangesInput, extractInput]);
+  }, [file, splitMode, rangesInput, extractInput, t]);
 
   return (
     <div className="split-pdf">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>✂️ Split PDF</h1>
-        <p>PDF를 여러 파일로 분할하세요</p>
+        <h1>{t('pages.pdf.split.hero.title')}</h1>
+        <p>{t('pages.pdf.split.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -128,7 +130,7 @@ const SplitPdf = () => {
         {!file ? (
           <>
             <div className="upload-icon">📁</div>
-            <p>PDF 파일을 드래그하거나 클릭하여 선택</p>
+            <p>{t('common.dropzone.pdf')}</p>
             <input
               type="file"
               accept="application/pdf"
@@ -137,7 +139,7 @@ const SplitPdf = () => {
               id="file-input"
             />
             <label htmlFor="file-input" className="btn btn-primary">
-              파일 선택
+              {t('common.buttons.selectFile')}
             </label>
           </>
         ) : (
@@ -156,10 +158,10 @@ const SplitPdf = () => {
       {/* 분할 옵션 */}
       {file && (
         <div className="options">
-          <h3>분할 옵션</h3>
+          <h3>{t('pages.pdf.split.options.title')}</h3>
 
           <div className="option-group">
-            <label>분할 방식</label>
+            <label>{t('pages.pdf.split.options.mode')}</label>
             <div className="split-modes">
               <button
                 className={`mode-btn ${splitMode === 'each' ? 'active' : ''}`}
@@ -167,8 +169,10 @@ const SplitPdf = () => {
                 disabled={splitting}
               >
                 <span className="mode-icon">📄</span>
-                <span className="mode-title">각 페이지</span>
-                <span className="mode-desc">모든 페이지를 개별 파일로</span>
+                <span className="mode-title">{t('pages.pdf.split.options.modes.each.title')}</span>
+                <span className="mode-desc">
+                  {t('pages.pdf.split.options.modes.each.description')}
+                </span>
               </button>
               <button
                 className={`mode-btn ${splitMode === 'range' ? 'active' : ''}`}
@@ -176,8 +180,10 @@ const SplitPdf = () => {
                 disabled={splitting}
               >
                 <span className="mode-icon">📚</span>
-                <span className="mode-title">범위별</span>
-                <span className="mode-desc">지정한 범위로 분할</span>
+                <span className="mode-title">{t('pages.pdf.split.options.modes.range.title')}</span>
+                <span className="mode-desc">
+                  {t('pages.pdf.split.options.modes.range.description')}
+                </span>
               </button>
               <button
                 className={`mode-btn ${splitMode === 'extract' ? 'active' : ''}`}
@@ -185,42 +191,48 @@ const SplitPdf = () => {
                 disabled={splitting}
               >
                 <span className="mode-icon">📑</span>
-                <span className="mode-title">페이지 추출</span>
-                <span className="mode-desc">특정 페이지만 추출</span>
+                <span className="mode-title">
+                  {t('pages.pdf.split.options.modes.extract.title')}
+                </span>
+                <span className="mode-desc">
+                  {t('pages.pdf.split.options.modes.extract.description')}
+                </span>
               </button>
             </div>
           </div>
 
           {splitMode === 'range' && (
             <div className="option-group">
-              <label>페이지 범위</label>
+              <label>{t('pages.pdf.split.options.rangeLabel')}</label>
               <input
                 type="text"
-                placeholder="예: 1-5, 6-10, 11-15"
+                placeholder={t('pages.pdf.split.options.rangePlaceholder')}
                 value={rangesInput}
                 onChange={(e) => setRangesInput(e.target.value)}
                 disabled={splitting}
               />
-              <small>쉼표로 구분하여 여러 범위를 입력하세요</small>
+              <small>{t('pages.pdf.split.options.rangeHint')}</small>
             </div>
           )}
 
           {splitMode === 'extract' && (
             <div className="option-group">
-              <label>추출할 페이지</label>
+              <label>{t('pages.pdf.split.options.extractLabel')}</label>
               <input
                 type="text"
-                placeholder="예: 1,3,5-7,10"
+                placeholder={t('pages.pdf.split.options.extractPlaceholder')}
                 value={extractInput}
                 onChange={(e) => setExtractInput(e.target.value)}
                 disabled={splitting}
               />
-              <small>페이지 번호를 쉼표로 구분하세요. 범위 지원</small>
+              <small>{t('pages.pdf.split.options.extractHint')}</small>
             </div>
           )}
 
           <button className="btn btn-convert" onClick={handleSplit} disabled={splitting}>
-            {splitting ? '분할 중...' : '✂️ PDF 분할'}
+            {splitting
+              ? t('pages.pdf.split.actions.splitting')
+              : t('pages.pdf.split.actions.split')}
           </button>
         </div>
       )}

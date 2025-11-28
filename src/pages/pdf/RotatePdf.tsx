@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { rotatePdf } from '../../utils/pdfRotator';
 import type { RotationAngle, RotateProgress } from '../../utils/pdfRotator';
 import './RotatePdf.css';
@@ -8,6 +9,7 @@ const RotatePdf = () => {
   const [rotating, setRotating] = useState(false);
   const [progress, setProgress] = useState<RotateProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const { t } = useTranslation();
 
   // 회전 옵션
   const [rotationAngle, setRotationAngle] = useState<RotationAngle>(90);
@@ -19,9 +21,9 @@ const RotatePdf = () => {
       setFile(selectedFile);
       setProgress(null);
     } else if (selectedFile) {
-      alert('PDF 파일만 업로드 가능합니다.');
+      alert(t('common.validation.pdfOnly'));
     }
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -37,7 +39,7 @@ const RotatePdf = () => {
     if (!file) return;
 
     setRotating(true);
-    setProgress({ current: 0, total: 1, status: '시작 중...' });
+    setProgress({ current: 0, total: 1, status: t('common.status.starting') });
 
     try {
       let pageIndices: number[] | 'all' = 'all';
@@ -65,28 +67,28 @@ const RotatePdf = () => {
         pageIndices = Array.from(indices).sort((a, b) => a - b);
 
         if (pageIndices.length === 0) {
-          alert('유효한 페이지 번호를 입력하세요.');
+          alert(t('common.validation.validPagesSimple'));
           setRotating(false);
           return;
         }
       }
 
       await rotatePdf(file, rotationAngle, pageIndices, setProgress);
-      alert('PDF 회전이 완료되었습니다!');
+      alert(t('common.success.rotate'));
     } catch (error) {
       console.error('회전 실패:', error);
-      alert('회전 중 오류가 발생했습니다.');
+      alert(t('common.errors.rotate'));
     } finally {
       setRotating(false);
     }
-  }, [file, rotationAngle, applyToAll, selectedPages]);
+  }, [file, rotationAngle, applyToAll, selectedPages, t]);
 
   return (
     <div className="rotate-pdf">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>🔄 Rotate PDF</h1>
-        <p>PDF 페이지를 회전하세요</p>
+        <h1>{t('pages.pdf.rotate.hero.title')}</h1>
+        <p>{t('pages.pdf.rotate.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -102,7 +104,7 @@ const RotatePdf = () => {
         {!file ? (
           <>
             <div className="upload-icon">📁</div>
-            <p>PDF 파일을 드래그하거나 클릭하여 선택</p>
+            <p>{t('common.dropzone.pdf')}</p>
             <input
               type="file"
               accept="application/pdf"
@@ -111,7 +113,7 @@ const RotatePdf = () => {
               id="file-input"
             />
             <label htmlFor="file-input" className="btn btn-primary">
-              파일 선택
+              {t('common.buttons.selectFile')}
             </label>
           </>
         ) : (
@@ -130,10 +132,10 @@ const RotatePdf = () => {
       {/* 회전 옵션 */}
       {file && (
         <div className="options">
-          <h3>회전 옵션</h3>
+          <h3>{t('pages.pdf.rotate.options.title')}</h3>
 
           <div className="option-group">
-            <label>회전 각도</label>
+            <label>{t('pages.pdf.rotate.options.angle')}</label>
             <div className="rotation-buttons">
               <button
                 className={`rotation-btn ${rotationAngle === 90 ? 'active' : ''}`}
@@ -141,7 +143,7 @@ const RotatePdf = () => {
                 disabled={rotating}
               >
                 <span className="rotation-icon">↻</span>
-                <span>90° 오른쪽</span>
+                <span>{t('pages.pdf.rotate.options.angles.right')}</span>
               </button>
               <button
                 className={`rotation-btn ${rotationAngle === 180 ? 'active' : ''}`}
@@ -149,7 +151,7 @@ const RotatePdf = () => {
                 disabled={rotating}
               >
                 <span className="rotation-icon">↻</span>
-                <span>180°</span>
+                <span>{t('pages.pdf.rotate.options.angles.half')}</span>
               </button>
               <button
                 className={`rotation-btn ${rotationAngle === 270 ? 'active' : ''}`}
@@ -157,7 +159,7 @@ const RotatePdf = () => {
                 disabled={rotating}
               >
                 <span className="rotation-icon">↺</span>
-                <span>90° 왼쪽</span>
+                <span>{t('pages.pdf.rotate.options.angles.left')}</span>
               </button>
             </div>
           </div>
@@ -170,24 +172,24 @@ const RotatePdf = () => {
                 onChange={(e) => setApplyToAll(e.target.checked)}
                 disabled={rotating}
               />
-              모든 페이지에 적용
+              {t('pages.pdf.rotate.options.applyAll')}
             </label>
             {!applyToAll && (
               <div className="page-selection">
                 <input
                   type="text"
-                  placeholder="예: 1,3,5-7"
+                  placeholder={t('pages.pdf.rotate.options.pageInputPlaceholder')}
                   value={selectedPages}
                   onChange={(e) => setSelectedPages(e.target.value)}
                   disabled={rotating}
                 />
-                <small>페이지 번호를 쉼표로 구분하세요. 범위는 하이픈으로 표시 (예: 1-5)</small>
+                <small>{t('pages.pdf.rotate.options.pageInputHint')}</small>
               </div>
             )}
           </div>
 
           <button className="btn btn-convert" onClick={handleRotate} disabled={rotating}>
-            {rotating ? '회전 중...' : '🔄 PDF 회전'}
+            {rotating ? t('pages.pdf.rotate.actions.rotating') : t('pages.pdf.rotate.actions.rotate')}
           </button>
         </div>
       )}

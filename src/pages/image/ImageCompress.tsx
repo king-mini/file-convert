@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './ImageCompress.css';
 
@@ -12,6 +13,7 @@ const ImageCompress = () => {
   const [error, setError] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
 
   // 압축 옵션
   const [quality, setQuality] = useState(70);
@@ -21,12 +23,12 @@ const ImageCompress = () => {
 
   const handleFile = useCallback((selectedFile: File) => {
     if (!selectedFile.type.startsWith('image/')) {
-      setError('이미지 파일만 업로드 가능합니다.');
+      setError(t('common.validation.imageOnly'));
       return;
     }
 
     if (selectedFile.size > 50 * 1024 * 1024) {
-      setError('50MB 이하의 파일만 지원합니다.');
+      setError(t('common.validation.maxImageSize', { limit: 50 }));
       return;
     }
 
@@ -39,7 +41,7 @@ const ImageCompress = () => {
 
     const url = URL.createObjectURL(selectedFile);
     setPreview(url);
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -108,11 +110,11 @@ const ImageCompress = () => {
       setCopied(false);
     } catch (err) {
       console.error('Processing error:', err);
-      setError('처리 중 오류가 발생했습니다.');
+      setError(t('common.errors.process'));
     } finally {
       setProcessing(false);
     }
-  }, [file, preview, quality, maxWidth]);
+  }, [file, preview, quality, maxWidth, t]);
 
   const handleDownload = useCallback(() => {
     if (!result || !file) return;
@@ -145,9 +147,9 @@ const ImageCompress = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      setError('클립보드 복사에 실패했습니다.');
+      setError(t('common.errors.clipboard'));
     }
-  }, [resultBlob]);
+  }, [resultBlob, t]);
 
   const getCompressionRatio = () => {
     if (!originalSize || !compressedSize) return 0;
@@ -157,8 +159,8 @@ const ImageCompress = () => {
   return (
     <div className="image-compress">
       <div className="page-header">
-        <h1>🗜️ Image Compress</h1>
-        <p>이미지 용량을 효과적으로 줄이세요</p>
+        <h1>{t('pages.image.imageCompress.hero.title')}</h1>
+        <p>{t('pages.image.imageCompress.hero.description')}</p>
       </div>
 
       {!file && (
@@ -180,8 +182,8 @@ const ImageCompress = () => {
           />
           <label htmlFor="file-input" className="upload-content">
             <div className="upload-icon">🖼️</div>
-            <p>이미지를 드래그하거나 클릭하여 선택하세요</p>
-            <span className="upload-hint">JPG, PNG, WebP (최대 50MB)</span>
+            <p>{t('pages.image.imageCompress.upload.hint')}</p>
+            <span className="upload-hint">{t('pages.image.imageCompress.upload.support')}</span>
           </label>
         </div>
       )}
@@ -197,27 +199,31 @@ const ImageCompress = () => {
         <div className="editor">
           <div className="image-compare">
             <div className="image-panel">
-              <h3>원본 ({formatFileSize(originalSize)})</h3>
+              <h3>
+                {t('pages.image.imageCompress.panels.original', {
+                  size: formatFileSize(originalSize),
+                })}
+              </h3>
               <div
                 className="image-container clickable"
                 onClick={() => preview && setModalImage(preview)}
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
-                <button 
-                  className="image-remove-btn"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleNewImage();
-                  }}
-                  title="다른 이미지 선택"
-                >
+            <button 
+              className="image-remove-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNewImage();
+              }}
+              title={t('common.hints.chooseAnother')}
+            >
                   ✕
                 </button>
               </div>
             </div>
             <div className="image-panel">
               <h3>
-                결과
+                {t('pages.image.imageCompress.panels.result')}
                 {compressedSize > 0 && (
                   <span className="compression-badge">
                     {formatFileSize(compressedSize)} (-{getCompressionRatio()}%)
@@ -232,7 +238,9 @@ const ImageCompress = () => {
                   <img src={result} alt="압축된 이미지" />
                 ) : (
                   <div className="placeholder">
-                    {processing ? '처리 중...' : '압축 후 결과가 표시됩니다'}
+                    {processing
+                      ? t('common.status.processing')
+                      : t('pages.image.imageCompress.placeholders.result')}
                   </div>
                 )}
               </div>
@@ -242,9 +250,13 @@ const ImageCompress = () => {
           <div className="options">
             <div className="option-group">
               <label>
-                압축 품질: <strong>{quality}%</strong>
+                {t('pages.image.imageCompress.options.qualityLabel', { value: quality })}
                 <span className="quality-hint">
-                  {quality >= 80 ? '고품질' : quality >= 50 ? '중간' : '저용량'}
+                  {quality >= 80
+                    ? t('pages.image.imageCompress.options.qualityHints.high')
+                    : quality >= 50
+                    ? t('pages.image.imageCompress.options.qualityHints.medium')
+                    : t('pages.image.imageCompress.options.qualityHints.low')}
                 </span>
               </label>
               <input
@@ -255,16 +267,18 @@ const ImageCompress = () => {
                 onChange={(e) => setQuality(Number(e.target.value))}
               />
               <div className="range-labels">
-                <span>저용량</span>
-                <span>고품질</span>
+                <span>{t('pages.image.imageCompress.options.rangeLabels.min')}</span>
+                <span>{t('pages.image.imageCompress.options.rangeLabels.max')}</span>
               </div>
             </div>
 
             <div className="option-group">
               <label>
-                최대 너비:
+                {t('pages.image.imageCompress.options.maxWidth')}{' '}
                 <strong>
-                  {maxWidth === 0 ? ' 제한 없음' : ` ${maxWidth}px`}
+                  {maxWidth === 0
+                    ? t('pages.image.imageCompress.options.maxWidthUnlimited')
+                    : ` ${maxWidth}px`}
                 </strong>
               </label>
               <div className="preset-buttons">
@@ -272,25 +286,25 @@ const ImageCompress = () => {
                   className={`preset-btn ${maxWidth === 0 ? 'active' : ''}`}
                   onClick={() => setMaxWidth(0)}
                 >
-                  원본
+                  {t('pages.image.imageCompress.options.presets.original')}
                 </button>
                 <button
                   className={`preset-btn ${maxWidth === 1920 ? 'active' : ''}`}
                   onClick={() => setMaxWidth(1920)}
                 >
-                  1920px
+                  {t('pages.image.imageCompress.options.presets.w1920')}
                 </button>
                 <button
                   className={`preset-btn ${maxWidth === 1280 ? 'active' : ''}`}
                   onClick={() => setMaxWidth(1280)}
                 >
-                  1280px
+                  {t('pages.image.imageCompress.options.presets.w1280')}
                 </button>
                 <button
                   className={`preset-btn ${maxWidth === 800 ? 'active' : ''}`}
                   onClick={() => setMaxWidth(800)}
                 >
-                  800px
+                  {t('pages.image.imageCompress.options.presets.w800')}
                 </button>
               </div>
             </div>
@@ -298,16 +312,16 @@ const ImageCompress = () => {
             {compressedSize > 0 && (
               <div className="compression-stats">
                 <div className="stat">
-                  <span className="stat-label">원본</span>
+                  <span className="stat-label">{t('pages.image.imageCompress.stats.original')}</span>
                   <span className="stat-value">{formatFileSize(originalSize)}</span>
                 </div>
                 <div className="stat-arrow">→</div>
                 <div className="stat">
-                  <span className="stat-label">압축 후</span>
+                  <span className="stat-label">{t('pages.image.imageCompress.stats.result')}</span>
                   <span className="stat-value highlight">{formatFileSize(compressedSize)}</span>
                 </div>
                 <div className="stat">
-                  <span className="stat-label">절감</span>
+                  <span className="stat-label">{t('pages.image.imageCompress.stats.saved')}</span>
                   <span className="stat-value success">-{getCompressionRatio()}%</span>
                 </div>
               </div>
@@ -316,7 +330,7 @@ const ImageCompress = () => {
 
           <div className="actions">
             <button className="btn btn-secondary" onClick={handleNewImage}>
-              🖼️ 다른 이미지
+              {t('common.buttons.otherImage')}
             </button>
             {result && (
               <button
@@ -324,7 +338,7 @@ const ImageCompress = () => {
                 onClick={handleProcess}
                 disabled={processing}
               >
-                🔄 다시 적용
+                {t('common.buttons.retry')}
               </button>
             )}
             {!result ? (
@@ -333,7 +347,9 @@ const ImageCompress = () => {
                 onClick={handleProcess}
                 disabled={processing}
               >
-                {processing ? '처리 중...' : '🗜️ 압축하기'}
+                {processing
+                  ? t('common.status.processing')
+                  : t('pages.image.imageCompress.actions.compress')}
               </button>
             ) : (
               <>
@@ -341,10 +357,10 @@ const ImageCompress = () => {
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
-                  {copied ? '✓ 복사됨' : '📋 복사'}
+                  {copied ? t('common.buttons.copied') : t('common.buttons.copy')}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
-                  💾 저장
+                  {t('common.buttons.save')}
                 </button>
               </>
             )}
@@ -358,7 +374,7 @@ const ImageCompress = () => {
             <button className="modal-close" onClick={() => setModalImage(null)}>
               ✕
             </button>
-            <img src={modalImage} alt="확대 이미지" />
+            <img src={modalImage} alt={t('pages.image.imageResize.modal.title')} />
           </div>
         </div>
       )}

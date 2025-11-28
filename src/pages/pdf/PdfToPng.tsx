@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { convertPdfToPngImages } from '../../utils/pngConverter';
 import type { ConvertOptions, ConvertProgress } from '../../utils/pngConverter';
 import './PdfToJpg.css';
@@ -8,6 +9,7 @@ const PdfToPng = () => {
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState<ConvertProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const { t } = useTranslation();
 
   // 변환 옵션
   const [scale, setScale] = useState(2);
@@ -21,9 +23,9 @@ const PdfToPng = () => {
       setFile(selectedFile);
       setProgress(null);
     } else if (selectedFile) {
-      alert('PDF 파일만 업로드 가능합니다.');
+      alert(t('common.validation.pdfOnly'));
     }
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -39,7 +41,7 @@ const PdfToPng = () => {
     if (!file) return;
 
     setConverting(true);
-    setProgress({ current: 0, total: 1, status: '시작 중...' });
+    setProgress({ current: 0, total: 1, status: t('common.status.starting') });
 
     const options: ConvertOptions = {
       scale,
@@ -51,18 +53,18 @@ const PdfToPng = () => {
       await convertPdfToPngImages(file, options, setProgress);
     } catch (error) {
       console.error('변환 실패:', error);
-      alert('변환 중 오류가 발생했습니다.');
+      alert(t('common.errors.convert'));
     } finally {
       setConverting(false);
     }
-  }, [file, scale, transparentBg, usePageRange, startPage, endPage]);
+  }, [file, scale, transparentBg, usePageRange, startPage, endPage, t]);
 
   return (
     <div className="pdf-to-jpg">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>🎨 PDF to PNG Converter</h1>
-        <p>브라우저에서 안전하게 변환 · 투명 배경 지원</p>
+        <h1>{t('pages.pdf.toPng.hero.title')}</h1>
+        <p>{t('pages.pdf.toPng.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -78,7 +80,7 @@ const PdfToPng = () => {
         {!file ? (
           <>
             <div className="upload-icon">📁</div>
-            <p>PDF 파일을 드래그하거나 클릭하여 선택</p>
+            <p>{t('common.dropzone.pdf')}</p>
             <input
               type="file"
               accept="application/pdf"
@@ -87,7 +89,7 @@ const PdfToPng = () => {
               id="file-input"
             />
             <label htmlFor="file-input" className="btn btn-primary">
-              파일 선택
+              {t('common.buttons.selectFile')}
             </label>
           </>
         ) : (
@@ -106,11 +108,12 @@ const PdfToPng = () => {
       {/* 변환 옵션 */}
       {file && (
         <div className="options">
-          <h3>변환 옵션</h3>
+          <h3>{t('pages.pdf.toPng.options.title')}</h3>
 
           <div className="option-group">
             <label>
-              해상도: <strong>{scale === 1 ? '72dpi' : scale === 2 ? '144dpi' : '216dpi'}</strong>
+              {t('pages.pdf.toPng.options.resolution')}:{' '}
+              <strong>{scale === 1 ? '72dpi' : scale === 2 ? '144dpi' : '216dpi'}</strong>
             </label>
             <input
               type="range"
@@ -131,7 +134,7 @@ const PdfToPng = () => {
                 onChange={(e) => setTransparentBg(e.target.checked)}
                 disabled={converting}
               />
-              투명 배경 (흰색 배경 제거)
+              {t('pages.pdf.toPng.options.transparent')}
             </label>
           </div>
 
@@ -143,7 +146,7 @@ const PdfToPng = () => {
                 onChange={(e) => setUsePageRange(e.target.checked)}
                 disabled={converting}
               />
-              페이지 범위 지정
+              {t('pages.pdf.toPng.options.pageRange')}
             </label>
             {usePageRange && (
               <div className="page-range">
@@ -167,7 +170,7 @@ const PdfToPng = () => {
           </div>
 
           <button className="btn btn-convert" onClick={handleConvert} disabled={converting}>
-            {converting ? '변환 중...' : '🚀 변환 시작'}
+            {converting ? t('common.status.converting') : t('pages.pdf.toPng.actions.start')}
           </button>
         </div>
       )}

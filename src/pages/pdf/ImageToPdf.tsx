@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { convertImagesToPdf, createImagePreview } from '../../utils/imageToPdfConverter';
 import type { ImageFile, PageSize, ConvertOptions } from '../../utils/imageToPdfConverter';
 import { saveAs } from 'file-saver';
@@ -9,6 +10,7 @@ const ImageToPdf = () => {
   const [converting, setConverting] = useState(false);
   const [progress, setProgress] = useState<{ current: number; total: number } | null>(null);
   const [dragOver, setDragOver] = useState(false);
+  const { t } = useTranslation();
 
   // 변환 옵션
   const [pageSize, setPageSize] = useState<PageSize>('A4');
@@ -23,7 +25,7 @@ const ImageToPdf = () => {
     );
 
     if (imageFiles.length === 0) {
-      alert('이미지 파일만 선택할 수 있습니다.');
+      alert(t('common.validation.imageOnly'));
       return;
     }
 
@@ -43,7 +45,7 @@ const ImageToPdf = () => {
     }
 
     setImages((prev) => [...prev, ...newImages]);
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -92,22 +94,22 @@ const ImageToPdf = () => {
       );
 
       saveAs(blob, 'converted_images.pdf');
-      alert('PDF 생성이 완료되었습니다!');
+      alert(t('common.success.pdfCreated'));
     } catch (error) {
       console.error('변환 실패:', error);
-      alert('변환 중 오류가 발생했습니다.');
+      alert(t('common.errors.convert'));
     } finally {
       setConverting(false);
       setProgress(null);
     }
-  }, [images, pageSize, orientation, margin]);
+  }, [images, pageSize, orientation, margin, t]);
 
   return (
     <div className="image-to-pdf">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>🖼️ Image to PDF Converter</h1>
-        <p>여러 이미지를 하나의 PDF로 변환하세요</p>
+        <h1>{t('pages.pdf.imageToPdf.hero.title')}</h1>
+        <p>{t('pages.pdf.imageToPdf.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -121,7 +123,7 @@ const ImageToPdf = () => {
         onDragLeave={() => setDragOver(false)}
       >
         <div className="upload-icon">🖼️</div>
-        <p>이미지 파일을 드래그하거나 클릭하여 선택 (JPG, PNG, GIF, WebP)</p>
+        <p>{t('pages.pdf.imageToPdf.upload.hint')}</p>
         <input
           type="file"
           accept="image/*"
@@ -131,14 +133,14 @@ const ImageToPdf = () => {
           id="file-input"
         />
         <label htmlFor="file-input" className="btn btn-primary">
-          이미지 선택
+          {t('common.buttons.selectImages')}
         </label>
       </div>
 
       {/* 이미지 목록 */}
       {images.length > 0 && (
         <div className="image-list">
-          <h3>선택된 이미지 ({images.length}개)</h3>
+          <h3>{t('pages.pdf.imageToPdf.list.title', { count: images.length })}</h3>
           <div className="images-grid">
             {images.map((img, index) => (
               <div key={img.id} className="image-item">
@@ -149,21 +151,21 @@ const ImageToPdf = () => {
                     <button
                       onClick={() => handleMoveImage(img.id, 'up')}
                       disabled={index === 0}
-                      title="위로"
+                      title={t('pages.pdf.imageToPdf.list.moveUp')}
                     >
                       ↑
                     </button>
                     <button
                       onClick={() => handleMoveImage(img.id, 'down')}
                       disabled={index === images.length - 1}
-                      title="아래로"
+                      title={t('pages.pdf.imageToPdf.list.moveDown')}
                     >
                       ↓
                     </button>
                     <button
                       onClick={() => handleRemoveImage(img.id)}
                       className="btn-delete"
-                      title="삭제"
+                      title={t('pages.pdf.imageToPdf.list.delete')}
                     >
                       ✕
                     </button>
@@ -178,31 +180,35 @@ const ImageToPdf = () => {
       {/* 변환 옵션 */}
       {images.length > 0 && (
         <div className="options">
-          <h3>변환 옵션</h3>
+          <h3>{t('pages.pdf.imageToPdf.options.title')}</h3>
 
           <div className="option-group">
-            <label>페이지 크기</label>
+            <label>{t('pages.pdf.imageToPdf.options.pageSize')}</label>
             <select value={pageSize} onChange={(e) => setPageSize(e.target.value as PageSize)}>
-              <option value="A4">A4</option>
-              <option value="Letter">Letter</option>
-              <option value="Auto">자동 (이미지 크기에 맞춤)</option>
+              <option value="A4">{t('pages.pdf.imageToPdf.options.pageSizeOptions.a4')}</option>
+              <option value="Letter">{t('pages.pdf.imageToPdf.options.pageSizeOptions.letter')}</option>
+              <option value="Auto">{t('pages.pdf.imageToPdf.options.pageSizeOptions.auto')}</option>
             </select>
           </div>
 
           <div className="option-group">
-            <label>페이지 방향</label>
+            <label>{t('pages.pdf.imageToPdf.options.orientation')}</label>
             <select
               value={orientation}
               onChange={(e) => setOrientation(e.target.value as 'portrait' | 'landscape')}
             >
-              <option value="portrait">세로 (Portrait)</option>
-              <option value="landscape">가로 (Landscape)</option>
+              <option value="portrait">
+                {t('pages.pdf.imageToPdf.options.orientationOptions.portrait')}
+              </option>
+              <option value="landscape">
+                {t('pages.pdf.imageToPdf.options.orientationOptions.landscape')}
+              </option>
             </select>
           </div>
 
           <div className="option-group">
             <label>
-              여백: <strong>{margin}mm</strong>
+              {t('pages.pdf.imageToPdf.options.margin', { value: margin })}
             </label>
             <input
               type="range"
@@ -216,7 +222,12 @@ const ImageToPdf = () => {
           </div>
 
           <button className="btn btn-convert" onClick={handleConvert} disabled={converting}>
-            {converting ? `변환 중... (${progress?.current}/${progress?.total})` : '📄 PDF 생성'}
+            {converting
+              ? t('pages.pdf.imageToPdf.actions.processing', {
+                  current: progress?.current ?? 0,
+                  total: progress?.total ?? images.length,
+                })
+              : t('pages.pdf.imageToPdf.actions.create')}
           </button>
         </div>
       )}

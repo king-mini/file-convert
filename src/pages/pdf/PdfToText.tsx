@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { extractTextFromPdf, downloadAsTextFile } from '../../utils/textExtractor';
 import type { ExtractProgress, ExtractedText } from '../../utils/textExtractor';
 import './PdfToText.css';
@@ -9,6 +10,7 @@ const PdfToText = () => {
   const [progress, setProgress] = useState<ExtractProgress | null>(null);
   const [dragOver, setDragOver] = useState(false);
   const [extractedTexts, setExtractedTexts] = useState<ExtractedText[]>([]);
+  const { t } = useTranslation();
 
   const handleFileSelect = useCallback((selectedFile: File | null) => {
     if (selectedFile?.type === 'application/pdf') {
@@ -16,9 +18,9 @@ const PdfToText = () => {
       setProgress(null);
       setExtractedTexts([]);
     } else if (selectedFile) {
-      alert('PDF 파일만 업로드 가능합니다.');
+      alert(t('common.validation.pdfOnly'));
     }
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -34,7 +36,7 @@ const PdfToText = () => {
     if (!file) return;
 
     setExtracting(true);
-    setProgress({ current: 0, total: 1, status: '시작 중...' });
+    setProgress({ current: 0, total: 1, status: t('common.status.starting') });
     setExtractedTexts([]);
 
     try {
@@ -42,11 +44,11 @@ const PdfToText = () => {
       setExtractedTexts(texts);
     } catch (error) {
       console.error('추출 실패:', error);
-      alert('텍스트 추출 중 오류가 발생했습니다.');
+      alert(t('common.errors.extract'));
     } finally {
       setExtracting(false);
     }
-  }, [file]);
+  }, [file, t]);
 
   const handleDownload = useCallback(() => {
     if (!file || extractedTexts.length === 0) return;
@@ -56,15 +58,15 @@ const PdfToText = () => {
   const handleCopyAll = useCallback(() => {
     const fullText = extractedTexts.map((page) => page.text).join('\n\n');
     navigator.clipboard.writeText(fullText);
-    alert('텍스트가 클립보드에 복사되었습니다!');
-  }, [extractedTexts]);
+    alert(t('common.success.copy'));
+  }, [extractedTexts, t]);
 
   return (
     <div className="pdf-to-text">
       {/* 페이지 헤더 */}
       <div className="page-header">
-        <h1>📝 PDF to Text Converter</h1>
-        <p>PDF에서 텍스트를 추출하세요</p>
+        <h1>{t('pages.pdf.toText.hero.title')}</h1>
+        <p>{t('pages.pdf.toText.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -80,7 +82,7 @@ const PdfToText = () => {
         {!file ? (
           <>
             <div className="upload-icon">📁</div>
-            <p>PDF 파일을 드래그하거나 클릭하여 선택</p>
+            <p>{t('common.dropzone.pdf')}</p>
             <input
               type="file"
               accept="application/pdf"
@@ -89,7 +91,7 @@ const PdfToText = () => {
               id="file-input"
             />
             <label htmlFor="file-input" className="btn btn-primary">
-              파일 선택
+              {t('common.buttons.selectFile')}
             </label>
           </>
         ) : (
@@ -109,7 +111,7 @@ const PdfToText = () => {
       {file && !extractedTexts.length && (
         <div className="options">
           <button className="btn btn-convert" onClick={handleExtract} disabled={extracting}>
-            {extracting ? '추출 중...' : '📝 텍스트 추출'}
+            {extracting ? t('pages.pdf.toText.actions.extracting') : t('pages.pdf.toText.actions.extract')}
           </button>
         </div>
       )}
@@ -134,13 +136,13 @@ const PdfToText = () => {
       {extractedTexts.length > 0 && (
         <div className="text-result">
           <div className="result-header">
-            <h3>추출된 텍스트 ({extractedTexts.length} 페이지)</h3>
+            <h3>{t('pages.pdf.toText.result.title', { count: extractedTexts.length })}</h3>
             <div className="result-actions">
               <button className="btn btn-secondary" onClick={handleCopyAll}>
-                📋 전체 복사
+                {t('pages.pdf.toText.result.copyAll')}
               </button>
               <button className="btn btn-primary" onClick={handleDownload}>
-                💾 TXT 저장
+                {t('pages.pdf.toText.result.saveTxt')}
               </button>
             </div>
           </div>
@@ -148,7 +150,9 @@ const PdfToText = () => {
           <div className="text-preview">
             {extractedTexts.map((page) => (
               <div key={page.pageNumber} className="text-page">
-                <div className="page-number">페이지 {page.pageNumber}</div>
+                <div className="page-number">
+                  {t('pages.pdf.toText.result.pageLabel', { page: page.pageNumber })}
+                </div>
                 <pre className="page-text">{page.text}</pre>
               </div>
             ))}

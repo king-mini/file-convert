@@ -1,5 +1,6 @@
 import { PDFDocument, degrees } from 'pdf-lib';
 import { saveAs } from 'file-saver';
+import i18n from '../i18n';
 
 export type RotationAngle = 90 | 180 | 270;
 
@@ -19,7 +20,11 @@ export const rotatePdf = async (
   const pdfDoc = await PDFDocument.load(arrayBuffer);
 
   const totalPages = pdfDoc.getPageCount();
-  onProgress?.({ current: 0, total: totalPages, status: 'PDF 로딩 완료' });
+  onProgress?.({
+    current: 0,
+    total: totalPages,
+    status: i18n.t('common.status.pdfLoadingComplete'),
+  });
 
   // 회전할 페이지 결정
   const pagesToRotate =
@@ -34,7 +39,7 @@ export const rotatePdf = async (
     onProgress?.({
       current: i + 1,
       total: pagesToRotate.length,
-      status: `페이지 ${pageIndex + 1} 회전 중...`,
+      status: i18n.t('common.status.pageRotating', { page: pageIndex + 1 }),
     });
 
     const page = pdfDoc.getPage(pageIndex);
@@ -46,7 +51,7 @@ export const rotatePdf = async (
   onProgress?.({
     current: pagesToRotate.length,
     total: pagesToRotate.length,
-    status: 'PDF 생성 중...',
+    status: i18n.t('common.status.pdfGenerating'),
   });
 
   const pdfBytes = await pdfDoc.save();
@@ -57,7 +62,7 @@ export const rotatePdf = async (
   onProgress?.({
     current: pagesToRotate.length,
     total: pagesToRotate.length,
-    status: '완료!',
+    status: i18n.t('common.status.done'),
   });
 };
 

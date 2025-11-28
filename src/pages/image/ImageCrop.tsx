@@ -1,4 +1,5 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './ImageCrop.css';
 
@@ -23,6 +24,7 @@ const ImageCrop = () => {
   const [error, setError] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const { t } = useTranslation();
 
   // 이미지 원본 크기
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
@@ -42,12 +44,12 @@ const ImageCrop = () => {
 
   const handleFile = useCallback((selectedFile: File) => {
     if (!selectedFile.type.startsWith('image/')) {
-      setError('이미지 파일만 업로드 가능합니다.');
+      setError(t('common.validation.imageOnly'));
       return;
     }
 
     if (selectedFile.size > 50 * 1024 * 1024) {
-      setError('50MB 이하의 파일만 지원합니다.');
+      setError(t('common.validation.maxImageSize', { limit: 50 }));
       return;
     }
 
@@ -66,7 +68,7 @@ const ImageCrop = () => {
       setCropArea({ x: 15, y: 15, width: 70, height: 70 });
     };
     img.src = url;
-  }, []);
+  }, [t]);
 
   // 비율 변경 시 크롭 영역 조정
   useEffect(() => {
@@ -240,11 +242,11 @@ const ImageCrop = () => {
       setCopied(false);
     } catch (err) {
       console.error('Processing error:', err);
-      setError('처리 중 오류가 발생했습니다.');
+      setError(t('common.errors.process'));
     } finally {
       setProcessing(false);
     }
-  }, [file, preview, cropArea]);
+  }, [file, preview, cropArea, t]);
 
   const handleDownload = useCallback(() => {
     if (!result || !file) return;
@@ -278,9 +280,9 @@ const ImageCrop = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      setError('클립보드 복사에 실패했습니다.');
+      setError(t('common.errors.clipboard'));
     }
-  }, [resultBlob]);
+  }, [resultBlob, t]);
 
   const getCropPixelSize = () => ({
     width: Math.round((cropArea.width / 100) * imageSize.width),
@@ -290,8 +292,8 @@ const ImageCrop = () => {
   return (
     <div className="image-crop">
       <div className="page-header">
-        <h1>✂️ Image Crop</h1>
-        <p>이미지를 원하는 영역만 잘라내세요</p>
+        <h1>{t('pages.image.imageCrop.hero.title')}</h1>
+        <p>{t('pages.image.imageCrop.hero.description')}</p>
       </div>
 
       {!file && (
@@ -313,8 +315,8 @@ const ImageCrop = () => {
           />
           <label htmlFor="file-input" className="upload-content">
             <div className="upload-icon">🖼️</div>
-            <p>이미지를 드래그하거나 클릭하여 선택하세요</p>
-            <span className="upload-hint">JPG, PNG, WebP (최대 50MB)</span>
+            <p>{t('pages.image.imageCrop.upload.hint')}</p>
+            <span className="upload-hint">{t('pages.image.imageCrop.upload.support')}</span>
           </label>
         </div>
       )}
@@ -333,7 +335,7 @@ const ImageCrop = () => {
             <button 
               className="image-remove-btn"
               onClick={handleNewImage}
-              title="다른 이미지 선택"
+              title={t('common.hints.chooseAnother')}
             >
               ✕
             </button>
@@ -368,7 +370,7 @@ const ImageCrop = () => {
 
           <div className="options">
             <div className="option-group">
-              <label>비율</label>
+              <label>{t('pages.image.imageCrop.options.ratio')}</label>
               <div className="ratio-buttons">
                 {(Object.keys(aspectRatios) as AspectRatio[]).map((ratio) => (
                   <button
@@ -376,7 +378,7 @@ const ImageCrop = () => {
                     className={`ratio-btn ${aspectRatio === ratio ? 'active' : ''}`}
                     onClick={() => setAspectRatio(ratio)}
                   >
-                    {aspectRatios[ratio].label}
+                    {t(`pages.image.imageCrop.options.buttons.${ratio}`)}
                   </button>
                 ))}
               </div>
@@ -390,14 +392,14 @@ const ImageCrop = () => {
 
           <div className="actions">
             <button className="btn btn-secondary" onClick={handleNewImage}>
-              🖼️ 다른 이미지
+              {t('common.buttons.otherImage')}
             </button>
             <button
               className="btn btn-primary"
               onClick={handleProcess}
               disabled={processing}
             >
-              {processing ? '처리 중...' : '✂️ 자르기'}
+              {processing ? t('common.status.processing') : t('pages.image.imageCrop.actions.crop')}
             </button>
           </div>
         </div>
@@ -406,7 +408,12 @@ const ImageCrop = () => {
       {result && (
         <div className="editor">
           <div className="result-container">
-            <h3>결과 ({getCropPixelSize().width} × {getCropPixelSize().height})</h3>
+            <h3>
+              {t('pages.image.imageCrop.panels.result', {
+                width: getCropPixelSize().width,
+                height: getCropPixelSize().height,
+              })}
+            </h3>
             <div
               className="image-container clickable"
               onClick={() => setModalImage(result)}
@@ -417,7 +424,7 @@ const ImageCrop = () => {
 
           <div className="actions">
             <button className="btn btn-secondary" onClick={handleNewImage}>
-              🖼️ 다른 이미지
+              {t('common.buttons.otherImage')}
             </button>
             <button
               className="btn btn-primary"
@@ -426,16 +433,16 @@ const ImageCrop = () => {
                 setResultBlob(null);
               }}
             >
-              ✂️ 다시 자르기
+              {t('pages.image.imageCrop.actions.recrop')}
             </button>
             <button
               className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
               onClick={handleCopyToClipboard}
             >
-              {copied ? '✓ 복사됨' : '📋 복사'}
+              {copied ? t('common.buttons.copied') : t('common.buttons.copy')}
             </button>
             <button className="btn btn-success" onClick={handleDownload}>
-              💾 저장
+              {t('common.buttons.save')}
             </button>
           </div>
         </div>

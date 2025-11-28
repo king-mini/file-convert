@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { availableLanguages } from '../i18n';
@@ -13,18 +13,7 @@ const Header = () => {
   const isPdfTool = location.pathname.startsWith('/pdf/');
   const isImageTool = location.pathname.startsWith('/image/');
   const currentLang = (i18n.resolvedLanguage || i18n.language || 'ko').split('-')[0];
-  const [langOpen, setLangOpen] = useState(false);
   const langRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (langRef.current && !langRef.current.contains(event.target as Node)) {
-        setLangOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
 
   return (
     <header className="header">
@@ -57,10 +46,7 @@ const Header = () => {
               key={lang.code}
               type="button"
               className={`lang-btn ${currentLang === lang.code ? 'active' : ''}`}
-              onClick={() => {
-                i18n.changeLanguage(lang.code);
-                setLangOpen(false);
-              }}
+              onClick={() => i18n.changeLanguage(lang.code)}
             >
               {lang.label}
             </button>

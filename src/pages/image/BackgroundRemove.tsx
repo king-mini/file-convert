@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { removeBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import type { RemoveBackgroundOptions } from '../../utils/imageProcessor';
 import './BackgroundRemove.css';
@@ -19,6 +20,7 @@ const BackgroundRemove = () => {
   const [edgeBlur, setEdgeBlur] = useState(3);
   const [copied, setCopied] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
+  const { t } = useTranslation();
 
   // 모달 키보드 단축키 (ESC: 닫기, 좌우 방향키: 토글)
   useEffect(() => {
@@ -40,12 +42,12 @@ const BackgroundRemove = () => {
 
   const handleFile = useCallback((selectedFile: File) => {
     if (!selectedFile.type.startsWith('image/')) {
-      setError('이미지 파일만 업로드 가능합니다.');
+      setError(t('common.validation.imageOnly'));
       return;
     }
 
     if (selectedFile.size > 10 * 1024 * 1024) {
-      setError('10MB 이하의 파일만 지원합니다.');
+      setError(t('common.validation.maxImageSize', { limit: 10 }));
       return;
     }
 
@@ -55,7 +57,7 @@ const BackgroundRemove = () => {
 
     const url = URL.createObjectURL(selectedFile);
     setPreview(url);
-  }, []);
+  }, [t]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -95,11 +97,11 @@ const BackgroundRemove = () => {
       setCopied(false);
     } catch (err) {
       console.error('Processing error:', err);
-      setError('처리 중 오류가 발생했습니다. 다시 시도해주세요.');
+      setError(t('common.errors.process'));
     } finally {
       setProcessing(false);
     }
-  }, [file, modelSelection, edgeBlur]);
+  }, [file, modelSelection, edgeBlur, t]);
 
   const handleDownload = useCallback(() => {
     if (!result || !file) return;
@@ -131,9 +133,9 @@ const BackgroundRemove = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      setError('클립보드 복사에 실패했습니다.');
+      setError(t('common.errors.clipboard'));
     }
-  }, [resultBlob]);
+  }, [resultBlob, t]);
 
   const handleReapply = useCallback(async () => {
     if (!file) return;
@@ -147,8 +149,8 @@ const BackgroundRemove = () => {
   return (
     <div className="background-remove">
       <div className="page-header">
-        <h1>✨ Background Remove</h1>
-        <p>이미지 배경을 깔끔하게 제거하세요</p>
+        <h1>{t('pages.image.backgroundRemove.hero.title')}</h1>
+        <p>{t('pages.image.backgroundRemove.hero.description')}</p>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -171,8 +173,8 @@ const BackgroundRemove = () => {
           />
           <label htmlFor="file-input" className="upload-content">
             <div className="upload-icon">🖼️</div>
-            <p>이미지를 드래그하거나 클릭하여 선택하세요</p>
-            <span className="upload-hint">JPG, PNG, WebP (최대 10MB)</span>
+            <p>{t('pages.image.backgroundRemove.upload.hint')}</p>
+            <span className="upload-hint">{t('pages.image.backgroundRemove.upload.support')}</span>
           </label>
         </div>
       )}
@@ -191,7 +193,7 @@ const BackgroundRemove = () => {
           {/* 이미지 비교 뷰 */}
           <div className="image-compare">
             <div className="image-panel">
-              <h3>원본</h3>
+              <h3>{t('pages.image.backgroundRemove.panels.original')}</h3>
               <div 
                 className="image-container clickable"
                 onClick={() => {
@@ -200,7 +202,7 @@ const BackgroundRemove = () => {
                     setModalImage(preview);
                   }
                 }}
-                title="클릭하여 크게 보기"
+                title={t('common.hints.viewLarge')}
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
                 <button 
@@ -209,24 +211,26 @@ const BackgroundRemove = () => {
                     e.stopPropagation();
                     handleNewImage();
                   }}
-                  title="다른 이미지 선택"
+                  title={t('common.hints.chooseAnother')}
                 >
                   ✕
                 </button>
               </div>
             </div>
             <div className="image-panel">
-              <h3>결과</h3>
+              <h3>{t('pages.image.backgroundRemove.panels.result')}</h3>
               <div 
                 className={`image-container transparent-bg ${result ? 'clickable' : ''}`}
                 onClick={() => result && setModalImage(result)}
-                title={result ? "클릭하여 크게 보기" : undefined}
+                title={result ? t('common.hints.viewLarge') : undefined}
               >
                 {result ? (
                   <img src={result} alt="배경 제거된 이미지" />
                 ) : (
                   <div className="placeholder">
-                    {processing ? '처리 중...' : '배경 제거 후 결과가 표시됩니다'}
+                    {processing
+                      ? t('common.status.processing')
+                      : t('pages.image.backgroundRemove.placeholders.result')}
                   </div>
                 )}
               </div>
@@ -236,7 +240,7 @@ const BackgroundRemove = () => {
           {/* 옵션 */}
           <div className="options">
             <div className="option-group">
-              <label>모델 정밀도</label>
+              <label>{t('pages.image.backgroundRemove.options.model')}</label>
               <div className="radio-group">
                 <label className={`radio-option ${modelSelection === 0 ? 'active' : ''}`}>
                   <input
@@ -246,7 +250,7 @@ const BackgroundRemove = () => {
                     onChange={() => setModelSelection(0)}
                     disabled={processing}
                   />
-                  <span>⚡ 빠름</span>
+                  <span>{t('pages.image.backgroundRemove.options.fast')}</span>
                 </label>
                 <label className={`radio-option ${modelSelection === 1 ? 'active' : ''}`}>
                   <input
@@ -256,15 +260,13 @@ const BackgroundRemove = () => {
                     onChange={() => setModelSelection(1)}
                     disabled={processing}
                   />
-                  <span>🎯 정밀</span>
+                  <span>{t('pages.image.backgroundRemove.options.quality')}</span>
                 </label>
               </div>
             </div>
 
             <div className="option-group">
-              <label>
-                엣지 부드럽기: <strong>{edgeBlur}px</strong>
-              </label>
+              <label>{t('pages.image.backgroundRemove.options.edgeBlur', { value: edgeBlur })}</label>
               <input
                 type="range"
                 min="0"
@@ -274,8 +276,8 @@ const BackgroundRemove = () => {
                 disabled={processing}
               />
               <div className="range-labels">
-                <span>날카롭게</span>
-                <span>부드럽게</span>
+                <span>{t('pages.image.backgroundRemove.options.edgeLabels.sharp')}</span>
+                <span>{t('pages.image.backgroundRemove.options.edgeLabels.smooth')}</span>
               </div>
             </div>
 
@@ -283,15 +285,13 @@ const BackgroundRemove = () => {
               <span className="file-name">{file.name}</span>
               <span className="file-size">{formatFileSize(file.size)}</span>
             </div>
-            <p className="output-info">
-              💡 결과는 투명 배경 PNG 파일로 저장됩니다
-            </p>
+            <p className="output-info">{t('pages.image.backgroundRemove.info.output')}</p>
           </div>
 
           {/* 진행률 */}
           {processing && (
             <div className="progress" aria-live="polite">
-              <p>배경 제거 중...</p>
+              <p>{t('pages.image.backgroundRemove.progress.label')}</p>
               <div className="progress-bar">
                 <div
                   className="progress-fill"
@@ -305,7 +305,7 @@ const BackgroundRemove = () => {
           {/* 액션 버튼 */}
           <div className="actions">
             <button className="btn btn-secondary" onClick={handleNewImage}>
-              🖼️ 다른 이미지
+              {t('common.buttons.otherImage')}
             </button>
             {result && (
               <button
@@ -313,7 +313,7 @@ const BackgroundRemove = () => {
                 onClick={handleReapply}
                 disabled={processing}
               >
-                🔄 다시 적용
+                {t('common.buttons.retry')}
               </button>
             )}
             {!result ? (
@@ -322,7 +322,9 @@ const BackgroundRemove = () => {
                 onClick={handleProcess}
                 disabled={processing}
               >
-                {processing ? '처리 중...' : '✨ 배경 제거'}
+                {processing
+                  ? t('common.status.processing')
+                  : t('pages.image.backgroundRemove.actions.apply')}
               </button>
             ) : (
               <>
@@ -330,10 +332,10 @@ const BackgroundRemove = () => {
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
-                  {copied ? '✓ 복사됨' : '📋 복사'}
+                  {copied ? t('common.buttons.copied') : t('common.buttons.copy')}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
-                  💾 PNG 저장
+                  {t('pages.image.backgroundRemove.actions.savePng')}
                 </button>
               </>
             )}
@@ -357,13 +359,13 @@ const BackgroundRemove = () => {
                   className={`modal-toggle-btn ${modalIndex === 0 ? 'active' : ''}`}
                   onClick={() => setModalIndex(0)}
                 >
-                  원본
+                  {t('pages.image.backgroundRemove.panels.original')}
                 </button>
                 <button
                   className={`modal-toggle-btn ${modalIndex === 1 ? 'active' : ''}`}
                   onClick={() => setModalIndex(1)}
                 >
-                  결과
+                  {t('pages.image.backgroundRemove.panels.result')}
                 </button>
               </div>
             )}

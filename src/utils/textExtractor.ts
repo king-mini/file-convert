@@ -1,5 +1,6 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import { saveAs } from 'file-saver';
+import i18n from '../i18n';
 
 // PDF.js worker 설정
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -27,7 +28,11 @@ export const extractTextFromPdf = async (
   const pdf = await loadingTask.promise;
 
   const totalPages = pdf.numPages;
-  onProgress?.({ current: 0, total: totalPages, status: 'PDF 로딩 완료' });
+  onProgress?.({
+    current: 0,
+    total: totalPages,
+    status: i18n.t('common.status.pdfLoadingComplete'),
+  });
 
   const extractedTexts: ExtractedText[] = [];
 
@@ -36,7 +41,10 @@ export const extractTextFromPdf = async (
     onProgress?.({
       current: pageNum,
       total: totalPages,
-      status: `페이지 ${pageNum}/${totalPages} 텍스트 추출 중...`,
+      status: i18n.t('common.status.pageExtracting', {
+        current: pageNum,
+        total: totalPages,
+      }),
     });
 
     const page = await pdf.getPage(pageNum);
@@ -50,11 +58,15 @@ export const extractTextFromPdf = async (
 
     extractedTexts.push({
       pageNumber: pageNum,
-      text: text || '(텍스트 없음)',
+      text: text || i18n.t('common.messages.noText'),
     });
   }
 
-  onProgress?.({ current: totalPages, total: totalPages, status: '추출 완료!' });
+  onProgress?.({
+    current: totalPages,
+    total: totalPages,
+    status: i18n.t('common.status.extractingFinished'),
+  });
 
   return extractedTexts;
 };
@@ -67,7 +79,7 @@ export const downloadAsTextFile = (
   const fullText = extractedTexts
     .map(
       (page) =>
-        `========== 페이지 ${page.pageNumber} ==========\n\n${page.text}\n\n`
+        `${i18n.t('pages.pdf.toText.textFile.separator', { page: page.pageNumber })}${page.text}\n\n`
     )
     .join('');
 

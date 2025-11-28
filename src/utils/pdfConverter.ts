@@ -1,6 +1,7 @@
 import * as pdfjsLib from 'pdfjs-dist';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import i18n from '../i18n';
 
 // PDF.js worker 설정 - 로컬 파일 사용
 pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
@@ -38,7 +39,11 @@ export const convertPdfToImages = async (
   const endPage = Math.max(startPage, Math.min(end, totalPages));
   const pagesToConvert = endPage - startPage + 1;
 
-  onProgress?.({ current: 0, total: pagesToConvert, status: 'PDF 로딩 완료' });
+  onProgress?.({
+    current: 0,
+    total: pagesToConvert,
+    status: i18n.t('common.status.pdfLoadingComplete'),
+  });
 
   const zip = new JSZip();
 
@@ -47,7 +52,7 @@ export const convertPdfToImages = async (
     onProgress?.({
       current: pageNum - startPage + 1,
       total: pagesToConvert,
-      status: `페이지 ${pageNum}/${endPage} 변환 중...`,
+      status: i18n.t('common.status.pageConverting', { current: pageNum, total: endPage }),
     });
 
     const page = await pdf.getPage(pageNum);
@@ -84,12 +89,20 @@ export const convertPdfToImages = async (
   }
 
   // ZIP 생성 및 다운로드
-  onProgress?.({ current: pagesToConvert, total: pagesToConvert, status: 'ZIP 파일 생성 중...' });
+  onProgress?.({
+    current: pagesToConvert,
+    total: pagesToConvert,
+    status: i18n.t('common.status.zipPreparing'),
+  });
   
   const zipBlob = await zip.generateAsync({ type: 'blob' });
   const outputFileName = file.name.replace(/\.pdf$/i, '') + '_images.zip';
   saveAs(zipBlob, outputFileName);
 
-  onProgress?.({ current: pagesToConvert, total: pagesToConvert, status: '완료!' });
+  onProgress?.({
+    current: pagesToConvert,
+    total: pagesToConvert,
+    status: i18n.t('common.status.done'),
+  });
 };
 
