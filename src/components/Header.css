@@ -85,36 +85,77 @@
 }
 
 .lang-switch {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.4rem;
+  justify-content: flex-end;
 }
 
-.lang-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 84px;
-  min-height: 40px;
-  padding: 0 0.8rem;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+.lang-toggle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  font-weight: 600;
+  font-size: 1.1rem;
   cursor: pointer;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   backdrop-filter: blur(10px);
 }
 
-.lang-btn:hover {
+.lang-toggle:hover,
+.lang-toggle:focus-visible {
   background: rgba(255, 255, 255, 0.25);
 }
 
-.lang-btn.active {
+.lang-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 160px;
   background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  z-index: 50;
+}
+
+.lang-option {
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #4a4a68;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  transition: all 0.15s;
+}
+
+.lang-option:hover,
+.lang-option:focus-visible {
+  background: rgba(102, 126, 234, 0.1);
   color: #5c6ff7;
-  border-color: #ffffff;
+}
+
+.lang-option.active {
+  background: rgba(102, 126, 234, 0.15);
+  color: #5c6ff7;
+}
+
+.lang-check {
+  font-size: 0.9rem;
+  color: #5c6ff7;
 }
 
 /* 태블릿 이하 */

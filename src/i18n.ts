@@ -8,8 +8,19 @@ export const availableLanguages = [
   { code: 'en', label: 'English' },
 ];
 
-const defaultLanguage =
-  typeof window !== 'undefined' && navigator.language.toLowerCase().startsWith('ko') ? 'ko' : 'en';
+const resolveStoredLanguage = () => {
+  if (typeof window === 'undefined') return null;
+  const stored = window.localStorage.getItem('lokit_lang');
+  return stored === 'ko' || stored === 'en' ? stored : null;
+};
+
+const resolveBrowserLanguage = () => {
+  if (typeof window === 'undefined') return 'en';
+  const lang = navigator.language?.toLowerCase() || '';
+  return lang.startsWith('ko') ? 'ko' : 'en';
+};
+
+const defaultLanguage = resolveStoredLanguage() ?? resolveBrowserLanguage();
 
 const resources = {
   ko: {
