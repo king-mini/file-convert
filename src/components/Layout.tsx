@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from './Header';
+import MetaUpdater from './MetaUpdater';
 import './Layout.css';
 
 const Layout = () => {
@@ -8,6 +9,7 @@ const Layout = () => {
 
   return (
     <div className="layout">
+      <MetaUpdater />
       <Header />
       <main className="layout-main">
         <Outlet />

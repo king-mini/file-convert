@@ -87,6 +87,9 @@ const ko = {
       en: 'English',
     },
   },
+  meta: {
+    description: 'Lokit - 빠르고 안전한 PDF & 이미지 도구. 브라우저에서 바로 변환하세요.',
+  },
   hub: {
     hero: {
       title: '무엇을 도와드릴까요?',
