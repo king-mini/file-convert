@@ -150,7 +150,7 @@ const en = {
     },
   },
   footer: {
-    notice: '© 2025 Lokit · All conversions stay in your browser',
+    notice: '© 2025 Lokit · Everything is processed safely in your browser without uploads',
   },
   pages: {
     pdf: {
@@ -191,6 +191,20 @@ const en = {
           compress: {
             title: 'Compress PDF',
             description: 'Reduce PDF file size',
+          },
+        },
+        benefits: {
+          client: {
+            title: '100% client-side',
+            description: 'Handle every task directly in the browser, no uploads',
+          },
+          privacy: {
+            title: 'Privacy protection',
+            description: 'Every file stays on your device',
+          },
+          free: {
+            title: 'Unlimited free',
+            description: 'Use every tool without limits or accounts',
           },
         },
       },

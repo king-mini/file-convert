@@ -150,7 +150,7 @@ const ko = {
     },
   },
   footer: {
-    notice: '© 2025 Lokit · 모든 변환은 브라우저에서 처리됩니다',
+    notice: '© 2025 Lokit · 모든 작업은 서버에 업로드되지 않고 안전하게 처리됩니다',
   },
   pages: {
     pdf: {
@@ -191,6 +191,20 @@ const ko = {
           compress: {
             title: 'PDF 압축',
             description: 'PDF 파일 크기 압축',
+          },
+        },
+        benefits: {
+          client: {
+            title: '100% 클라이언트 사이드',
+            description: '서버 업로드 없이 브라우저에서 직접 처리',
+          },
+          privacy: {
+            title: '개인정보 보호',
+            description: '모든 파일은 사용자의 브라우저에서만 처리',
+          },
+          free: {
+            title: '무료 무제한',
+            description: '제한 없이 무료로 사용 가능',
           },
         },
       },

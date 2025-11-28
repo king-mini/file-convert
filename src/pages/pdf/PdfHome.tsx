@@ -74,6 +74,26 @@ const PdfHome = () => {
     ],
     [t]
   );
+  const benefits = useMemo(
+    () => [
+      {
+        icon: '✅',
+        title: t('pages.pdf.home.benefits.client.title'),
+        description: t('pages.pdf.home.benefits.client.description'),
+      },
+      {
+        icon: '🔒',
+        title: t('pages.pdf.home.benefits.privacy.title'),
+        description: t('pages.pdf.home.benefits.privacy.description'),
+      },
+      {
+        icon: '💰',
+        title: t('pages.pdf.home.benefits.free.title'),
+        description: t('pages.pdf.home.benefits.free.description'),
+      },
+    ],
+    [t]
+  );
 
   return (
     <div className="home">
@@ -109,21 +129,13 @@ const PdfHome = () => {
 
       {/* Features Section */}
       <section className="benefits">
-        <div className="benefit-card">
-          <div className="benefit-icon">✅</div>
-          <h3>{t('hub.features.client.title')}</h3>
-          <p>{t('hub.features.client.desc')}</p>
-        </div>
-        <div className="benefit-card">
-          <div className="benefit-icon">🔒</div>
-          <h3>{t('hub.features.privacy.title')}</h3>
-          <p>{t('hub.features.privacy.desc')}</p>
-        </div>
-        <div className="benefit-card">
-          <div className="benefit-icon">💰</div>
-          <h3>{t('hub.features.free.title')}</h3>
-          <p>{t('hub.features.free.desc')}</p>
-        </div>
+        {benefits.map((benefit) => (
+          <div key={benefit.title} className="benefit-card">
+            <div className="benefit-icon">{benefit.icon}</div>
+            <h3>{benefit.title}</h3>
+            <p>{benefit.description}</p>
+          </div>
+        ))}
       </section>
     </div>
   );
