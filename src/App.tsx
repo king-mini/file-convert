@@ -1,62 +1,71 @@
+import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/Layout';
-import Hub from './pages/Hub';
-import PdfHome from './pages/pdf/PdfHome';
-import PdfToJpg from './pages/pdf/PdfToJpg';
-import PdfToPng from './pages/pdf/PdfToPng';
-import PdfToText from './pages/pdf/PdfToText';
-import ImageToPdf from './pages/pdf/ImageToPdf';
-import MergePdf from './pages/pdf/MergePdf';
-import SplitPdf from './pages/pdf/SplitPdf';
-import RotatePdf from './pages/pdf/RotatePdf';
-import CompressPdf from './pages/pdf/CompressPdf';
-import ImageHome from './pages/image/ImageHome';
-import PortraitBlur from './pages/image/PortraitBlur';
-import BackgroundRemove from './pages/image/BackgroundRemove';
-import ImageResize from './pages/image/ImageResize';
-import ImageCompress from './pages/image/ImageCompress';
-import FormatConvert from './pages/image/FormatConvert';
-import ImageCrop from './pages/image/ImageCrop';
+import Loading from './components/Loading';
+
+const Hub = lazy(() => import('./pages/Hub'));
+
+// PDF
+const PdfHome = lazy(() => import('./pages/pdf/PdfHome'));
+const PdfToJpg = lazy(() => import('./pages/pdf/PdfToJpg'));
+const PdfToPng = lazy(() => import('./pages/pdf/PdfToPng'));
+const PdfToText = lazy(() => import('./pages/pdf/PdfToText'));
+const ImageToPdf = lazy(() => import('./pages/pdf/ImageToPdf'));
+const MergePdf = lazy(() => import('./pages/pdf/MergePdf'));
+const SplitPdf = lazy(() => import('./pages/pdf/SplitPdf'));
+const RotatePdf = lazy(() => import('./pages/pdf/RotatePdf'));
+const CompressPdf = lazy(() => import('./pages/pdf/CompressPdf'));
+
+// Image
+const ImageHome = lazy(() => import('./pages/image/ImageHome'));
+const PortraitBlur = lazy(() => import('./pages/image/PortraitBlur'));
+const BackgroundRemove = lazy(() => import('./pages/image/BackgroundRemove'));
+const ImageResize = lazy(() => import('./pages/image/ImageResize'));
+const ImageCompress = lazy(() => import('./pages/image/ImageCompress'));
+const FormatConvert = lazy(() => import('./pages/image/FormatConvert'));
+const ImageCrop = lazy(() => import('./pages/image/ImageCrop'));
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* Hub - Main Page */}
-          <Route index element={<Hub />} />
-          
-          {/* PDF Routes */}
-          <Route path="pdf" element={<PdfHome />} />
-          <Route path="pdf/to-jpg" element={<PdfToJpg />} />
-          <Route path="pdf/to-png" element={<PdfToPng />} />
-          <Route path="pdf/to-text" element={<PdfToText />} />
-          <Route path="pdf/image-to-pdf" element={<ImageToPdf />} />
-          <Route path="pdf/merge" element={<MergePdf />} />
-          <Route path="pdf/split" element={<SplitPdf />} />
-          <Route path="pdf/rotate" element={<RotatePdf />} />
-          <Route path="pdf/compress" element={<CompressPdf />} />
-          
-          {/* Image Routes */}
-          <Route path="image" element={<ImageHome />} />
-          <Route path="image/portrait-blur" element={<PortraitBlur />} />
-          <Route path="image/bg-remove" element={<BackgroundRemove />} />
-          <Route path="image/resize" element={<ImageResize />} />
-          <Route path="image/compress" element={<ImageCompress />} />
-          <Route path="image/format" element={<FormatConvert />} />
-          <Route path="image/crop" element={<ImageCrop />} />
-          
-          {/* Redirects - Old URLs to New URLs */}
-          <Route path="pdf-to-jpg" element={<Navigate to="/pdf/to-jpg" replace />} />
-          <Route path="pdf-to-png" element={<Navigate to="/pdf/to-png" replace />} />
-          <Route path="pdf-to-text" element={<Navigate to="/pdf/to-text" replace />} />
-          <Route path="image-to-pdf" element={<Navigate to="/pdf/image-to-pdf" replace />} />
-          <Route path="merge-pdf" element={<Navigate to="/pdf/merge" replace />} />
-          <Route path="split-pdf" element={<Navigate to="/pdf/split" replace />} />
-          <Route path="rotate-pdf" element={<Navigate to="/pdf/rotate" replace />} />
-          <Route path="compress-pdf" element={<Navigate to="/pdf/compress" replace />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<Loading />}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            {/* Hub - Main Page */}
+            <Route index element={<Hub />} />
+            
+            {/* PDF Routes */}
+            <Route path="pdf" element={<PdfHome />} />
+            <Route path="pdf/to-jpg" element={<PdfToJpg />} />
+            <Route path="pdf/to-png" element={<PdfToPng />} />
+            <Route path="pdf/to-text" element={<PdfToText />} />
+            <Route path="pdf/image-to-pdf" element={<ImageToPdf />} />
+            <Route path="pdf/merge" element={<MergePdf />} />
+            <Route path="pdf/split" element={<SplitPdf />} />
+            <Route path="pdf/rotate" element={<RotatePdf />} />
+            <Route path="pdf/compress" element={<CompressPdf />} />
+            
+            {/* Image Routes */}
+            <Route path="image" element={<ImageHome />} />
+            <Route path="image/portrait-blur" element={<PortraitBlur />} />
+            <Route path="image/bg-remove" element={<BackgroundRemove />} />
+            <Route path="image/resize" element={<ImageResize />} />
+            <Route path="image/compress" element={<ImageCompress />} />
+            <Route path="image/format" element={<FormatConvert />} />
+            <Route path="image/crop" element={<ImageCrop />} />
+            
+            {/* Redirects - Old URLs to New URLs */}
+            <Route path="pdf-to-jpg" element={<Navigate to="/pdf/to-jpg" replace />} />
+            <Route path="pdf-to-png" element={<Navigate to="/pdf/to-png" replace />} />
+            <Route path="pdf-to-text" element={<Navigate to="/pdf/to-text" replace />} />
+            <Route path="image-to-pdf" element={<Navigate to="/pdf/image-to-pdf" replace />} />
+            <Route path="merge-pdf" element={<Navigate to="/pdf/merge" replace />} />
+            <Route path="split-pdf" element={<Navigate to="/pdf/split" replace />} />
+            <Route path="rotate-pdf" element={<Navigate to="/pdf/rotate" replace />} />
+            <Route path="compress-pdf" element={<Navigate to="/pdf/compress" replace />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 };

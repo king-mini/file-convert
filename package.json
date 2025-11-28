@@ -14,12 +14,14 @@
 	},
 	"dependencies": {
 		"file-saver": "^2.0.5",
+		"i18next": "^23.14.0",
 		"jspdf": "^3.0.4",
 		"jszip": "^3.10.1",
 		"pdf-lib": "^1.17.1",
 		"pdfjs-dist": "^5.4.394",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",
+		"react-i18next": "^15.4.0",
 		"react-router-dom": "^7.9.6"
 	},
 	"devDependencies": {

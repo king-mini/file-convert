@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './ImageHome.css';
 
 interface FeatureCard {
@@ -9,58 +10,60 @@ interface FeatureCard {
   available: boolean;
 }
 
-const features: FeatureCard[] = [
-  {
-    title: 'Portrait Blur',
-    icon: '🎭',
-    description: '인물 배경 흐리기',
-    path: '/image/portrait-blur',
-    available: true,
-  },
-  {
-    title: 'Background Remove',
-    icon: '✨',
-    description: '이미지 배경 제거',
-    path: '/image/bg-remove',
-    available: true,
-  },
-  {
-    title: 'Image Resize',
-    icon: '📐',
-    description: '이미지 크기 조정',
-    path: '/image/resize',
-    available: true,
-  },
-  {
-    title: 'Image Compress',
-    icon: '🗜️',
-    description: '이미지 용량 압축',
-    path: '/image/compress',
-    available: true,
-  },
-  {
-    title: 'Format Convert',
-    icon: '🔄',
-    description: 'PNG/JPG/WebP 변환',
-    path: '/image/format',
-    available: true,
-  },
-  {
-    title: 'Image Crop',
-    icon: '✂️',
-    description: '이미지 자르기',
-    path: '/image/crop',
-    available: true,
-  },
-];
-
 const ImageHome = () => {
+  const { t } = useTranslation();
+
+  const features: FeatureCard[] = [
+    {
+      title: t('imageHome.features.portraitBlur.title'),
+      icon: '🎭',
+      description: t('imageHome.features.portraitBlur.description'),
+      path: '/image/portrait-blur',
+      available: true,
+    },
+    {
+      title: t('imageHome.features.backgroundRemove.title'),
+      icon: '✨',
+      description: t('imageHome.features.backgroundRemove.description'),
+      path: '/image/bg-remove',
+      available: true,
+    },
+    {
+      title: t('imageHome.features.imageResize.title'),
+      icon: '📐',
+      description: t('imageHome.features.imageResize.description'),
+      path: '/image/resize',
+      available: true,
+    },
+    {
+      title: t('imageHome.features.imageCompress.title'),
+      icon: '🗜️',
+      description: t('imageHome.features.imageCompress.description'),
+      path: '/image/compress',
+      available: true,
+    },
+    {
+      title: t('imageHome.features.formatConvert.title'),
+      icon: '🔄',
+      description: t('imageHome.features.formatConvert.description'),
+      path: '/image/format',
+      available: true,
+    },
+    {
+      title: t('imageHome.features.imageCrop.title'),
+      icon: '✂️',
+      description: t('imageHome.features.imageCrop.description'),
+      path: '/image/crop',
+      available: true,
+    },
+  ];
+
   return (
     <div className="home">
       {/* Hero Section */}
       <section className="hero">
-        <h1 className="hero-title">🖼️ 이미지 도구</h1>
-        <p className="hero-subtitle">브라우저에서 안전하게 편집하세요</p>
+        <h1 className="hero-title">{t('imageHome.heroTitle')}</h1>
+        <p className="hero-subtitle">{t('imageHome.heroSubtitle')}</p>
       </section>
 
       {/* Feature Grid */}
@@ -79,7 +82,7 @@ const ImageHome = () => {
                   <div className="feature-icon">{feature.icon}</div>
                   <h3 className="feature-title">{feature.title}</h3>
                   <p className="feature-description">{feature.description}</p>
-                  <span className="coming-soon">곧 출시</span>
+                  <span className="coming-soon">{t('common.comingSoon')}</span>
                 </div>
               )}
             </div>
@@ -91,18 +94,18 @@ const ImageHome = () => {
       <section className="benefits">
         <div className="benefit-card">
           <div className="benefit-icon">✅</div>
-          <h3>100% 클라이언트 사이드</h3>
-          <p>서버 업로드 없이 브라우저에서 직접 처리</p>
+          <h3>{t('hub.features.client.title')}</h3>
+          <p>{t('hub.features.client.desc')}</p>
         </div>
         <div className="benefit-card">
           <div className="benefit-icon">🔒</div>
-          <h3>개인정보 보호</h3>
-          <p>모든 파일은 사용자의 브라우저에서만 처리</p>
+          <h3>{t('hub.features.privacy.title')}</h3>
+          <p>{t('hub.features.privacy.desc')}</p>
         </div>
         <div className="benefit-card">
           <div className="benefit-icon">💰</div>
-          <h3>무료 무제한</h3>
-          <p>제한 없이 무료로 사용 가능</p>
+          <h3>{t('hub.features.free.title')}</h3>
+          <p>{t('hub.features.free.desc')}</p>
         </div>
       </section>
     </div>

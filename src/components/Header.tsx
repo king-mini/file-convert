@@ -1,13 +1,30 @@
+import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { availableLanguages } from '../i18n';
 import './Header.css';
 
 const Header = () => {
   const location = useLocation();
+  const { t, i18n } = useTranslation();
   const isHub = location.pathname === '/';
   const isPdfHome = location.pathname === '/pdf';
   const isImageHome = location.pathname === '/image';
   const isPdfTool = location.pathname.startsWith('/pdf/');
   const isImageTool = location.pathname.startsWith('/image/');
+  const currentLang = (i18n.resolvedLanguage || i18n.language || 'ko').split('-')[0];
+  const [langOpen, setLangOpen] = useState(false);
+  const langRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   return (
     <header className="header">
@@ -15,7 +32,7 @@ const Header = () => {
         <Link to="/" className="logo">
           🔄 Lokit
         </Link>
-        
+
         {/* Hub에서는 네비게이션 숨김 */}
         {!isHub && (
           <nav className="nav">
@@ -23,16 +40,32 @@ const Header = () => {
               to="/pdf" 
               className={`nav-link ${isPdfHome || isPdfTool ? 'active' : ''}`}
             >
-              📄 PDF 도구
+              {t('nav.pdf')}
             </Link>
             <Link 
               to="/image" 
               className={`nav-link ${isImageHome || isImageTool ? 'active' : ''}`}
             >
-              🖼️ 이미지 도구
+              {t('nav.image')}
             </Link>
           </nav>
         )}
+
+        <div className="lang-switch" ref={langRef}>
+          {availableLanguages.map((lang) => (
+            <button
+              key={lang.code}
+              type="button"
+              className={`lang-btn ${currentLang === lang.code ? 'active' : ''}`}
+              onClick={() => {
+                i18n.changeLanguage(lang.code);
+                setLangOpen(false);
+              }}
+            >
+              {lang.label}
+            </button>
+          ))}
+        </div>
       </div>
     </header>
   );

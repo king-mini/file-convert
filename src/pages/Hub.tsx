@@ -1,32 +1,6 @@
 import { Link } from 'react-router-dom';
 import './Hub.css';
 
-interface CategoryCard {
-  icon: string;
-  title: string;
-  description: string;
-  count: string;
-  path: string;
-  badge?: string;
-}
-
-const categories: CategoryCard[] = [
-  {
-    icon: '📄',
-    title: 'PDF 작업',
-    description: 'PDF 변환, 병합, 분할, 압축 등',
-    count: '8개 도구',
-    path: '/pdf',
-  },
-  {
-    icon: '🖼️',
-    title: '이미지 편집',
-    description: '배경 흐리기, 배경 제거 등',
-    count: '6개 도구',
-    path: '/image',
-  },
-];
-
 const Hub = () => {
   return (
     <div className="hub">
@@ -36,25 +10,27 @@ const Hub = () => {
 
       <section className="categories">
         <div className="category-grid">
-          {categories.map((category) => (
-            <Link 
-              key={category.path} 
-              to={category.path} 
-              className="category-card"
-            >
-              <div className="category-icon">{category.icon}</div>
-              <div className="category-content">
-                <div className="category-header">
-                  <h2 className="category-title">{category.title}</h2>
-                  {category.badge && (
-                    <span className="category-badge">{category.badge}</span>
-                  )}
-                </div>
-                <p className="category-description">{category.description}</p>
-                <span className="category-count">{category.count}</span>
+          <Link to="/pdf" className="category-card">
+            <div className="category-icon">📄</div>
+            <div className="category-content">
+              <div className="category-header">
+                <h2 className="category-title">PDF 작업</h2>
               </div>
-            </Link>
-          ))}
+              <p className="category-description">PDF 변환, 병합, 분할, 압축 등</p>
+              <span className="category-count">8개 도구</span>
+            </div>
+          </Link>
+
+          <Link to="/image" className="category-card">
+            <div className="category-icon">🖼️</div>
+            <div className="category-content">
+              <div className="category-header">
+                <h2 className="category-title">이미지 편집</h2>
+              </div>
+              <p className="category-description">배경 흐리기, 배경 제거 등</p>
+              <span className="category-count">6개 도구</span>
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -71,7 +47,7 @@ const Hub = () => {
         </div>
         <div className="feature-item">
           <div className="feature-icon">💰</div>
-          <h3>무료 무제한</h3>
+          <h3>무료 제공</h3>
           <p>제한 없이 무료로 사용 가능</p>
         </div>
       </section>
