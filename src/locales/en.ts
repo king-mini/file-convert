@@ -90,6 +90,7 @@ const en = {
   meta: {
     description: 'Lokit - Fast and safe PDF & image tools. Convert directly in your browser.',
   },
+  locale: 'en-US',
   hub: {
     hero: {
       title: 'What can we help you with?',

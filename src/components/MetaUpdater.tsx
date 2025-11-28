@@ -6,7 +6,8 @@ const MetaUpdater = () => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const description = t('meta.description');
-  const lang = (i18n.language || 'ko').split('-')[0];
+  const locale = t('locale');
+  const lang = (i18n.language || 'en').split('-')[0];
 
   useEffect(() => {
     const descriptionMeta = document.querySelector('meta[name="description"]');
@@ -19,8 +20,19 @@ const MetaUpdater = () => {
       ogDescription.setAttribute('content', description);
     }
 
+    const ogLocale = document.querySelector('meta[property="og:locale"]');
+    if (ogLocale) {
+      ogLocale.setAttribute('content', locale.replace('-', '_'));
+    }
+
+    const ogAlternate = document.querySelector('meta[property="og:locale:alternate"]');
+    if (ogAlternate) {
+      const alternate = lang === 'ko' ? 'en-US' : 'ko-KR';
+      ogAlternate.setAttribute('content', alternate.replace('-', '_'));
+    }
+
     document.documentElement.setAttribute('lang', lang);
-  }, [description, lang, location.pathname]);
+  }, [description, locale, lang, location.pathname]);
 
   return null;
 };
