@@ -50,9 +50,43 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
-        <Link to="/" className="logo">
-          🔄 Lokit
-        </Link>
+        <div className="header-top">
+          <Link to="/" className="logo">
+            🔄 Lokit
+          </Link>
+
+          <div className="lang-switch" ref={langRef}>
+            <button
+              type="button"
+              className="lang-toggle"
+              aria-haspopup="listbox"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              🌐
+              <span className="sr-only">{t('header.lang.label')}</span>
+            </button>
+
+            {menuOpen && (
+              <div className="lang-menu" role="listbox">
+                {availableLanguages.map((lang) => (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    role="option"
+                    data-lang={lang.code}
+                    aria-selected={currentLang === lang.code}
+                    className={`lang-option ${currentLang === lang.code ? 'active' : ''}`}
+                    onClick={() => handleLanguageChange(lang.code as LanguageCode)}
+                  >
+                    {currentLang === lang.code && <span className="lang-check">✓</span>}
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
         {/* Hub에서는 네비게이션 숨김 */}
         {!isHub && (
@@ -71,38 +105,6 @@ const Header = () => {
             </Link>
           </nav>
         )}
-
-        <div className="lang-switch" ref={langRef}>
-          <button
-            type="button"
-            className="lang-toggle"
-            aria-haspopup="listbox"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen((prev) => !prev)}
-          >
-            🌐
-            <span className="sr-only">{t('header.lang.label')}</span>
-          </button>
-
-          {menuOpen && (
-            <div className="lang-menu" role="listbox">
-              {availableLanguages.map((lang) => (
-                <button
-                  key={lang.code}
-                  type="button"
-                  role="option"
-                  data-lang={lang.code}
-                  aria-selected={currentLang === lang.code}
-                  className={`lang-option ${currentLang === lang.code ? 'active' : ''}`}
-                  onClick={() => handleLanguageChange(lang.code as LanguageCode)}
-                >
-                  {currentLang === lang.code && <span className="lang-check">✓</span>}
-                  {lang.label}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
     </header>
   );
