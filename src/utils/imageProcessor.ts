@@ -178,6 +178,129 @@ const clearCanvas = (canvas: HTMLCanvasElement) => {
 const yieldToMain = (): Promise<void> => 
   new Promise(resolve => setTimeout(resolve, 0));
 
+// Canvas filter 지원 여부 확인
+const supportsCanvasFilter = (): boolean => {
+  try {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return false;
+    // iOS Safari는 filter 속성이 있지만 작동하지 않음
+    // 실제로 적용되는지 테스트
+    return typeof ctx.filter === 'string' && !isIOS();
+  } catch {
+    return false;
+  }
+};
+
+// StackBlur 알고리즘 (iOS fallback용)
+const stackBlurCanvas = (
+  canvas: HTMLCanvasElement, 
+  radius: number
+): void => {
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  
+  const width = canvas.width;
+  const height = canvas.height;
+  const imageData = ctx.getImageData(0, 0, width, height);
+  const pixels = imageData.data;
+  
+  // 간소화된 Box Blur (3 pass로 Gaussian 근사)
+  const iterations = 3;
+  const boxRadius = Math.round(radius / iterations);
+  
+  for (let i = 0; i < iterations; i++) {
+    boxBlurH(pixels, width, height, boxRadius);
+    boxBlurV(pixels, width, height, boxRadius);
+  }
+  
+  ctx.putImageData(imageData, 0, 0);
+};
+
+// 수평 Box Blur
+const boxBlurH = (
+  pixels: Uint8ClampedArray, 
+  width: number, 
+  height: number, 
+  radius: number
+): void => {
+  const div = radius + radius + 1;
+  for (let y = 0; y < height; y++) {
+    let rSum = 0, gSum = 0, bSum = 0, aSum = 0;
+    
+    // 초기 합계 계산
+    for (let x = -radius; x <= radius; x++) {
+      const px = Math.min(width - 1, Math.max(0, x));
+      const idx = (y * width + px) * 4;
+      rSum += pixels[idx];
+      gSum += pixels[idx + 1];
+      bSum += pixels[idx + 2];
+      aSum += pixels[idx + 3];
+    }
+    
+    for (let x = 0; x < width; x++) {
+      const idx = (y * width + x) * 4;
+      pixels[idx] = Math.round(rSum / div);
+      pixels[idx + 1] = Math.round(gSum / div);
+      pixels[idx + 2] = Math.round(bSum / div);
+      pixels[idx + 3] = Math.round(aSum / div);
+      
+      // 윈도우 이동
+      const leftX = Math.max(0, x - radius);
+      const rightX = Math.min(width - 1, x + radius + 1);
+      const leftIdx = (y * width + leftX) * 4;
+      const rightIdx = (y * width + rightX) * 4;
+      
+      rSum += pixels[rightIdx] - pixels[leftIdx];
+      gSum += pixels[rightIdx + 1] - pixels[leftIdx + 1];
+      bSum += pixels[rightIdx + 2] - pixels[leftIdx + 2];
+      aSum += pixels[rightIdx + 3] - pixels[leftIdx + 3];
+    }
+  }
+};
+
+// 수직 Box Blur
+const boxBlurV = (
+  pixels: Uint8ClampedArray, 
+  width: number, 
+  height: number, 
+  radius: number
+): void => {
+  const div = radius + radius + 1;
+  for (let x = 0; x < width; x++) {
+    let rSum = 0, gSum = 0, bSum = 0, aSum = 0;
+    
+    // 초기 합계 계산
+    for (let y = -radius; y <= radius; y++) {
+      const py = Math.min(height - 1, Math.max(0, y));
+      const idx = (py * width + x) * 4;
+      rSum += pixels[idx];
+      gSum += pixels[idx + 1];
+      bSum += pixels[idx + 2];
+      aSum += pixels[idx + 3];
+    }
+    
+    for (let y = 0; y < height; y++) {
+      const idx = (y * width + x) * 4;
+      pixels[idx] = Math.round(rSum / div);
+      pixels[idx + 1] = Math.round(gSum / div);
+      pixels[idx + 2] = Math.round(bSum / div);
+      pixels[idx + 3] = Math.round(aSum / div);
+      
+      // 윈도우 이동
+      const topY = Math.max(0, y - radius);
+      const bottomY = Math.min(height - 1, y + radius + 1);
+      const topIdx = (topY * width + x) * 4;
+      const bottomIdx = (bottomY * width + x) * 4;
+      
+      rSum += pixels[bottomIdx] - pixels[topIdx];
+      gSum += pixels[bottomIdx + 1] - pixels[topIdx + 1];
+      bSum += pixels[bottomIdx + 2] - pixels[topIdx + 2];
+      aSum += pixels[bottomIdx + 3] - pixels[topIdx + 3];
+    }
+  }
+};
+
 // 클립보드에 이미지 복사
 export const copyImageToClipboard = async (blob: Blob): Promise<void> => {
   try {
@@ -296,9 +419,16 @@ export const blurBackground = async (
   const resultCtx = resultCanvas.getContext('2d')!;
 
   // 9. 블러된 배경 그리기 (resultCanvas에)
-  resultCtx.filter = `blur(${blurAmount}px)`;
-  resultCtx.drawImage(img, 0, 0);
-  resultCtx.filter = 'none';
+  if (supportsCanvasFilter()) {
+    // PC/Android: Canvas filter 사용 (빠름)
+    resultCtx.filter = `blur(${blurAmount}px)`;
+    resultCtx.drawImage(img, 0, 0);
+    resultCtx.filter = 'none';
+  } else {
+    // iOS: StackBlur 알고리즘 사용 (느리지만 호환됨)
+    resultCtx.drawImage(img, 0, 0);
+    stackBlurCanvas(resultCanvas, blurAmount);
+  }
 
   await yieldToMain();
   onProgress?.(75);
