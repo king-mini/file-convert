@@ -57,8 +57,8 @@
   font-weight: 600;
 }
 
-/* 모바일 반응형 */
-@media (max-width: 768px) {
+/* 작은 화면: 언어 버튼 크기 줄이기 */
+@media (max-width: 600px) {
   .lang-toggle-btn {
     width: 28px;
     height: 28px;
@@ -67,6 +67,15 @@
 
   .lang-menu {
     top: 36px;
+  }
+}
+
+/* 매우 작은 화면 */
+@media (max-width: 400px) {
+  .lang-toggle-btn {
+    width: 26px;
+    height: 26px;
+    font-size: 14px;
   }
 }
 
