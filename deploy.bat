@@ -9,8 +9,6 @@ if errorlevel 1 (
     exit /b 1
 )
 echo.
-echo Build completed!
-echo.
 call npx wrangler pages deploy dist --project-name=file-convert
 if errorlevel 1 (
     echo.
