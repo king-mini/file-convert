@@ -1,3 +1,5 @@
+@import './PdfToJpg.css';
+
 /* MergePdf는 PdfToJpg.css를 기본으로 사용하고 추가 스타일만 정의 */
 .merge-pdf {
   max-width: 800px;
