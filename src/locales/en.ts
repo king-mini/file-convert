@@ -104,20 +104,20 @@ const en = {
         badge: 'BETA',
       },
     },
-    features: {
-      client: {
-        title: '100% client-side',
-        desc: 'Process files in your browser without uploads',
+      features: {
+        client: {
+          title: '100% client-side',
+          desc: 'Handle every task directly in the browser with no uploads',
+        },
+        privacy: {
+          title: 'Privacy first',
+          desc: 'Every file stays on your device with no external transfer',
+        },
+        free: {
+          title: 'Free to use',
+          desc: 'Unlimited access with no account required',
+        },
       },
-      privacy: {
-        title: 'Privacy first',
-        desc: 'Files never leave your device',
-      },
-      free: {
-        title: 'Free to use',
-        desc: 'No account required',
-      },
-    },
   },
   imageHome: {
     heroTitle: '🖼️ Image Tools',
@@ -198,10 +198,10 @@ const en = {
             title: '100% client-side',
             description: 'Handle every task directly in the browser, no uploads',
           },
-          privacy: {
-            title: 'Privacy protection',
-            description: 'Every file stays on your device',
-          },
+        privacy: {
+          title: 'Privacy protection',
+          description: 'Every file stays on your device with no external transfer',
+        },
           free: {
             title: 'Unlimited free',
             description: 'Use every tool without limits or accounts',

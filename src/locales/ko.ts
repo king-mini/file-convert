@@ -104,20 +104,20 @@ const ko = {
         badge: 'BETA',
       },
     },
-    features: {
-      client: {
-        title: '100% 클라이언트 사이드',
-        desc: '파일 업로드 없이 브라우저에서 처리',
+      features: {
+        client: {
+          title: '100% 클라이언트 사이드',
+          desc: '서버 업로드 없이 브라우저에서 직접 처리',
+        },
+        privacy: {
+          title: '개인정보 보호',
+          desc: '모든 파일이 외부로 전송되지 않는 안전한 구조',
+        },
+        free: {
+          title: '무료 제공',
+          desc: '제한 없이 무료로 사용 가능',
+        },
       },
-      privacy: {
-        title: '개인정보 보호',
-        desc: '모든 파일이 기기에서 처리됩니다',
-      },
-      free: {
-        title: '무료 제공',
-        desc: '회원가입 없이 바로 사용',
-      },
-    },
   },
   imageHome: {
     heroTitle: '🖼️ 이미지 편집',
@@ -198,10 +198,10 @@ const ko = {
             title: '100% 클라이언트 사이드',
             description: '서버 업로드 없이 브라우저에서 직접 처리',
           },
-          privacy: {
-            title: '개인정보 보호',
-            description: '모든 파일은 사용자의 브라우저에서만 처리',
-          },
+        privacy: {
+          title: '개인정보 보호',
+          description: '모든 파일이 외부로 전송되지 않는 안전한 구조',
+        },
           free: {
             title: '무료 무제한',
             description: '제한 없이 무료로 사용 가능',
