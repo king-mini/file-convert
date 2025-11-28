@@ -66,19 +66,19 @@ export const LanguageSwitcher: React.FC = () => {
       >
         <li
           role="option"
-          data-lang="ko"
-          className={`lang-option ${currentLang === 'ko' ? 'lang-option-active' : ''}`}
-          onClick={() => applyLanguage('ko')}
-        >
-          한국어
-        </li>
-        <li
-          role="option"
           data-lang="en"
           className={`lang-option ${currentLang === 'en' ? 'lang-option-active' : ''}`}
           onClick={() => applyLanguage('en')}
         >
           English
+        </li>
+        <li
+          role="option"
+          data-lang="ko"
+          className={`lang-option ${currentLang === 'ko' ? 'lang-option-active' : ''}`}
+          onClick={() => applyLanguage('ko')}
+        >
+          한국어
         </li>
       </ul>
     </div>

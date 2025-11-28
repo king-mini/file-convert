@@ -3,7 +3,9 @@
   padding: 12px 32px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
+  z-index: 100;
 }
 
 .top-bar-inner {

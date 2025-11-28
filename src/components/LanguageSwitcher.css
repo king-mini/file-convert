@@ -1,6 +1,7 @@
 .lang-switcher {
   position: relative;
   display: inline-block;
+  z-index: 1000;
 }
 
 .lang-toggle-btn {
@@ -33,8 +34,10 @@
   list-style: none;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
-  background: rgba(17, 24, 39, 0.96);
-  z-index: 1000;
+  background: rgba(102, 126, 234, 0.98);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 1001;
 }
 
 .lang-menu-hidden {
@@ -42,19 +45,21 @@
 }
 
 .lang-option {
-  padding: 6px 12px;
+  padding: 8px 16px;
   font-size: 14px;
   cursor: pointer;
-  color: #f9fafb;
-  transition: background-color 0.15s;
+  color: #ffffff;
+  transition: all 0.15s;
 }
 
 .lang-option:hover {
-  background: rgba(59, 130, 246, 0.35);
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
 }
 
 .lang-option-active {
   font-weight: 600;
+  background: rgba(255, 255, 255, 0.15);
 }
 
 /* 작은 화면: 언어 버튼 크기 줄이기 */
