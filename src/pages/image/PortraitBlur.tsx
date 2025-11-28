@@ -88,7 +88,11 @@ const PortraitBlur = () => {
       setCopied(false);
     } catch (err) {
       console.error('Processing error:', err);
-      setError('처리 중 오류가 발생했습니다. 다시 시도해주세요.');
+      // 디버그: 상세 에러 표시
+      const errorMessage = err instanceof Error 
+        ? `[DEBUG] ${err.name}: ${err.message}` 
+        : `[DEBUG] Unknown error: ${String(err)}`;
+      setError(errorMessage);
     } finally {
       setProcessing(false);
     }

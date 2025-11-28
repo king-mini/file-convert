@@ -192,8 +192,8 @@ const supportsCanvasFilter = (): boolean => {
   }
 };
 
-// StackBlur 알고리즘 (iOS fallback용)
-const stackBlurCanvas = (
+// iOS fallback: 축소-확대 방식 블러 (모든 브라우저 호환)
+const applyBlurFallback = (
   canvas: HTMLCanvasElement, 
   radius: number
 ): void => {
@@ -202,103 +202,37 @@ const stackBlurCanvas = (
   
   const width = canvas.width;
   const height = canvas.height;
-  const imageData = ctx.getImageData(0, 0, width, height);
-  const pixels = imageData.data;
   
-  // 간소화된 Box Blur (3 pass로 Gaussian 근사)
-  const iterations = 3;
-  const boxRadius = Math.round(radius / iterations);
+  // 블러 강도에 따라 축소 비율 계산 (radius가 클수록 더 많이 축소)
+  // radius 15px -> 약 1/8 크기, radius 50px -> 약 1/16 크기
+  const scaleFactor = Math.max(0.02, 1 / (radius * 0.8));
+  const smallWidth = Math.max(1, Math.round(width * scaleFactor));
+  const smallHeight = Math.max(1, Math.round(height * scaleFactor));
   
-  for (let i = 0; i < iterations; i++) {
-    boxBlurH(pixels, width, height, boxRadius);
-    boxBlurV(pixels, width, height, boxRadius);
-  }
+  // 임시 캔버스 생성
+  const tempCanvas = document.createElement('canvas');
+  tempCanvas.width = smallWidth;
+  tempCanvas.height = smallHeight;
+  const tempCtx = tempCanvas.getContext('2d')!;
   
-  ctx.putImageData(imageData, 0, 0);
-};
-
-// 수평 Box Blur
-const boxBlurH = (
-  pixels: Uint8ClampedArray, 
-  width: number, 
-  height: number, 
-  radius: number
-): void => {
-  const div = radius + radius + 1;
-  for (let y = 0; y < height; y++) {
-    let rSum = 0, gSum = 0, bSum = 0, aSum = 0;
-    
-    // 초기 합계 계산
-    for (let x = -radius; x <= radius; x++) {
-      const px = Math.min(width - 1, Math.max(0, x));
-      const idx = (y * width + px) * 4;
-      rSum += pixels[idx];
-      gSum += pixels[idx + 1];
-      bSum += pixels[idx + 2];
-      aSum += pixels[idx + 3];
-    }
-    
-    for (let x = 0; x < width; x++) {
-      const idx = (y * width + x) * 4;
-      pixels[idx] = Math.round(rSum / div);
-      pixels[idx + 1] = Math.round(gSum / div);
-      pixels[idx + 2] = Math.round(bSum / div);
-      pixels[idx + 3] = Math.round(aSum / div);
-      
-      // 윈도우 이동
-      const leftX = Math.max(0, x - radius);
-      const rightX = Math.min(width - 1, x + radius + 1);
-      const leftIdx = (y * width + leftX) * 4;
-      const rightIdx = (y * width + rightX) * 4;
-      
-      rSum += pixels[rightIdx] - pixels[leftIdx];
-      gSum += pixels[rightIdx + 1] - pixels[leftIdx + 1];
-      bSum += pixels[rightIdx + 2] - pixels[leftIdx + 2];
-      aSum += pixels[rightIdx + 3] - pixels[leftIdx + 3];
-    }
-  }
-};
-
-// 수직 Box Blur
-const boxBlurV = (
-  pixels: Uint8ClampedArray, 
-  width: number, 
-  height: number, 
-  radius: number
-): void => {
-  const div = radius + radius + 1;
-  for (let x = 0; x < width; x++) {
-    let rSum = 0, gSum = 0, bSum = 0, aSum = 0;
-    
-    // 초기 합계 계산
-    for (let y = -radius; y <= radius; y++) {
-      const py = Math.min(height - 1, Math.max(0, y));
-      const idx = (py * width + x) * 4;
-      rSum += pixels[idx];
-      gSum += pixels[idx + 1];
-      bSum += pixels[idx + 2];
-      aSum += pixels[idx + 3];
-    }
-    
-    for (let y = 0; y < height; y++) {
-      const idx = (y * width + x) * 4;
-      pixels[idx] = Math.round(rSum / div);
-      pixels[idx + 1] = Math.round(gSum / div);
-      pixels[idx + 2] = Math.round(bSum / div);
-      pixels[idx + 3] = Math.round(aSum / div);
-      
-      // 윈도우 이동
-      const topY = Math.max(0, y - radius);
-      const bottomY = Math.min(height - 1, y + radius + 1);
-      const topIdx = (topY * width + x) * 4;
-      const bottomIdx = (bottomY * width + x) * 4;
-      
-      rSum += pixels[bottomIdx] - pixels[topIdx];
-      gSum += pixels[bottomIdx + 1] - pixels[topIdx + 1];
-      bSum += pixels[bottomIdx + 2] - pixels[topIdx + 2];
-      aSum += pixels[bottomIdx + 3] - pixels[topIdx + 3];
-    }
-  }
+  // 1단계: 원본을 작은 크기로 축소 (smoothing으로 평균화)
+  tempCtx.imageSmoothingEnabled = true;
+  tempCtx.imageSmoothingQuality = 'high';
+  tempCtx.drawImage(canvas, 0, 0, smallWidth, smallHeight);
+  
+  // 2단계: 작은 이미지를 원본 크기로 확대 (smoothing으로 블러 효과)
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.clearRect(0, 0, width, height);
+  ctx.drawImage(tempCanvas, 0, 0, width, height);
+  
+  // 3단계: 한번 더 반복하면 더 부드러운 블러
+  tempCtx.clearRect(0, 0, smallWidth, smallHeight);
+  tempCtx.drawImage(canvas, 0, 0, smallWidth, smallHeight);
+  ctx.drawImage(tempCanvas, 0, 0, width, height);
+  
+  // 임시 캔버스 정리
+  clearCanvas(tempCanvas);
 };
 
 // 클립보드에 이미지 복사
@@ -342,129 +276,153 @@ export const blurBackground = async (
   blurAmount: number,
   onProgress?: (progress: number) => void
 ): Promise<Blob> => {
-  onProgress?.(5);
+  let step = 'init';
+  
+  try {
+    onProgress?.(5);
 
-  // 1. EXIF 데이터 추출 (JPG인 경우)
-  const exifData = await extractExif(file);
+    // 1. EXIF 데이터 추출 (JPG인 경우)
+    step = 'extractExif';
+    const exifData = await extractExif(file);
 
-  // 2. MediaPipe 스크립트 로드
-  await loadMediaPipeScript();
-  onProgress?.(10);
+    // 2. MediaPipe 스크립트 로드
+    step = 'loadMediaPipe';
+    await loadMediaPipeScript();
+    onProgress?.(10);
 
-  // 3. 이미지 로드
-  const img = await loadImage(file);
-  const originalWidth = img.width;
-  const originalHeight = img.height;
-  onProgress?.(15);
+    // 3. 이미지 로드
+    step = 'loadImage';
+    const img = await loadImage(file);
+    const originalWidth = img.width;
+    const originalHeight = img.height;
+    onProgress?.(15);
 
-  // 4. 처리용 리사이즈 비율 계산 (마스크 생성용)
-  const maxSize = getMaxProcessingSize();
-  const ratio = getResizeRatio(originalWidth, originalHeight, maxSize);
-  const processWidth = Math.round(originalWidth * ratio);
-  const processHeight = Math.round(originalHeight * ratio);
+    // 4. 처리용 리사이즈 비율 계산 (마스크 생성용)
+    step = 'calcResize';
+    const maxSize = getMaxProcessingSize();
+    const ratio = getResizeRatio(originalWidth, originalHeight, maxSize);
+    const processWidth = Math.round(originalWidth * ratio);
+    const processHeight = Math.round(originalHeight * ratio);
 
-  // 5. MediaPipe Selfie Segmentation 초기화
-  const segmentation = new window.SelfieSegmentation({
-    locateFile: (path: string) =>
-      `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${path}`,
-  });
-
-  // iOS는 빠른 모델 사용 (메모리 절약)
-  segmentation.setOptions({
-    modelSelection: isIOS() ? 0 : 1,
-    selfieMode: false,
-  });
-
-  onProgress?.(25);
-
-  // 6. 작은 크기로 세그멘테이션 수행
-  const processCanvas = document.createElement('canvas');
-  processCanvas.width = processWidth;
-  processCanvas.height = processHeight;
-  const processCtx = processCanvas.getContext('2d')!;
-  processCtx.drawImage(img, 0, 0, processWidth, processHeight);
-
-  await yieldToMain(); // 브라우저에 숨쉴 틈
-
-  const segmentationResult = await new Promise<SegmentationResults>((resolve, reject) => {
-    segmentation.onResults((results) => {
-      resolve(results);
+    // 5. MediaPipe Selfie Segmentation 초기화
+    step = 'initSegmentation';
+    const segmentation = new window.SelfieSegmentation({
+      locateFile: (path: string) =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${path}`,
     });
 
-    segmentation.send({ image: processCanvas }).catch(reject);
-  });
+    // iOS는 빠른 모델 사용 (메모리 절약)
+    segmentation.setOptions({
+      modelSelection: isIOS() ? 0 : 1,
+      selfieMode: false,
+    });
 
-  onProgress?.(50);
+    onProgress?.(25);
 
-  // 7. 마스크를 원본 크기로 업스케일
-  const { segmentationMask } = segmentationResult;
-  
-  // processCanvas를 마스크 캔버스로 재활용
-  processCtx.clearRect(0, 0, processWidth, processHeight);
-  processCanvas.width = originalWidth;
-  processCanvas.height = originalHeight;
-  
-  // 부드러운 업스케일
-  processCtx.imageSmoothingEnabled = true;
-  processCtx.imageSmoothingQuality = 'high';
-  processCtx.drawImage(segmentationMask, 0, 0, originalWidth, originalHeight);
+    // 6. 작은 크기로 세그멘테이션 수행
+    step = 'createProcessCanvas';
+    const processCanvas = document.createElement('canvas');
+    processCanvas.width = processWidth;
+    processCanvas.height = processHeight;
+    const processCtx = processCanvas.getContext('2d')!;
+    processCtx.drawImage(img, 0, 0, processWidth, processHeight);
 
-  await yieldToMain();
-  onProgress?.(60);
+    await yieldToMain(); // 브라우저에 숨쉴 틈
 
-  // 8. 결과 캔버스 생성 (최종 결과용)
-  const resultCanvas = document.createElement('canvas');
-  resultCanvas.width = originalWidth;
-  resultCanvas.height = originalHeight;
-  const resultCtx = resultCanvas.getContext('2d')!;
+    step = 'runSegmentation';
+    const segmentationResult = await new Promise<SegmentationResults>((resolve, reject) => {
+      segmentation.onResults((results) => {
+        resolve(results);
+      });
 
-  // 9. 블러된 배경 그리기 (resultCanvas에)
-  if (supportsCanvasFilter()) {
-    // PC/Android: Canvas filter 사용 (빠름)
-    resultCtx.filter = `blur(${blurAmount}px)`;
+      segmentation.send({ image: processCanvas }).catch(reject);
+    });
+
+    onProgress?.(50);
+
+    // 7. 마스크를 원본 크기로 업스케일
+    step = 'upscaleMask';
+    const { segmentationMask } = segmentationResult;
+    
+    // processCanvas를 마스크 캔버스로 재활용
+    processCtx.clearRect(0, 0, processWidth, processHeight);
+    processCanvas.width = originalWidth;
+    processCanvas.height = originalHeight;
+    
+    // 부드러운 업스케일
+    processCtx.imageSmoothingEnabled = true;
+    processCtx.imageSmoothingQuality = 'high';
+    processCtx.drawImage(segmentationMask, 0, 0, originalWidth, originalHeight);
+
+    await yieldToMain();
+    onProgress?.(60);
+
+    // 8. 결과 캔버스 생성 (최종 결과용)
+    step = 'createResultCanvas';
+    const resultCanvas = document.createElement('canvas');
+    resultCanvas.width = originalWidth;
+    resultCanvas.height = originalHeight;
+    const resultCtx = resultCanvas.getContext('2d')!;
+
+    // 9. 블러된 배경 그리기 (resultCanvas에)
+    step = 'applyBlur';
+    const useCanvasFilter = supportsCanvasFilter();
+    console.log('[DEBUG] useCanvasFilter:', useCanvasFilter, 'isIOS:', isIOS());
+    
+    if (useCanvasFilter) {
+      // PC/Android: Canvas filter 사용 (빠름)
+      resultCtx.filter = `blur(${blurAmount}px)`;
+      resultCtx.drawImage(img, 0, 0);
+      resultCtx.filter = 'none';
+    } else {
+      // iOS: 축소-확대 방식 블러
+      resultCtx.drawImage(img, 0, 0);
+      applyBlurFallback(resultCanvas, blurAmount);
+    }
+
+    await yieldToMain();
+    onProgress?.(75);
+
+    // 10. 마스크를 사용하여 합성
+    step = 'compositeImages';
+    resultCtx.globalCompositeOperation = 'destination-out';
+    resultCtx.drawImage(processCanvas, 0, 0);
+
+    resultCtx.globalCompositeOperation = 'destination-over';
     resultCtx.drawImage(img, 0, 0);
-    resultCtx.filter = 'none';
-  } else {
-    // iOS: StackBlur 알고리즘 사용 (느리지만 호환됨)
-    resultCtx.drawImage(img, 0, 0);
-    stackBlurCanvas(resultCanvas, blurAmount);
+
+    // processCanvas 메모리 해제
+    clearCanvas(processCanvas);
+
+    await yieldToMain();
+    onProgress?.(90);
+
+    // 11. 결과 반환 (EXIF 유지, Orientation은 1로 리셋)
+    step = 'createResult';
+    let resultBlob: Blob;
+
+    if (exifData) {
+      // EXIF 보존 (Orientation만 1로 리셋)
+      const dataUrl = resultCanvas.toDataURL('image/jpeg', 0.92);
+      const exifInsertedDataUrl = insertExif(dataUrl, exifData);
+      resultBlob = dataUrlToBlob(exifInsertedDataUrl);
+    } else {
+      resultBlob = await canvasToBlob(resultCanvas);
+    }
+
+    // 정리
+    step = 'cleanup';
+    segmentation.close();
+    clearCanvas(resultCanvas);
+
+    onProgress?.(100);
+
+    return resultBlob;
+  } catch (err) {
+    // 디버그: step 정보 포함
+    const message = err instanceof Error ? err.message : String(err);
+    throw new Error(`[Step: ${step}] ${message}`);
   }
-
-  await yieldToMain();
-  onProgress?.(75);
-
-  // 10. 마스크를 사용하여 합성
-  resultCtx.globalCompositeOperation = 'destination-out';
-  resultCtx.drawImage(processCanvas, 0, 0);
-
-  resultCtx.globalCompositeOperation = 'destination-over';
-  resultCtx.drawImage(img, 0, 0);
-
-  // processCanvas 메모리 해제
-  clearCanvas(processCanvas);
-
-  await yieldToMain();
-  onProgress?.(90);
-
-  // 11. 결과 반환 (EXIF 유지, Orientation은 1로 리셋)
-  let resultBlob: Blob;
-
-  if (exifData) {
-    // EXIF 보존 (Orientation만 1로 리셋)
-    const dataUrl = resultCanvas.toDataURL('image/jpeg', 0.92);
-    const exifInsertedDataUrl = insertExif(dataUrl, exifData);
-    resultBlob = dataUrlToBlob(exifInsertedDataUrl);
-  } else {
-    resultBlob = await canvasToBlob(resultCanvas);
-  }
-
-  // 정리
-  segmentation.close();
-  clearCanvas(resultCanvas);
-
-  onProgress?.(100);
-
-  return resultBlob;
 };
 
 export interface RemoveBackgroundOptions {
