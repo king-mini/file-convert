@@ -330,6 +330,13 @@ const ImageCrop = () => {
         <div className="editor">
           <div className="crop-container" ref={containerRef}>
             <img ref={imageRef} src={preview || ''} alt="원본" className="crop-image" />
+            <button 
+              className="image-remove-btn"
+              onClick={handleNewImage}
+              title="다른 이미지 선택"
+            >
+              ✕
+            </button>
             <div className="crop-overlay">
               <div
                 className="crop-area"
@@ -428,7 +435,7 @@ const ImageCrop = () => {
               {copied ? '✓ 복사됨' : '📋 복사'}
             </button>
             <button className="btn btn-success" onClick={handleDownload}>
-              💾 다운로드
+              💾 저장
             </button>
           </div>
         </div>

@@ -156,22 +156,49 @@
 }
 
 .image-container.clickable::after {
-  content: '클릭하여 크게 보기';
+  content: '🔍 클릭하여 크게보기';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.5rem;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.6);
   color: white;
-  font-size: 0.75rem;
-  text-align: center;
-  opacity: 0;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  opacity: 0.8;
   transition: opacity 0.2s;
+  pointer-events: none;
 }
 
 .image-container.clickable:hover::after {
   opacity: 1;
+}
+
+/* 원본 이미지 X 버튼 */
+.image-remove-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-remove-btn:hover {
+  opacity: 1;
+  background: rgba(220, 38, 38, 0.9);
+  transform: scale(1.1);
 }
 
 .image-container img {

@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { blurBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './PortraitBlur.css';
 
@@ -15,6 +15,24 @@ const PortraitBlur = () => {
   const [modalIndex, setModalIndex] = useState(0); // 0: 원본, 1: 결과
   const [copied, setCopied] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
+
+  // 모달 키보드 단축키 (ESC: 닫기, 좌우 방향키: 토글)
+  useEffect(() => {
+    if (!modalImage) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalImage(null);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        if (result) {
+          setModalIndex(prev => prev === 0 ? 1 : 0);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalImage, result]);
 
   const handleFile = useCallback((selectedFile: File) => {
     // 파일 유효성 검사
@@ -286,7 +304,7 @@ const PortraitBlur = () => {
                   {copied ? '✓ 복사됨' : '📋 복사'}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
-                  💾 다운로드
+                  💾 저장
                 </button>
               </>
             )}
@@ -297,44 +315,28 @@ const PortraitBlur = () => {
       {/* 이미지 확대 모달 */}
       {modalImage && (
         <div className="modal-overlay" onClick={() => setModalImage(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setModalImage(null)}>
-              ✕
-            </button>
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             <div className="modal-image-wrapper">
               <img src={modalIndex === 0 ? preview! : result!} alt={modalIndex === 0 ? '원본' : '결과'} />
+              <button className="modal-close" onClick={() => setModalImage(null)}>
+                ✕
+              </button>
             </div>
             {result && (
-              <div className="modal-nav">
+              <div className="modal-toggle-group">
                 <button
-                  className={`modal-nav-btn ${modalIndex === 0 ? 'active' : ''}`}
+                  className={`modal-toggle-btn ${modalIndex === 0 ? 'active' : ''}`}
                   onClick={() => setModalIndex(0)}
                 >
                   원본
                 </button>
                 <button
-                  className={`modal-nav-btn ${modalIndex === 1 ? 'active' : ''}`}
+                  className={`modal-toggle-btn ${modalIndex === 1 ? 'active' : ''}`}
                   onClick={() => setModalIndex(1)}
                 >
                   결과
                 </button>
               </div>
-            )}
-            {result && (
-              <>
-                <button
-                  className="modal-arrow modal-arrow-left"
-                  onClick={() => setModalIndex(modalIndex === 0 ? 1 : 0)}
-                >
-                  ‹
-                </button>
-                <button
-                  className="modal-arrow modal-arrow-right"
-                  onClick={() => setModalIndex(modalIndex === 0 ? 1 : 0)}
-                >
-                  ›
-                </button>
-              </>
             )}
           </div>
         </div>

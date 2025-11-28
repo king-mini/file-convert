@@ -140,7 +140,7 @@ const PdfToText = () => {
                 📋 전체 복사
               </button>
               <button className="btn btn-primary" onClick={handleDownload}>
-                💾 TXT 다운로드
+                💾 TXT 저장
               </button>
             </div>
           </div>

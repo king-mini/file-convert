@@ -203,6 +203,16 @@ const ImageCompress = () => {
                 onClick={() => preview && setModalImage(preview)}
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
+                <button 
+                  className="image-remove-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNewImage();
+                  }}
+                  title="다른 이미지 선택"
+                >
+                  ✕
+                </button>
               </div>
             </div>
             <div className="image-panel">
@@ -334,7 +344,7 @@ const ImageCompress = () => {
                   {copied ? '✓ 복사됨' : '📋 복사'}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
-                  💾 다운로드
+                  💾 저장
                 </button>
               </>
             )}

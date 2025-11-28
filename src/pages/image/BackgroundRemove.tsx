@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { removeBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import type { RemoveBackgroundOptions } from '../../utils/imageProcessor';
 import './BackgroundRemove.css';
@@ -12,12 +12,31 @@ const BackgroundRemove = () => {
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
+  const [modalIndex, setModalIndex] = useState(0); // 0: 원본, 1: 결과
   
   // 옵션
   const [modelSelection, setModelSelection] = useState<0 | 1>(1);
   const [edgeBlur, setEdgeBlur] = useState(3);
   const [copied, setCopied] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
+
+  // 모달 키보드 단축키 (ESC: 닫기, 좌우 방향키: 토글)
+  useEffect(() => {
+    if (!modalImage) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setModalImage(null);
+      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        if (result) {
+          setModalIndex(prev => prev === 0 ? 1 : 0);
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalImage, result]);
 
   const handleFile = useCallback((selectedFile: File) => {
     if (!selectedFile.type.startsWith('image/')) {
@@ -175,10 +194,25 @@ const BackgroundRemove = () => {
               <h3>원본</h3>
               <div 
                 className="image-container clickable"
-                onClick={() => preview && setModalImage(preview)}
+                onClick={() => {
+                  if (preview) {
+                    setModalIndex(0);
+                    setModalImage(preview);
+                  }
+                }}
                 title="클릭하여 크게 보기"
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
+                <button 
+                  className="image-remove-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNewImage();
+                  }}
+                  title="다른 이미지 선택"
+                >
+                  ✕
+                </button>
               </div>
             </div>
             <div className="image-panel">
@@ -299,7 +333,7 @@ const BackgroundRemove = () => {
                   {copied ? '✓ 복사됨' : '📋 복사'}
                 </button>
                 <button className="btn btn-success" onClick={handleDownload}>
-                  💾 PNG 다운로드
+                  💾 PNG 저장
                 </button>
               </>
             )}
@@ -310,11 +344,29 @@ const BackgroundRemove = () => {
       {/* 이미지 확대 모달 */}
       {modalImage && (
         <div className="modal-overlay" onClick={() => setModalImage(null)}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setModalImage(null)}>
-              ✕
-            </button>
-            <img src={modalImage} alt="확대 이미지" />
+          <div className="modal-container" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-image-wrapper">
+              <img src={modalIndex === 0 ? preview! : result!} alt={modalIndex === 0 ? '원본' : '결과'} />
+              <button className="modal-close" onClick={() => setModalImage(null)}>
+                ✕
+              </button>
+            </div>
+            {result && (
+              <div className="modal-toggle-group">
+                <button
+                  className={`modal-toggle-btn ${modalIndex === 0 ? 'active' : ''}`}
+                  onClick={() => setModalIndex(0)}
+                >
+                  원본
+                </button>
+                <button
+                  className={`modal-toggle-btn ${modalIndex === 1 ? 'active' : ''}`}
+                  onClick={() => setModalIndex(1)}
+                >
+                  결과
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
