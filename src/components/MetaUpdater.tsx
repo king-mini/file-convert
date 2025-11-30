@@ -31,6 +31,48 @@ const MetaUpdater = () => {
       };
     }
     
+    // 주요 도구 페이지별 SEO 최적화된 메타 태그
+    if (path === '/pdf/to-jpg') {
+      return {
+        title: 'PDF to JPG - Convert PDF to High Quality JPG Images | Lokit',
+        description: 'Free online PDF to JPG converter. Convert PDF pages to high-quality JPG images with adjustable quality and resolution. No signup required, 100% secure.',
+        ogTitle: 'PDF to JPG Converter - Free Online Tool',
+        ogDescription: 'Convert PDF to JPG images instantly in your browser. Secure, fast, and free.',
+      };
+    }
+    if (path === '/pdf/to-png') {
+      return {
+        title: 'PDF to PNG - Convert PDF to PNG Images with Transparency | Lokit',
+        description: 'Free online PDF to PNG converter. Convert PDF pages to PNG images with optional transparency support. High quality, no signup required.',
+        ogTitle: 'PDF to PNG Converter - Free Online Tool',
+        ogDescription: 'Convert PDF to PNG images with transparency support. Secure, fast, and free.',
+      };
+    }
+    if (path === '/pdf/compress') {
+      return {
+        title: 'Compress PDF - Reduce PDF File Size Online | Lokit',
+        description: 'Free online PDF compressor. Reduce PDF file size while maintaining quality. Adjustable compression settings, no signup required.',
+        ogTitle: 'Compress PDF - Free Online PDF Compression Tool',
+        ogDescription: 'Reduce PDF file size instantly. Secure, fast, and free compression tool.',
+      };
+    }
+    if (path === '/pdf/merge') {
+      return {
+        title: 'Merge PDF - Combine Multiple PDF Files into One | Lokit',
+        description: 'Free online PDF merger. Combine multiple PDF files into one document. Reorder pages, no signup required, 100% secure.',
+        ogTitle: 'Merge PDF - Free Online PDF Merger Tool',
+        ogDescription: 'Combine multiple PDF files into one. Secure, fast, and free.',
+      };
+    }
+    if (path === '/image/portrait-blur') {
+      return {
+        title: 'Portrait Blur - AI Background Blur Tool for Photos | Lokit',
+        description: 'Free AI-powered portrait blur tool. Blur backgrounds in photos automatically. Adjustable blur strength, no signup required.',
+        ogTitle: 'Portrait Blur - AI Background Blur Tool',
+        ogDescription: 'Blur photo backgrounds automatically with AI. Secure, fast, and free.',
+      };
+    }
+    
     // 기본값
     return {
       title: 'Lokit - File Tools',
@@ -51,15 +93,21 @@ const MetaUpdater = () => {
     }
 
     // OG Tags 업데이트
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    if (ogTitle) {
-      ogTitle.setAttribute('content', metaInfo.title);
+    let ogTitle = document.querySelector('meta[property="og:title"]');
+    if (!ogTitle) {
+      ogTitle = document.createElement('meta');
+      ogTitle.setAttribute('property', 'og:title');
+      document.head.appendChild(ogTitle);
     }
+    ogTitle.setAttribute('content', metaInfo.ogTitle || metaInfo.title);
 
-    const ogDescription = document.querySelector('meta[property="og:description"]');
-    if (ogDescription) {
-      ogDescription.setAttribute('content', metaInfo.description);
+    let ogDescription = document.querySelector('meta[property="og:description"]');
+    if (!ogDescription) {
+      ogDescription = document.createElement('meta');
+      ogDescription.setAttribute('property', 'og:description');
+      document.head.appendChild(ogDescription);
     }
+    ogDescription.setAttribute('content', metaInfo.ogDescription || metaInfo.description);
 
     const ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogUrl) {
@@ -78,7 +126,7 @@ const MetaUpdater = () => {
     }
 
     document.documentElement.setAttribute('lang', lang);
-  }, [metaInfo.title, metaInfo.description, locale, lang, location.pathname, t]);
+  }, [metaInfo.title, metaInfo.description, metaInfo.ogTitle, metaInfo.ogDescription, locale, lang, location.pathname, t]);
 
   return null;
 };
