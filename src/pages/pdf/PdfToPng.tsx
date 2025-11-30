@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { convertPdfToPngImages } from '../../utils/pngConverter';
 import type { ConvertOptions, ConvertProgress } from '../../utils/pngConverter';
+import { trackConversionStart, trackConversionComplete, trackConversionError } from '../../utils/analytics';
 import PasswordModal from '../../components/PasswordModal';
 import './PdfToPng.css';
 
@@ -46,8 +47,11 @@ const PdfToPng = () => {
   const handleConvert = useCallback(async (password?: string) => {
     if (!file) return;
 
+    const startTime = Date.now();
     setConverting(true);
     setProgress({ current: 0, total: 1, status: t('common.status.starting') });
+
+    trackConversionStart('pdf_to_png', file.size);
 
     const options: ConvertOptions = {
       scale,
@@ -61,8 +65,17 @@ const PdfToPng = () => {
       setIsPasswordModalOpen(false);
       setPasswordError(false);
       setCurrentPassword(options.password);
+
+      const duration = Date.now() - startTime;
+      trackConversionComplete('pdf_to_png', file.size, duration);
     } catch (error: any) {
       console.error('변환 실패:', error);
+
+      const errorType = error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')
+        ? 'password_required'
+        : 'conversion_failed';
+      trackConversionError('pdf_to_png', errorType);
+
       if (error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')) {
         setIsPasswordModalOpen(true);
         if (password) {

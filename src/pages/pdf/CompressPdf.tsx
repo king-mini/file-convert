@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { compressPdf, formatFileSize } from '../../utils/pdfCompressor';
 import type { CompressOptions, CompressProgress } from '../../utils/pdfCompressor';
+import { trackConversionStart, trackConversionComplete, trackConversionError } from '../../utils/analytics';
 import PasswordModal from '../../components/PasswordModal';
 import './CompressPdf.css';
 
@@ -43,8 +44,11 @@ const CompressPdf = () => {
   const handleCompress = useCallback(async (password?: string) => {
     if (!file) return;
 
+    const startTime = Date.now();
     setCompressing(true);
     setProgress({ current: 0, total: 1, status: t('common.status.starting') });
+
+    trackConversionStart('compress_pdf', file.size);
 
     const options: CompressOptions = {
       quality,
@@ -58,8 +62,17 @@ const CompressPdf = () => {
       setIsPasswordModalOpen(false);
       setPasswordError(false);
       setCurrentPassword(options.password);
+
+      const duration = Date.now() - startTime;
+      trackConversionComplete('compress_pdf', file.size, duration);
     } catch (error: any) {
       console.error('압축 실패:', error);
+
+      const errorType = error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')
+        ? 'password_required'
+        : 'compression_failed';
+      trackConversionError('compress_pdf', errorType);
+
       if (error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')) {
         setIsPasswordModalOpen(true);
         if (password) {
