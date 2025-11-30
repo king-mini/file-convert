@@ -13,6 +13,7 @@ export interface ConvertOptions {
   quality: number; // 0.0 ~ 1.0
   scale: number; // 해상도 배율 (1 = 72dpi, 2 = 144dpi, etc.)
   pageRange?: { start: number; end: number }; // 1-based
+  password?: string;
 }
 
 export interface ConvertProgress {
@@ -27,7 +28,10 @@ export const convertPdfToImages = async (
   onProgress?: (progress: ConvertProgress) => void
 ): Promise<void> => {
   const arrayBuffer = await file.arrayBuffer();
-  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const loadingTask = pdfjsLib.getDocument({
+    data: arrayBuffer,
+    password: options.password,
+  });
   const pdf = await loadingTask.promise;
 
   const totalPages = pdf.numPages;
@@ -94,7 +98,7 @@ export const convertPdfToImages = async (
     total: pagesToConvert,
     status: i18n.t('common.status.zipPreparing'),
   });
-  
+
   const zipBlob = await zip.generateAsync({ type: 'blob' });
   const outputFileName = file.name.replace(/\.pdf$/i, '') + '_images.zip';
   saveAs(zipBlob, outputFileName);

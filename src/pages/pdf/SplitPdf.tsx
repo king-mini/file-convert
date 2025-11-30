@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { splitPdf } from '../../utils/pdfSplitter';
 import type { SplitMode, SplitOptions, SplitProgress } from '../../utils/pdfSplitter';
+import PasswordModal from '../../components/PasswordModal';
 import './SplitPdf.css';
 
 const SplitPdf = () => {
@@ -15,6 +16,12 @@ const SplitPdf = () => {
   const [splitMode, setSplitMode] = useState<SplitMode>('each');
   const [rangesInput, setRangesInput] = useState('');
   const [extractInput, setExtractInput] = useState('');
+
+
+  // Password Modal State
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState<string | undefined>(undefined);
 
   const handleFileSelect = useCallback((selectedFile: File | null) => {
     if (selectedFile?.type === 'application/pdf') {
@@ -74,10 +81,13 @@ const SplitPdf = () => {
     return Array.from(result).sort((a, b) => a - b);
   };
 
-  const handleSplit = useCallback(async () => {
+  const handleSplit = useCallback(async (password?: string) => {
     if (!file) return;
 
-    const options: SplitOptions = { mode: splitMode };
+    const options: SplitOptions = {
+      mode: splitMode,
+      password: password || currentPassword
+    };
 
     if (splitMode === 'range') {
       const ranges = parseRanges(rangesInput);
@@ -101,13 +111,27 @@ const SplitPdf = () => {
     try {
       await splitPdf(file, options, setProgress);
       alert(t('common.success.split'));
-    } catch (error) {
+      setIsPasswordModalOpen(false);
+      setPasswordError(false);
+      setCurrentPassword(options.password);
+    } catch (error: any) {
       console.error('분할 실패:', error);
-      alert(t('common.errors.split'));
+      if (error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')) {
+        setIsPasswordModalOpen(true);
+        if (password) {
+          setPasswordError(true);
+        }
+      } else {
+        alert(t('common.errors.split'));
+      }
     } finally {
       setSplitting(false);
     }
-  }, [file, splitMode, rangesInput, extractInput, t]);
+  }, [file, splitMode, rangesInput, extractInput, t, currentPassword]);
+
+  const handlePasswordSubmit = (password: string) => {
+    handleSplit(password);
+  };
 
   return (
     <div className="split-pdf">
@@ -229,7 +253,7 @@ const SplitPdf = () => {
             </div>
           )}
 
-          <button className="btn btn-convert" onClick={handleSplit} disabled={splitting}>
+          <button className="btn btn-convert" onClick={() => handleSplit()} disabled={splitting}>
             {splitting
               ? t('pages.pdf.split.actions.splitting')
               : t('pages.pdf.split.actions.split')}
@@ -253,6 +277,16 @@ const SplitPdf = () => {
         </div>
       )}
 
+      <PasswordModal
+        isOpen={isPasswordModalOpen}
+        isError={passwordError}
+        onSubmit={handlePasswordSubmit}
+        onCancel={() => {
+          setIsPasswordModalOpen(false);
+          setPasswordError(false);
+          setSplitting(false);
+        }}
+      />
     </div>
   );
 };

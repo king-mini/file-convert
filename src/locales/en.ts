@@ -16,6 +16,8 @@ const en = {
       copied: '✓ Copied',
       save: '💾 Download',
       retry: '🔄 Apply again',
+      cancel: 'Cancel',
+      submit: 'Submit',
     },
     validation: {
       pdfOnly: 'Only PDF files are supported.',
@@ -76,6 +78,14 @@ const en = {
       page: 'pages',
     },
   },
+  components: {
+    passwordModal: {
+      title: 'Password Required',
+      description: 'This file is encrypted. Please enter the password to proceed.',
+      placeholder: 'Enter password',
+      error: 'Incorrect password. Please try again.',
+    },
+  },
   nav: {
     pdf: '📄 PDF Tools',
     image: '🖼️ Image Tools',
@@ -88,7 +98,7 @@ const en = {
     },
   },
   meta: {
-    description: 'Lokit - Fast and safe PDF & image tools. Convert directly in your browser.',
+    description: 'Lokit - Free online PDF & Image tools. Convert PDF to Word, JPG, PNG. Merge, Split, Compress PDF files securely in your browser. No signup required.',
     privacy: {
       title: 'Privacy Policy - Lokit',
       description: 'Lokit Privacy Policy. All files are processed only in your browser and are not uploaded to any server.',
@@ -109,31 +119,31 @@ const en = {
     },
     categories: {
       pdf: {
-        title: 'PDF tools',
-        desc: 'Convert, merge, split, rotate PDF',
+        title: 'PDF Tools',
+        desc: 'Convert, merge, split, rotate, and compress PDF files online for free.',
         count: '8 tools',
       },
       image: {
-        title: 'Image tools',
-        desc: 'Background remove, resize, blur',
+        title: 'Image Tools',
+        desc: 'Remove background, resize, blur, and convert images online.',
         count: '6 tools',
         badge: 'BETA',
       },
     },
-      features: {
-        client: {
-          title: '100% client-side',
-          desc: 'Handle every task directly in the browser with no uploads',
-        },
-        privacy: {
-          title: 'Privacy first',
-          desc: 'Every file stays on your device with no external transfer',
-        },
-        free: {
-          title: 'Free to use',
-          desc: 'Unlimited access with no account required',
-        },
+    features: {
+      client: {
+        title: '100% client-side',
+        desc: 'Handle every task directly in the browser with no uploads',
       },
+      privacy: {
+        title: 'Privacy first',
+        desc: 'Every file stays on your device with no external transfer',
+      },
+      free: {
+        title: 'Free to use',
+        desc: 'Unlimited access with no account required',
+      },
+    },
   },
   imageHome: {
     heroTitle: '🖼️ Image Tools',
@@ -260,8 +270,8 @@ const en = {
     pdf: {
       home: {
         hero: {
-          title: '📄 PDF Tools',
-          subtitle: 'Convert safely in your browser',
+          title: 'Free Online PDF Tools',
+          subtitle: 'Securely convert, merge, and split PDFs in your browser',
         },
         features: {
           toJpg: {
@@ -302,10 +312,10 @@ const en = {
             title: '100% client-side',
             description: 'Handle every task directly in the browser, no uploads',
           },
-        privacy: {
-          title: 'Privacy protection',
-          description: 'Every file stays on your device with no external transfer',
-        },
+          privacy: {
+            title: 'Privacy protection',
+            description: 'Every file stays on your device with no external transfer',
+          },
           free: {
             title: 'Unlimited free',
             description: 'Use every tool without limits or accounts',
@@ -314,8 +324,8 @@ const en = {
       },
       toJpg: {
         hero: {
-          title: '📄 PDF to JPG Converter',
-          description: 'Convert safely in your browser · no uploads',
+          title: 'Convert PDF to JPG Online',
+          description: 'Free tool to convert PDF pages to high-quality JPG images securely.',
         },
         options: {
           title: 'Conversion options',
@@ -329,8 +339,8 @@ const en = {
       },
       toPng: {
         hero: {
-          title: '🎨 PDF to PNG Converter',
-          description: 'Convert safely in your browser · supports transparency',
+          title: 'Convert PDF to PNG Online',
+          description: 'Free tool to convert PDF pages to PNG images with transparency support.',
         },
         options: {
           title: 'Conversion options',
@@ -344,8 +354,8 @@ const en = {
       },
       toText: {
         hero: {
-          title: '📝 PDF to Text Converter',
-          description: 'Extract text from PDFs',
+          title: 'Extract Text from PDF',
+          description: 'Free online tool to extract text content from PDF files.',
         },
         actions: {
           extract: '📝 Extract text',
@@ -363,8 +373,8 @@ const en = {
       },
       imageToPdf: {
         hero: {
-          title: '🖼️ Image to PDF Converter',
-          description: 'Combine multiple images into one PDF',
+          title: 'Convert Images to PDF',
+          description: 'Combine JPG, PNG, WebP images into a single PDF document.',
         },
         upload: {
           hint: 'Drag or click to add JPG, PNG, GIF, or WebP images',
@@ -397,8 +407,8 @@ const en = {
       },
       merge: {
         hero: {
-          title: '🔗 Merge PDF',
-          description: 'Combine multiple PDFs into one',
+          title: 'Merge PDF Files Online',
+          description: 'Combine multiple PDF files into one document for free.',
         },
         upload: {
           hint: 'Drag or click to add PDFs (multiple files supported)',
@@ -421,8 +431,8 @@ const en = {
       },
       split: {
         hero: {
-          title: '✂️ Split PDF',
-          description: 'Split a PDF into multiple files',
+          title: 'Split PDF Files Online',
+          description: 'Separate PDF pages or extract specific pages into new files.',
         },
         options: {
           title: 'Split options',
@@ -455,8 +465,8 @@ const en = {
       },
       rotate: {
         hero: {
-          title: '🔄 Rotate PDF',
-          description: 'Rotate pages inside a PDF',
+          title: 'Rotate PDF Pages',
+          description: 'Permanently rotate PDF pages 90 or 180 degrees online.',
         },
         options: {
           title: 'Rotation options',
@@ -477,8 +487,8 @@ const en = {
       },
       compress: {
         hero: {
-          title: '📦 Compress PDF',
-          description: 'Reduce the size of a PDF file',
+          title: 'Compress PDF Online',
+          description: 'Reduce PDF file size while maintaining quality for free.',
         },
         warning: {
           title: 'Notice',

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { availableLanguages } from '../i18n';
 import './LanguageSwitcher.css';
 
 type Language = 'ko' | 'en';
@@ -48,6 +49,8 @@ export const LanguageSwitcher: React.FC = () => {
     };
   }, []);
 
+  if (availableLanguages.length <= 1) return null;
+
   return (
     <div className="lang-switcher" ref={ref}>
       <button
@@ -64,22 +67,17 @@ export const LanguageSwitcher: React.FC = () => {
         role="listbox"
         aria-label="Language selector"
       >
-        <li
-          role="option"
-          data-lang="en"
-          className={`lang-option ${currentLang === 'en' ? 'lang-option-active' : ''}`}
-          onClick={() => applyLanguage('en')}
-        >
-          English
-        </li>
-        <li
-          role="option"
-          data-lang="ko"
-          className={`lang-option ${currentLang === 'ko' ? 'lang-option-active' : ''}`}
-          onClick={() => applyLanguage('ko')}
-        >
-          한국어
-        </li>
+        {availableLanguages.map((lang) => (
+          <li
+            key={lang.code}
+            role="option"
+            data-lang={lang.code}
+            className={`lang-option ${currentLang === lang.code ? 'lang-option-active' : ''}`}
+            onClick={() => applyLanguage(lang.code as Language)}
+          >
+            {lang.label}
+          </li>
+        ))}
       </ul>
     </div>
   );

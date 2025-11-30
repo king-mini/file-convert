@@ -15,6 +15,7 @@ export interface SplitOptions {
   mode: SplitMode;
   ranges?: { start: number; end: number }[]; // 1-based
   extractPages?: number[]; // 1-based
+  password?: string;
 }
 
 const createSinglePagePdf = async (
@@ -48,7 +49,7 @@ export const splitPdf = async (
   onProgress?: (progress: SplitProgress) => void
 ): Promise<void> => {
   const arrayBuffer = await file.arrayBuffer();
-  const pdfDoc = await PDFDocument.load(arrayBuffer);
+  const pdfDoc = await PDFDocument.load(arrayBuffer, { password: options.password } as any);
 
   const totalPages = pdfDoc.getPageCount();
   onProgress?.({

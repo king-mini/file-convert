@@ -14,6 +14,7 @@ export interface CompressOptions {
   scale: number; // 해상도 배율 (낮을수록 더 압축)
   maxWidth?: number; // 최대 너비 (px), undefined면 제한 없음
   maxHeight?: number; // 최대 높이 (px), undefined면 제한 없음
+  password?: string;
 }
 
 export interface CompressProgress {
@@ -82,7 +83,10 @@ export const compressPdf = async (
 
   // 원본 PDF 로드
   const arrayBuffer = await file.arrayBuffer();
-  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const loadingTask = pdfjsLib.getDocument({
+    data: arrayBuffer,
+    password: options.password,
+  });
   const pdf = await loadingTask.promise;
 
   const totalPages = pdf.numPages;
@@ -164,7 +168,7 @@ export const compressPdf = async (
   const finalSize = pdfBytes.length;
   const compressionRatio = ((1 - finalSize / originalSize) * 100).toFixed(1);
 
-  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
   const outputFileName = file.name.replace(/\.pdf$/i, '') + '_compressed.pdf';
   saveAs(blob, outputFileName);
 

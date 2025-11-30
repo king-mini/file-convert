@@ -2,7 +2,8 @@ import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { convertPdfToPngImages } from '../../utils/pngConverter';
 import type { ConvertOptions, ConvertProgress } from '../../utils/pngConverter';
-import './PdfToJpg.css';
+import PasswordModal from '../../components/PasswordModal';
+import './PdfToPng.css';
 
 const PdfToPng = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -13,10 +14,15 @@ const PdfToPng = () => {
 
   // 변환 옵션
   const [scale, setScale] = useState(2);
-  const [transparentBg, setTransparentBg] = useState(false);
+  const [transparent, setTransparent] = useState(false);
   const [usePageRange, setUsePageRange] = useState(false);
   const [startPage, setStartPage] = useState(1);
   const [endPage, setEndPage] = useState(1);
+
+  // Password Modal State
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState<string | undefined>(undefined);
 
   const handleFileSelect = useCallback((selectedFile: File | null) => {
     if (selectedFile?.type === 'application/pdf') {
@@ -37,7 +43,7 @@ const PdfToPng = () => {
     [handleFileSelect]
   );
 
-  const handleConvert = useCallback(async () => {
+  const handleConvert = useCallback(async (password?: string) => {
     if (!file) return;
 
     setConverting(true);
@@ -45,22 +51,33 @@ const PdfToPng = () => {
 
     const options: ConvertOptions = {
       scale,
-      backgroundColor: transparentBg ? undefined : '#FFFFFF',
+      backgroundColor: transparent ? undefined : '#FFFFFF',
       ...(usePageRange && { pageRange: { start: startPage, end: endPage } }),
+      password: password || currentPassword,
     };
 
     try {
       await convertPdfToPngImages(file, options, setProgress);
-    } catch (error) {
+      setIsPasswordModalOpen(false);
+      setPasswordError(false);
+      setCurrentPassword(options.password);
+    } catch (error: any) {
       console.error('변환 실패:', error);
-      alert(t('common.errors.convert'));
+      if (error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')) {
+        setIsPasswordModalOpen(true);
+        if (password) {
+          setPasswordError(true);
+        }
+      } else {
+        alert(t('common.errors.convert'));
+      }
     } finally {
       setConverting(false);
     }
-  }, [file, scale, transparentBg, usePageRange, startPage, endPage, t]);
+  }, [file, scale, transparent, usePageRange, startPage, endPage, t, currentPassword]);
 
   return (
-    <div className="pdf-to-jpg">
+    <div className="pdf-to-png">
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.toPng.hero.title')}</h1>
@@ -111,27 +128,27 @@ const PdfToPng = () => {
           <h3>{t('pages.pdf.toPng.options.title')}</h3>
 
           <div className="option-group">
-            <label>
-              {t('pages.pdf.toPng.options.resolution')}:{' '}
-              <strong>{scale === 1 ? '72dpi' : scale === 2 ? '144dpi' : '216dpi'}</strong>
-            </label>
-            <input
-              type="range"
-              min="1"
-              max="3"
-              step="0.5"
-              value={scale}
-              onChange={(e) => setScale(parseFloat(e.target.value))}
-              disabled={converting}
-            />
+            <label>{t('pages.pdf.toPng.options.resolution')}</label>
+            <div className="range-slider">
+              <input
+                type="range"
+                min="1"
+                max="3"
+                step="0.5"
+                value={scale}
+                onChange={(e) => setScale(parseFloat(e.target.value))}
+                disabled={converting}
+              />
+              <span>{Math.round(scale * 72)}dpi</span>
+            </div>
           </div>
 
           <div className="option-group">
-            <label>
+            <label className="checkbox-label">
               <input
                 type="checkbox"
-                checked={transparentBg}
-                onChange={(e) => setTransparentBg(e.target.checked)}
+                checked={transparent}
+                onChange={(e) => setTransparent(e.target.checked)}
                 disabled={converting}
               />
               {t('pages.pdf.toPng.options.transparent')}
@@ -139,7 +156,7 @@ const PdfToPng = () => {
           </div>
 
           <div className="option-group">
-            <label>
+            <label className="checkbox-label">
               <input
                 type="checkbox"
                 checked={usePageRange}
@@ -148,8 +165,9 @@ const PdfToPng = () => {
               />
               {t('pages.pdf.toPng.options.pageRange')}
             </label>
+
             {usePageRange && (
-              <div className="page-range">
+              <div className="page-range-inputs">
                 <input
                   type="number"
                   min="1"
@@ -157,7 +175,7 @@ const PdfToPng = () => {
                   onChange={(e) => setStartPage(parseInt(e.target.value) || 1)}
                   disabled={converting}
                 />
-                <span>~</span>
+                <span>-</span>
                 <input
                   type="number"
                   min="1"
@@ -169,14 +187,14 @@ const PdfToPng = () => {
             )}
           </div>
 
-          <button className="btn btn-convert" onClick={handleConvert} disabled={converting}>
+          <button className="btn btn-convert" onClick={() => handleConvert()} disabled={converting}>
             {converting ? t('common.status.converting') : t('pages.pdf.toPng.actions.start')}
           </button>
         </div>
       )}
 
       {/* 진행률 */}
-      {progress && (
+      {progress && converting && (
         <div className="progress">
           <p>{progress.status}</p>
           <div className="progress-bar">
@@ -191,9 +209,18 @@ const PdfToPng = () => {
         </div>
       )}
 
+      <PasswordModal
+        isOpen={isPasswordModalOpen}
+        isError={passwordError}
+        onSubmit={(password) => handleConvert(password)}
+        onCancel={() => {
+          setIsPasswordModalOpen(false);
+          setPasswordError(false);
+          setConverting(false);
+        }}
+      />
     </div>
   );
 };
 
 export default PdfToPng;
-

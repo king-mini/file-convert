@@ -21,10 +21,14 @@ export interface ExtractedText {
 
 export const extractTextFromPdf = async (
   file: File,
+  password?: string,
   onProgress?: (progress: ExtractProgress) => void
 ): Promise<ExtractedText[]> => {
   const arrayBuffer = await file.arrayBuffer();
-  const loadingTask = pdfjsLib.getDocument({ data: arrayBuffer });
+  const loadingTask = pdfjsLib.getDocument({
+    data: arrayBuffer,
+    password: password,
+  });
   const pdf = await loadingTask.promise;
 
   const totalPages = pdf.numPages;
@@ -49,7 +53,7 @@ export const extractTextFromPdf = async (
 
     const page = await pdf.getPage(pageNum);
     const textContent = await page.getTextContent();
-    
+
     // 텍스트 아이템들을 문자열로 결합
     const text = textContent.items
       .map((item: any) => item.str)

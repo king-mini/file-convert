@@ -16,6 +16,8 @@ const ko = {
       copied: '✓ 복사됨',
       save: '💾 저장',
       retry: '🔄 다시 적용',
+      cancel: '취소',
+      submit: '확인',
     },
     validation: {
       pdfOnly: 'PDF 파일만 업로드 가능합니다.',
@@ -76,6 +78,14 @@ const ko = {
       page: '페이지',
     },
   },
+  components: {
+    passwordModal: {
+      title: '비밀번호 입력',
+      description: '암호화된 파일입니다. 작업을 진행하려면 비밀번호를 입력하세요.',
+      placeholder: '비밀번호 입력',
+      error: '비밀번호가 일치하지 않습니다. 다시 시도해주세요.',
+    },
+  },
   nav: {
     pdf: '📄 PDF 작업',
     image: '🖼️ 이미지 편집',
@@ -120,20 +130,20 @@ const ko = {
         badge: 'BETA',
       },
     },
-      features: {
-        client: {
-          title: '100% 클라이언트 사이드',
-          desc: '서버 업로드 없이 브라우저에서 직접 처리',
-        },
-        privacy: {
-          title: '개인정보 보호',
-          desc: '모든 파일이 외부로 전송되지 않는 안전한 구조',
-        },
-        free: {
-          title: '무료 제공',
-          desc: '제한 없이 무료로 사용 가능',
-        },
+    features: {
+      client: {
+        title: '100% 클라이언트 사이드',
+        desc: '서버 업로드 없이 브라우저에서 직접 처리',
       },
+      privacy: {
+        title: '개인정보 보호',
+        desc: '모든 파일이 외부로 전송되지 않는 안전한 구조',
+      },
+      free: {
+        title: '무료 제공',
+        desc: '제한 없이 무료로 사용 가능',
+      },
+    },
   },
   imageHome: {
     heroTitle: '🖼️ 이미지 편집',
@@ -302,10 +312,10 @@ const ko = {
             title: '100% 클라이언트 사이드',
             description: '서버 업로드 없이 브라우저에서 직접 처리',
           },
-        privacy: {
-          title: '개인정보 보호',
-          description: '모든 파일이 외부로 전송되지 않는 안전한 구조',
-        },
+          privacy: {
+            title: '개인정보 보호',
+            description: '모든 파일이 외부로 전송되지 않는 안전한 구조',
+          },
           free: {
             title: '무료 무제한',
             description: '제한 없이 무료로 사용 가능',

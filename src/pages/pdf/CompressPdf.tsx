@@ -2,16 +2,8 @@ import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { compressPdf, formatFileSize } from '../../utils/pdfCompressor';
 import type { CompressOptions, CompressProgress } from '../../utils/pdfCompressor';
+import PasswordModal from '../../components/PasswordModal';
 import './CompressPdf.css';
-
-type CompressionLevel = 'low' | 'medium' | 'high' | 'extreme';
-
-const compressionPresets: Record<CompressionLevel, CompressOptions> = {
-  low: { quality: 0.9, scale: 2 },
-  medium: { quality: 0.7, scale: 1.5 },
-  high: { quality: 0.5, scale: 1, maxWidth: 1600 },
-  extreme: { quality: 0.3, scale: 0.8, maxWidth: 1200 },
-};
 
 const CompressPdf = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -21,7 +13,13 @@ const CompressPdf = () => {
   const { t } = useTranslation();
 
   // 압축 옵션
-  const [compressionLevel, setCompressionLevel] = useState<CompressionLevel>('medium');
+  const [quality, setQuality] = useState(0.7);
+  const [scale, setScale] = useState(1.0);
+
+  // Password Modal State
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState<string | undefined>(undefined);
 
   const handleFileSelect = useCallback((selectedFile: File | null) => {
     if (selectedFile?.type === 'application/pdf') {
@@ -42,29 +40,38 @@ const CompressPdf = () => {
     [handleFileSelect]
   );
 
-  const handleCompress = useCallback(async () => {
+  const handleCompress = useCallback(async (password?: string) => {
     if (!file) return;
 
     setCompressing(true);
-    setProgress({
-      current: 0,
-      total: 1,
-      status: t('common.status.starting'),
-      originalSize: file.size,
-    });
+    setProgress({ current: 0, total: 1, status: t('common.status.starting') });
 
-    const options = compressionPresets[compressionLevel];
+    const options: CompressOptions = {
+      quality,
+      scale,
+      password: password || currentPassword,
+    };
 
     try {
       await compressPdf(file, options, setProgress);
       alert(t('common.success.compress'));
-    } catch (error) {
+      setIsPasswordModalOpen(false);
+      setPasswordError(false);
+      setCurrentPassword(options.password);
+    } catch (error: any) {
       console.error('압축 실패:', error);
-      alert(t('common.errors.compress'));
+      if (error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')) {
+        setIsPasswordModalOpen(true);
+        if (password) {
+          setPasswordError(true);
+        }
+      } else {
+        alert(t('common.errors.compress'));
+      }
     } finally {
       setCompressing(false);
     }
-  }, [file, compressionLevel, t]);
+  }, [file, quality, scale, t, currentPassword]);
 
   return (
     <div className="compress-pdf">
@@ -72,15 +79,6 @@ const CompressPdf = () => {
       <div className="page-header">
         <h1>{t('pages.pdf.compress.hero.title')}</h1>
         <p>{t('pages.pdf.compress.hero.description')}</p>
-      </div>
-
-      {/* 경고 메시지 */}
-      <div className="warning-box">
-        <span className="warning-icon">⚠️</span>
-        <div className="warning-content">
-          <strong>{t('pages.pdf.compress.warning.title')}</strong>
-          <p>{t('pages.pdf.compress.warning.description')}</p>
-        </div>
       </div>
 
       {/* 파일 업로드 영역 */}
@@ -112,12 +110,8 @@ const CompressPdf = () => {
           <>
             <div className="file-info">
               <span className="file-icon">📄</span>
-              <div className="file-details">
-                <span className="file-name">{file.name}</span>
-                <span className="file-size">
-                  {t('pages.pdf.compress.fileInfo.original', { size: formatFileSize(file.size) })}
-                </span>
-              </div>
+              <span className="file-name">{file.name}</span>
+              <span className="file-size">({formatFileSize(file.size)})</span>
               <button className="btn-remove" onClick={() => setFile(null)}>
                 ✕
               </button>
@@ -131,79 +125,46 @@ const CompressPdf = () => {
         <div className="options">
           <h3>{t('pages.pdf.compress.options.title')}</h3>
 
-          <div className="compression-levels">
-            <button
-              className={`level-btn ${compressionLevel === 'low' ? 'active' : ''}`}
-              onClick={() => setCompressionLevel('low')}
-              disabled={compressing}
-            >
-              <span className="level-icon">🟢</span>
-              <span className="level-title">
-                {t('pages.pdf.compress.options.levels.low.title')}
-              </span>
-              <span className="level-desc">{t('pages.pdf.compress.options.levels.low.desc')}</span>
-              <span className="level-info">
-                {t('pages.pdf.compress.options.levels.low.info')}
-              </span>
-            </button>
-            <button
-              className={`level-btn ${compressionLevel === 'medium' ? 'active' : ''}`}
-              onClick={() => setCompressionLevel('medium')}
-              disabled={compressing}
-            >
-              <span className="level-icon">🟡</span>
-              <span className="level-title">
-                {t('pages.pdf.compress.options.levels.medium.title')}
-              </span>
-              <span className="level-desc">
-                {t('pages.pdf.compress.options.levels.medium.desc')}
-              </span>
-              <span className="level-info">
-                {t('pages.pdf.compress.options.levels.medium.info')}
-              </span>
-            </button>
-            <button
-              className={`level-btn ${compressionLevel === 'high' ? 'active' : ''}`}
-              onClick={() => setCompressionLevel('high')}
-              disabled={compressing}
-            >
-              <span className="level-icon">🟠</span>
-              <span className="level-title">
-                {t('pages.pdf.compress.options.levels.high.title')}
-              </span>
-              <span className="level-desc">{t('pages.pdf.compress.options.levels.high.desc')}</span>
-              <span className="level-info">
-                {t('pages.pdf.compress.options.levels.high.info')}
-              </span>
-            </button>
-            <button
-              className={`level-btn ${compressionLevel === 'extreme' ? 'active' : ''}`}
-              onClick={() => setCompressionLevel('extreme')}
-              disabled={compressing}
-            >
-              <span className="level-icon">🔴</span>
-              <span className="level-title">
-                {t('pages.pdf.compress.options.levels.extreme.title')}
-              </span>
-              <span className="level-desc">
-                {t('pages.pdf.compress.options.levels.extreme.desc')}
-              </span>
-              <span className="level-info">
-                {t('pages.pdf.compress.options.levels.extreme.info')}
-              </span>
-            </button>
+          <div className="option-group">
+            <label>{t('pages.pdf.compress.options.quality', { value: Math.round(quality * 100) })}</label>
+            <div className="range-slider">
+              <input
+                type="range"
+                min="0.1"
+                max="1.0"
+                step="0.1"
+                value={quality}
+                onChange={(e) => setQuality(parseFloat(e.target.value))}
+                disabled={compressing}
+              />
+              <span>{Math.round(quality * 100)}%</span>
+            </div>
           </div>
 
-          <button className="btn btn-convert" onClick={handleCompress} disabled={compressing}>
-            {compressing
-              ? t('pages.pdf.compress.actions.compressing')
-              : t('pages.pdf.compress.actions.compress')}
+          <div className="option-group">
+            <label>{t('pages.pdf.compress.options.resolution')}</label>
+            <div className="range-slider">
+              <input
+                type="range"
+                min="0.5"
+                max="1.0"
+                step="0.25"
+                value={scale}
+                onChange={(e) => setScale(parseFloat(e.target.value))}
+                disabled={compressing}
+              />
+              <span>{Math.round(scale * 100)}%</span>
+            </div>
+          </div>
+
+          <button className="btn btn-convert" onClick={() => handleCompress()} disabled={compressing}>
+            {compressing ? t('pages.pdf.compress.actions.compressing') : t('pages.pdf.compress.actions.compress')}
           </button>
         </div>
       )}
 
       {/* 진행률 */}
-      {progress && (
+      {progress && compressing && (
         <div className="progress">
           <p>{progress.status}</p>
           <div className="progress-bar">
@@ -212,22 +173,24 @@ const CompressPdf = () => {
               style={{ width: `${(progress.current / progress.total) * 100}%` }}
             />
           </div>
-          <div className="progress-info">
           <p className="progress-text">
-            {progress.current} / {progress.total} {t('common.units.page')}
+            {progress.current} / {progress.total}
           </p>
-            {progress.originalSize && progress.currentSize && (
-              <p className="size-info">
-                {formatFileSize(progress.originalSize)} → {formatFileSize(progress.currentSize)}
-              </p>
-            )}
-          </div>
         </div>
       )}
 
+      <PasswordModal
+        isOpen={isPasswordModalOpen}
+        isError={passwordError}
+        onSubmit={(password) => handleCompress(password)}
+        onCancel={() => {
+          setIsPasswordModalOpen(false);
+          setPasswordError(false);
+          setCompressing(false);
+        }}
+      />
     </div>
   );
 };
 
 export default CompressPdf;
-

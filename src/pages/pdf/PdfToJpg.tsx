@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { convertPdfToImages } from '../../utils/pdfConverter';
 import type { ConvertOptions, ConvertProgress } from '../../utils/pdfConverter';
+import PasswordModal from '../../components/PasswordModal';
 import './PdfToJpg.css';
 
 const PdfToJpg = () => {
@@ -12,11 +13,16 @@ const PdfToJpg = () => {
   const { t } = useTranslation();
 
   // 변환 옵션
-  const [quality, setQuality] = useState(0.9);
+  const [quality, setQuality] = useState(0.8);
   const [scale, setScale] = useState(2);
   const [usePageRange, setUsePageRange] = useState(false);
   const [startPage, setStartPage] = useState(1);
   const [endPage, setEndPage] = useState(1);
+
+  // Password Modal State
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState<string | undefined>(undefined);
 
   const handleFileSelect = useCallback((selectedFile: File | null) => {
     if (selectedFile?.type === 'application/pdf') {
@@ -37,7 +43,7 @@ const PdfToJpg = () => {
     [handleFileSelect]
   );
 
-  const handleConvert = useCallback(async () => {
+  const handleConvert = useCallback(async (password?: string) => {
     if (!file) return;
 
     setConverting(true);
@@ -47,17 +53,28 @@ const PdfToJpg = () => {
       quality,
       scale,
       ...(usePageRange && { pageRange: { start: startPage, end: endPage } }),
+      password: password || currentPassword,
     };
 
     try {
       await convertPdfToImages(file, options, setProgress);
-    } catch (error) {
+      setIsPasswordModalOpen(false);
+      setPasswordError(false);
+      setCurrentPassword(options.password);
+    } catch (error: any) {
       console.error('변환 실패:', error);
-      alert(t('common.errors.convert'));
+      if (error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')) {
+        setIsPasswordModalOpen(true);
+        if (password) {
+          setPasswordError(true);
+        }
+      } else {
+        alert(t('common.errors.convert'));
+      }
     } finally {
       setConverting(false);
     }
-  }, [file, quality, scale, usePageRange, startPage, endPage, t]);
+  }, [file, quality, scale, usePageRange, startPage, endPage, t, currentPassword]);
 
   return (
     <div className="pdf-to-jpg">
@@ -111,38 +128,39 @@ const PdfToJpg = () => {
           <h3>{t('pages.pdf.toJpg.options.title')}</h3>
 
           <div className="option-group">
-            <label>
-              {t('pages.pdf.toJpg.options.quality', { value: Math.round(quality * 100) })}
-            </label>
-            <input
-              type="range"
-              min="0.5"
-              max="1"
-              step="0.05"
-              value={quality}
-              onChange={(e) => setQuality(parseFloat(e.target.value))}
-              disabled={converting}
-            />
+            <label>{t('pages.pdf.toJpg.options.quality', { value: Math.round(quality * 100) })}</label>
+            <div className="range-slider">
+              <input
+                type="range"
+                min="0.1"
+                max="1.0"
+                step="0.1"
+                value={quality}
+                onChange={(e) => setQuality(parseFloat(e.target.value))}
+                disabled={converting}
+              />
+              <span>{Math.round(quality * 100)}%</span>
+            </div>
           </div>
 
           <div className="option-group">
-            <label>
-              {t('pages.pdf.toJpg.options.resolution')}:{' '}
-              <strong>{scale === 1 ? '72dpi' : scale === 2 ? '144dpi' : '216dpi'}</strong>
-            </label>
-            <input
-              type="range"
-              min="1"
-              max="3"
-              step="0.5"
-              value={scale}
-              onChange={(e) => setScale(parseFloat(e.target.value))}
-              disabled={converting}
-            />
+            <label>{t('pages.pdf.toJpg.options.resolution')}</label>
+            <div className="range-slider">
+              <input
+                type="range"
+                min="1"
+                max="3"
+                step="0.5"
+                value={scale}
+                onChange={(e) => setScale(parseFloat(e.target.value))}
+                disabled={converting}
+              />
+              <span>{Math.round(scale * 72)}dpi</span>
+            </div>
           </div>
 
           <div className="option-group">
-            <label>
+            <label className="checkbox-label">
               <input
                 type="checkbox"
                 checked={usePageRange}
@@ -151,8 +169,9 @@ const PdfToJpg = () => {
               />
               {t('pages.pdf.toJpg.options.pageRange')}
             </label>
+
             {usePageRange && (
-              <div className="page-range">
+              <div className="page-range-inputs">
                 <input
                   type="number"
                   min="1"
@@ -160,7 +179,7 @@ const PdfToJpg = () => {
                   onChange={(e) => setStartPage(parseInt(e.target.value) || 1)}
                   disabled={converting}
                 />
-                <span>~</span>
+                <span>-</span>
                 <input
                   type="number"
                   min="1"
@@ -172,14 +191,14 @@ const PdfToJpg = () => {
             )}
           </div>
 
-          <button className="btn btn-convert" onClick={handleConvert} disabled={converting}>
+          <button className="btn btn-convert" onClick={() => handleConvert()} disabled={converting}>
             {converting ? t('common.status.converting') : t('pages.pdf.toJpg.actions.start')}
           </button>
         </div>
       )}
 
       {/* 진행률 */}
-      {progress && (
+      {progress && converting && (
         <div className="progress">
           <p>{progress.status}</p>
           <div className="progress-bar">
@@ -194,9 +213,18 @@ const PdfToJpg = () => {
         </div>
       )}
 
+      <PasswordModal
+        isOpen={isPasswordModalOpen}
+        isError={passwordError}
+        onSubmit={(password) => handleConvert(password)}
+        onCancel={() => {
+          setIsPasswordModalOpen(false);
+          setPasswordError(false);
+          setConverting(false);
+        }}
+      />
     </div>
   );
 };
 
 export default PdfToJpg;
-

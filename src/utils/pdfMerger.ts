@@ -12,6 +12,7 @@ export interface PdfFile {
   id: string;
   file: File;
   pageCount?: number;
+  password?: string;
 }
 
 export const mergePdfs = async (
@@ -40,7 +41,7 @@ export const mergePdfs = async (
     });
 
     const arrayBuffer = await files[i].file.arrayBuffer();
-    const pdf = await PDFDocument.load(arrayBuffer);
+    const pdf = await PDFDocument.load(arrayBuffer, { password: files[i].password } as any);
     const pageCount = pdf.getPageCount();
 
     // 모든 페이지 복사
@@ -59,7 +60,7 @@ export const mergePdfs = async (
   });
 
   const pdfBytes = await mergedPdf.save();
-  const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+  const blob = new Blob([pdfBytes as any], { type: 'application/pdf' });
   saveAs(blob, 'merged.pdf');
 
   onProgress?.({
@@ -72,7 +73,7 @@ export const mergePdfs = async (
 export const getPageCount = async (file: File): Promise<number> => {
   try {
     const arrayBuffer = await file.arrayBuffer();
-    const pdf = await PDFDocument.load(arrayBuffer);
+    const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
     return pdf.getPageCount();
   } catch (error) {
     console.error('페이지 수 확인 실패:', error);

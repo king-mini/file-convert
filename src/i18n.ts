@@ -3,9 +3,12 @@ import { initReactI18next } from 'react-i18next';
 import ko from './locales/ko';
 import en from './locales/en';
 
+// Production 환경에서는 한국어 숨김
+const isProduction = import.meta.env.PROD;
+
 export const availableLanguages = [
   { code: 'en', label: 'English' },
-  { code: 'ko', label: '한국어' },
+  ...(isProduction ? [] : [{ code: 'ko', label: '한국어' }]),
 ];
 
 const resolveStoredLanguage = () => {
@@ -20,7 +23,7 @@ const resolveBrowserLanguage = () => {
   return lang.startsWith('ko') ? 'ko' : 'en';
 };
 
-const defaultLanguage = resolveStoredLanguage() ?? resolveBrowserLanguage();
+const defaultLanguage = isProduction ? 'en' : (resolveStoredLanguage() ?? resolveBrowserLanguage());
 
 const resources = {
   ko: {

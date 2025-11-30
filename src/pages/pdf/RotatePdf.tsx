@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { rotatePdf } from '../../utils/pdfRotator';
 import type { RotationAngle, RotateProgress } from '../../utils/pdfRotator';
+import PasswordModal from '../../components/PasswordModal';
 import './RotatePdf.css';
 
 const RotatePdf = () => {
@@ -12,9 +13,13 @@ const RotatePdf = () => {
   const { t } = useTranslation();
 
   // 회전 옵션
-  const [rotationAngle, setRotationAngle] = useState<RotationAngle>(90);
-  const [applyToAll, setApplyToAll] = useState(true);
-  const [selectedPages, setSelectedPages] = useState('');
+  const [angle, setAngle] = useState<RotationAngle>(90);
+  const [selectedPages, setSelectedPages] = useState<'all' | string>('all');
+
+  // Password Modal State
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState<string | undefined>(undefined);
 
   const handleFileSelect = useCallback((selectedFile: File | null) => {
     if (selectedFile?.type === 'application/pdf') {
@@ -35,53 +40,65 @@ const RotatePdf = () => {
     [handleFileSelect]
   );
 
-  const handleRotate = useCallback(async () => {
+  const parsePageIndices = (input: string): number[] => {
+    const parts = input.split(',').map((s) => s.trim());
+    const result = new Set<number>();
+
+    for (const part of parts) {
+      if (part.includes('-')) {
+        const [start, end] = part.split('-').map((n) => parseInt(n.trim()));
+        if (!isNaN(start) && !isNaN(end)) {
+          for (let i = start; i <= end; i++) {
+            result.add(i);
+          }
+        }
+      } else {
+        const num = parseInt(part);
+        if (!isNaN(num)) {
+          result.add(num);
+        }
+      }
+    }
+
+    return Array.from(result).sort((a, b) => a - b);
+  };
+
+  const handleRotate = useCallback(async (password?: string) => {
     if (!file) return;
+
+    let pageIndices: number[] | 'all' = 'all';
+    if (selectedPages !== 'all') {
+      const parsed = parsePageIndices(selectedPages);
+      if (parsed.length === 0) {
+        alert(t('common.validation.validPages', { example: '1,3,5-7' }));
+        return;
+      }
+      pageIndices = parsed;
+    }
 
     setRotating(true);
     setProgress({ current: 0, total: 1, status: t('common.status.starting') });
 
     try {
-      let pageIndices: number[] | 'all' = 'all';
-
-      if (!applyToAll && selectedPages) {
-        // 페이지 범위 파싱 (예: "1,3,5-7" → [0,2,4,5,6])
-        const ranges = selectedPages.split(',').map((s) => s.trim());
-        const indices = new Set<number>();
-
-        for (const range of ranges) {
-          if (range.includes('-')) {
-            const [start, end] = range.split('-').map((n) => parseInt(n.trim()));
-            if (isNaN(start) || isNaN(end)) continue;
-            for (let i = start; i <= end; i++) {
-              indices.add(i - 1); // 0-based
-            }
-          } else {
-            const num = parseInt(range);
-            if (!isNaN(num)) {
-              indices.add(num - 1); // 0-based
-            }
-          }
-        }
-
-        pageIndices = Array.from(indices).sort((a, b) => a - b);
-
-        if (pageIndices.length === 0) {
-          alert(t('common.validation.validPagesSimple'));
-          setRotating(false);
-          return;
-        }
-      }
-
-      await rotatePdf(file, rotationAngle, pageIndices, setProgress);
+      await rotatePdf(file, angle, pageIndices, password || currentPassword, setProgress);
       alert(t('common.success.rotate'));
-    } catch (error) {
+      setIsPasswordModalOpen(false);
+      setPasswordError(false);
+      setCurrentPassword(password || currentPassword);
+    } catch (error: any) {
       console.error('회전 실패:', error);
-      alert(t('common.errors.rotate'));
+      if (error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')) {
+        setIsPasswordModalOpen(true);
+        if (password) {
+          setPasswordError(true);
+        }
+      } else {
+        alert(t('common.errors.rotate'));
+      }
     } finally {
       setRotating(false);
     }
-  }, [file, rotationAngle, applyToAll, selectedPages, t]);
+  }, [file, angle, selectedPages, t, currentPassword]);
 
   return (
     <div className="rotate-pdf">
@@ -136,66 +153,74 @@ const RotatePdf = () => {
 
           <div className="option-group">
             <label>{t('pages.pdf.rotate.options.angle')}</label>
-            <div className="rotation-buttons">
+            <div className="angle-buttons">
               <button
-                className={`rotation-btn ${rotationAngle === 90 ? 'active' : ''}`}
-                onClick={() => setRotationAngle(90)}
+                className={`angle-btn ${angle === 90 ? 'active' : ''}`}
+                onClick={() => setAngle(90)}
                 disabled={rotating}
               >
-                <span className="rotation-icon">↻</span>
-                <span>{t('pages.pdf.rotate.options.angles.right')}</span>
+                ↻ 90°
               </button>
               <button
-                className={`rotation-btn ${rotationAngle === 180 ? 'active' : ''}`}
-                onClick={() => setRotationAngle(180)}
+                className={`angle-btn ${angle === 180 ? 'active' : ''}`}
+                onClick={() => setAngle(180)}
                 disabled={rotating}
               >
-                <span className="rotation-icon">↻</span>
-                <span>{t('pages.pdf.rotate.options.angles.half')}</span>
+                ↻ 180°
               </button>
               <button
-                className={`rotation-btn ${rotationAngle === 270 ? 'active' : ''}`}
-                onClick={() => setRotationAngle(270)}
+                className={`angle-btn ${angle === 270 ? 'active' : ''}`}
+                onClick={() => setAngle(270)}
                 disabled={rotating}
               >
-                <span className="rotation-icon">↺</span>
-                <span>{t('pages.pdf.rotate.options.angles.left')}</span>
+                ↻ 270°
               </button>
             </div>
           </div>
 
           <div className="option-group">
-            <label>
-              <input
-                type="checkbox"
-                checked={applyToAll}
-                onChange={(e) => setApplyToAll(e.target.checked)}
-                disabled={rotating}
-              />
-              {t('pages.pdf.rotate.options.applyAll')}
-            </label>
-            {!applyToAll && (
-              <div className="page-selection">
+            <label>{t('pages.pdf.rotate.options.pages')}</label>
+            <div className="page-selection">
+              <label className="radio-label">
                 <input
-                  type="text"
-                  placeholder={t('pages.pdf.rotate.options.pageInputPlaceholder')}
-                  value={selectedPages}
-                  onChange={(e) => setSelectedPages(e.target.value)}
+                  type="radio"
+                  checked={selectedPages === 'all'}
+                  onChange={() => setSelectedPages('all')}
                   disabled={rotating}
                 />
-                <small>{t('pages.pdf.rotate.options.pageInputHint')}</small>
-              </div>
+                {t('pages.pdf.rotate.options.allPages')}
+              </label>
+              <label className="radio-label">
+                <input
+                  type="radio"
+                  checked={selectedPages !== 'all'}
+                  onChange={() => setSelectedPages('')}
+                  disabled={rotating}
+                />
+                {t('pages.pdf.rotate.options.specificPages')}
+              </label>
+            </div>
+
+            {selectedPages !== 'all' && (
+              <input
+                type="text"
+                className="page-input"
+                placeholder={t('pages.pdf.rotate.options.pagePlaceholder')}
+                value={selectedPages}
+                onChange={(e) => setSelectedPages(e.target.value)}
+                disabled={rotating}
+              />
             )}
           </div>
 
-          <button className="btn btn-convert" onClick={handleRotate} disabled={rotating}>
+          <button className="btn btn-convert" onClick={() => handleRotate()} disabled={rotating}>
             {rotating ? t('pages.pdf.rotate.actions.rotating') : t('pages.pdf.rotate.actions.rotate')}
           </button>
         </div>
       )}
 
       {/* 진행률 */}
-      {progress && (
+      {progress && rotating && (
         <div className="progress">
           <p>{progress.status}</p>
           <div className="progress-bar">
@@ -210,9 +235,18 @@ const RotatePdf = () => {
         </div>
       )}
 
+      <PasswordModal
+        isOpen={isPasswordModalOpen}
+        isError={passwordError}
+        onSubmit={(password) => handleRotate(password)}
+        onCancel={() => {
+          setIsPasswordModalOpen(false);
+          setPasswordError(false);
+          setRotating(false);
+        }}
+      />
     </div>
   );
 };
 
 export default RotatePdf;
-

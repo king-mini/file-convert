@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { extractTextFromPdf, downloadAsTextFile } from '../../utils/textExtractor';
 import type { ExtractProgress, ExtractedText } from '../../utils/textExtractor';
+import PasswordModal from '../../components/PasswordModal';
 import './PdfToText.css';
 
 const PdfToText = () => {
@@ -11,6 +12,11 @@ const PdfToText = () => {
   const [dragOver, setDragOver] = useState(false);
   const [extractedTexts, setExtractedTexts] = useState<ExtractedText[]>([]);
   const { t } = useTranslation();
+
+  // Password Modal State
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState<string | undefined>(undefined);
 
   const handleFileSelect = useCallback((selectedFile: File | null) => {
     if (selectedFile?.type === 'application/pdf') {
@@ -32,7 +38,7 @@ const PdfToText = () => {
     [handleFileSelect]
   );
 
-  const handleExtract = useCallback(async () => {
+  const handleExtract = useCallback(async (password?: string) => {
     if (!file) return;
 
     setExtracting(true);
@@ -40,15 +46,25 @@ const PdfToText = () => {
     setExtractedTexts([]);
 
     try {
-      const texts = await extractTextFromPdf(file, setProgress);
+      const texts = await extractTextFromPdf(file, password || currentPassword, setProgress);
       setExtractedTexts(texts);
-    } catch (error) {
+      setIsPasswordModalOpen(false);
+      setPasswordError(false);
+      setCurrentPassword(password || currentPassword);
+    } catch (error: any) {
       console.error('추출 실패:', error);
-      alert(t('common.errors.extract'));
+      if (error.message.includes('Password') || error.name === 'PasswordException' || error.message.includes('Encrypted')) {
+        setIsPasswordModalOpen(true);
+        if (password) {
+          setPasswordError(true);
+        }
+      } else {
+        alert(t('common.errors.extract'));
+      }
     } finally {
       setExtracting(false);
     }
-  }, [file, t]);
+  }, [file, t, currentPassword]);
 
   const handleDownload = useCallback(() => {
     if (!file || extractedTexts.length === 0) return;
@@ -110,7 +126,7 @@ const PdfToText = () => {
       {/* 추출 버튼 */}
       {file && !extractedTexts.length && (
         <div className="options">
-          <button className="btn btn-convert" onClick={handleExtract} disabled={extracting}>
+          <button className="btn btn-convert" onClick={() => handleExtract()} disabled={extracting}>
             {extracting ? t('pages.pdf.toText.actions.extracting') : t('pages.pdf.toText.actions.extract')}
           </button>
         </div>
@@ -160,9 +176,18 @@ const PdfToText = () => {
         </div>
       )}
 
+      <PasswordModal
+        isOpen={isPasswordModalOpen}
+        isError={passwordError}
+        onSubmit={(password) => handleExtract(password)}
+        onCancel={() => {
+          setIsPasswordModalOpen(false);
+          setPasswordError(false);
+          setExtracting(false);
+        }}
+      />
     </div>
   );
 };
 
 export default PdfToText;
-
