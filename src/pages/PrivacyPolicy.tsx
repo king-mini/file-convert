@@ -1,54 +1,50 @@
-import { useTranslation } from 'react-i18next';
 import './Policy.css';
 
 const PrivacyPolicy = () => {
-  const { t } = useTranslation();
-
   return (
     <div className="policy-page">
       <div className="policy-container">
-        <h1 className="policy-title">{t('policy.privacy.title')}</h1>
-        <p className="policy-updated">{t('policy.privacy.updated')}</p>
+        <h1 className="policy-title">Privacy Policy</h1>
 
         <section className="policy-section">
-          <h2>{t('policy.privacy.sections.overview.title')}</h2>
-          <p>{t('policy.privacy.sections.overview.content')}</p>
+          <h2>1. Overview</h2>
+          <p>Lokit ("Service") takes your privacy very seriously. This Privacy Policy explains what information we collect when you use our Service and how we use it.</p>
         </section>
 
         <section className="policy-section">
-          <h2>{t('policy.privacy.sections.fileProcessing.title')}</h2>
-          <p>{t('policy.privacy.sections.fileProcessing.content')}</p>
+          <h2>2. File Processing</h2>
+          <p>This Service operates 100% client-side:</p>
           <ul>
-            <li>{t('policy.privacy.sections.fileProcessing.item1')}</li>
-            <li>{t('policy.privacy.sections.fileProcessing.item2')}</li>
-            <li>{t('policy.privacy.sections.fileProcessing.item3')}</li>
-            <li>{t('policy.privacy.sections.fileProcessing.item4')}</li>
+            <li>All files are processed only in your browser</li>
+            <li>Files are not uploaded to any server</li>
+            <li>Files are immediately deleted from memory after processing</li>
+            <li>Files are not stored in cookies or local storage</li>
           </ul>
         </section>
 
         <section className="policy-section">
-          <h2>{t('policy.privacy.sections.dataCollection.title')}</h2>
-          <p>{t('policy.privacy.sections.dataCollection.content')}</p>
-          <h3>{t('policy.privacy.sections.dataCollection.analytics.title')}</h3>
-          <p>{t('policy.privacy.sections.dataCollection.analytics.content')}</p>
-          <h3>{t('policy.privacy.sections.dataCollection.ads.title')}</h3>
-          <p>{t('policy.privacy.sections.dataCollection.ads.content')}</p>
+          <h2>3. Information We Collect</h2>
+          <p>This Service may collect the following information:</p>
+          <h3>Google Analytics</h3>
+          <p>We collect anonymous analytics data such as page visits and usage patterns. No personally identifiable information is included.</p>
+          <h3>Google AdSense</h3>
+          <p>We collect information about ad impressions and clicks. Cookies may be used to collect advertising-related data.</p>
         </section>
 
         <section className="policy-section">
-          <h2>{t('policy.privacy.sections.cookies.title')}</h2>
-          <p>{t('policy.privacy.sections.cookies.content')}</p>
+          <h2>4. Cookie Usage</h2>
+          <p>This Service may use cookies for the following purposes:</p>
           <ul>
-            <li>{t('policy.privacy.sections.cookies.item1')}</li>
-            <li>{t('policy.privacy.sections.cookies.item2')}</li>
-            <li>{t('policy.privacy.sections.cookies.item3')}</li>
+            <li>Analytics cookies: Usage pattern analysis through Google Analytics</li>
+            <li>Advertising cookies: Personalized ads through Google AdSense</li>
+            <li>Settings cookies: Storing user preferences (optional)</li>
           </ul>
-          <p>{t('policy.privacy.sections.cookies.note')}</p>
+          <p>You can delete or block cookies at any time through your browser settings.</p>
         </section>
 
         <section className="policy-section">
-          <h2>{t('policy.privacy.sections.contact.title')}</h2>
-          <p>{t('policy.privacy.sections.contact.content')}</p>
+          <h2>5. Contact</h2>
+          <p>If you have any questions about this Privacy Policy, please contact us through the GitHub repository issues.</p>
         </section>
       </div>
     </div>
