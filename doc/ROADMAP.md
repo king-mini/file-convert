@@ -72,6 +72,11 @@
   - Accessibility > 90
   - Best Practices > 90
   - SEO > 95
+- [ ] **LCP (Largest Contentful Paint) 개선**
+  - 현재: 4.94s -> 목표: < 2.5s
+  - 렌더링 차단 리소스 제거
+  - 이미지/폰트 프리로딩
+  - 불필요한 초기 스크립트 지연 로딩
 
 **예상 소요**: 3-5일
 
@@ -220,6 +225,7 @@
 | Lighthouse Performance | ? | > 90 | Chrome DevTools |
 | Lighthouse Accessibility | ? | > 90 | Chrome DevTools |
 | 첫 페이지 로딩 (3G) | ? | < 2초 | Lighthouse |
+| LCP (Largest Contentful Paint) | 4.94s | < 2.5s | Web Vitals |
 
 ### 비즈니스 목표 (3개월)
 
@@ -286,6 +292,7 @@
 2. ✅ Google Analytics 설정
 3. ✅ 성능 최적화
 4. ✅ SEO 최적화
+5. [ ] LCP 성능 개선 (4.94s -> 2.5s)
 
 ### 단기 (1-2주)
 
