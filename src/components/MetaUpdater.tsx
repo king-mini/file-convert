@@ -64,12 +64,12 @@ const MetaUpdater = () => {
         ogDescription: 'Combine multiple PDF files into one. Secure, fast, and free.',
       };
     }
-    if (path === '/image/portrait-blur') {
+    if (path === '/image/blur-background') {
       return {
-        title: 'Portrait Blur - AI Background Blur Tool for Photos | Lokit',
-        description: 'Free AI-powered portrait blur tool. Blur backgrounds in photos automatically. Adjustable blur strength, no signup required.',
-        ogTitle: 'Portrait Blur - AI Background Blur Tool',
-        ogDescription: 'Blur photo backgrounds automatically with AI. Secure, fast, and free.',
+        title: 'Portrait Background Blur - AI Blur Photo Background | Lokit',
+        description: 'Free AI-powered portrait background blur tool. Blur backgrounds in people photos automatically. Perfect for portrait photography. Adjustable blur strength, no signup required.',
+        ogTitle: 'Portrait Background Blur - AI Photo Background Blur Tool',
+        ogDescription: 'Blur photo backgrounds for portraits automatically with AI. Keep people sharp, blur the background. Secure, fast, and free.',
       };
     }
     if (path === '/image/bg-remove') {

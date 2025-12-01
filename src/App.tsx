@@ -18,7 +18,7 @@ const CompressPdf = lazy(() => import('./pages/pdf/CompressPdf'));
 
 // Image
 const ImageHome = lazy(() => import('./pages/image/ImageHome'));
-const PortraitBlur = lazy(() => import('./pages/image/PortraitBlur'));
+const BackgroundBlur = lazy(() => import('./pages/image/BackgroundBlur'));
 const BackgroundRemove = lazy(() => import('./pages/image/BackgroundRemove'));
 const ImageResize = lazy(() => import('./pages/image/ImageResize'));
 const ImageCompress = lazy(() => import('./pages/image/ImageCompress'));
@@ -38,7 +38,7 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             {/* Hub - Main Page */}
             <Route index element={<Hub />} />
-            
+
             {/* PDF Routes */}
             <Route path="pdf" element={<PdfHome />} />
             <Route path="pdf/to-jpg" element={<PdfToJpg />} />
@@ -49,21 +49,21 @@ const App = () => {
             <Route path="pdf/split" element={<SplitPdf />} />
             <Route path="pdf/rotate" element={<RotatePdf />} />
             <Route path="pdf/compress" element={<CompressPdf />} />
-            
+
             {/* Image Routes */}
             <Route path="image" element={<ImageHome />} />
-            <Route path="image/portrait-blur" element={<PortraitBlur />} />
+            <Route path="image/blur-background" element={<BackgroundBlur />} />
             <Route path="image/bg-remove" element={<BackgroundRemove />} />
             <Route path="image/resize" element={<ImageResize />} />
             <Route path="image/compress" element={<ImageCompress />} />
             <Route path="image/format" element={<FormatConvert />} />
             <Route path="image/crop" element={<ImageCrop />} />
-            
+
             {/* Policy Routes */}
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<Terms />} />
             <Route path="licenses" element={<Licenses />} />
-            
+
             {/* Redirects - Old URLs to New URLs */}
             <Route path="pdf-to-jpg" element={<Navigate to="/pdf/to-jpg" replace />} />
             <Route path="pdf-to-png" element={<Navigate to="/pdf/to-png" replace />} />
@@ -73,6 +73,7 @@ const App = () => {
             <Route path="split-pdf" element={<Navigate to="/pdf/split" replace />} />
             <Route path="rotate-pdf" element={<Navigate to="/pdf/rotate" replace />} />
             <Route path="compress-pdf" element={<Navigate to="/pdf/compress" replace />} />
+            <Route path="image/portrait-blur" element={<Navigate to="/image/blur-background" replace />} />
           </Route>
         </Routes>
       </Suspense>

@@ -1,4 +1,4 @@
-.portrait-blur {
+.background-blur {
   max-width: 1000px;
   margin: 0 auto;
   display: flex;
@@ -395,7 +395,7 @@
 }
 
 @media (max-width: 500px) {
-  .portrait-blur {
+  .background-blur {
     gap: 1rem;
   }
 
@@ -529,4 +529,3 @@
   background: rgba(220, 38, 38, 0.9);
   transform: scale(1.1);
 }
-

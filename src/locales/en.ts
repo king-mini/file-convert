@@ -14,7 +14,7 @@ const en = {
       otherImage: '🖼️ Pick another image',
       copy: '📋 Copy',
       copied: '✓ Copied',
-      save: '💾 Download',
+      save: '💾 Save',
       retry: '🔄 Apply again',
       cancel: 'Cancel',
       submit: 'Submit',
@@ -150,8 +150,8 @@ const en = {
     heroSubtitle: 'Edit quickly in your browser',
     features: {
       portraitBlur: {
-        title: 'Portrait Blur',
-        description: 'Blur backgrounds for people',
+        title: 'Background Blur',
+        description: 'Blur background for portraits',
       },
       backgroundRemove: {
         title: 'Background Remove',
@@ -531,8 +531,8 @@ const en = {
     image: {
       portraitBlur: {
         hero: {
-          title: '🎭 Portrait Blur',
-          description: 'Keep faces sharp, blur the background',
+          title: '🎭 Background Blur',
+          description: 'Blur background of portrait photos - keep people sharp',
         },
         upload: {
           hint: 'Drag or click to add an image',

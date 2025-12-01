@@ -1,13 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { blurBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
-import './PortraitBlur.css';
+import './BackgroundBlur.css';
 
-const PortraitBlur = () => {
+const BackgroundBlur = () => {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
-  const [blurAmount, setBlurAmount] = useState(15);
+  const [blurAmount, setBlurAmount] = useState(8);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [dragOver, setDragOver] = useState(false);
@@ -91,8 +91,8 @@ const PortraitBlur = () => {
     } catch (err) {
       console.error('Processing error:', err);
       // 디버그: 상세 에러 표시
-      const errorMessage = err instanceof Error 
-        ? `[DEBUG] ${err.name}: ${err.message}` 
+      const errorMessage = err instanceof Error
+        ? `[DEBUG] ${err.name}: ${err.message}`
         : `[DEBUG] Unknown error: ${String(err)}`;
       setError(errorMessage);
     } finally {
@@ -140,13 +140,13 @@ const PortraitBlur = () => {
     // 기존 결과 정리
     if (result) URL.revokeObjectURL(result);
     setResult(null);
-    
+
     // 다시 처리
     await handleProcess();
   }, [file, result, handleProcess]);
 
   return (
-    <div className="portrait-blur">
+    <div className="background-blur">
       <div className="page-header">
         <h1>{t('pages.image.portraitBlur.hero.title')}</h1>
         <p>{t('pages.image.portraitBlur.hero.description')}</p>
@@ -193,7 +193,7 @@ const PortraitBlur = () => {
           <div className="image-compare">
             <div className="image-panel">
               <h3>{t('pages.image.portraitBlur.panels.original')}</h3>
-              <div 
+              <div
                 className="image-container clickable"
                 onClick={() => {
                   if (preview) {
@@ -204,7 +204,7 @@ const PortraitBlur = () => {
                 title={t('common.hints.viewLarge')}
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
-                <button 
+                <button
                   className="image-remove-btn"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -218,7 +218,7 @@ const PortraitBlur = () => {
             </div>
             <div className="image-panel">
               <h3>{t('pages.image.portraitBlur.panels.result')}</h3>
-              <div 
+              <div
                 className={`image-container ${result ? 'clickable' : ''}`}
                 onClick={() => {
                   if (result) {
@@ -303,7 +303,7 @@ const PortraitBlur = () => {
               </button>
             ) : (
               <>
-                <button 
+                <button
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >
@@ -351,5 +351,5 @@ const PortraitBlur = () => {
   );
 };
 
-export default PortraitBlur;
+export default BackgroundBlur;
 

@@ -150,8 +150,8 @@ const ko = {
     heroSubtitle: '브라우저에서 빠르게 편집하세요',
     features: {
       portraitBlur: {
-        title: 'Portrait Blur',
-        description: '인물 배경 흐리기',
+        title: 'Background Blur',
+        description: '인물 사진 배경 흐리기',
       },
       backgroundRemove: {
         title: 'Background Remove',
@@ -531,8 +531,8 @@ const ko = {
     image: {
       portraitBlur: {
         hero: {
-          title: '🎭 Portrait Blur',
-          description: '인물은 선명하게, 배경은 흐리게',
+          title: '🎭 Background Blur',
+          description: '인물 사진 배경 흐리기 - 피사체는 선명하게, 배경은 흐리게',
         },
         upload: {
           hint: '이미지를 드래그하거나 클릭하여 선택하세요',

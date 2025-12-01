@@ -18,7 +18,7 @@ const ImageHome = () => {
       title: t('imageHome.features.portraitBlur.title'),
       icon: '🎭',
       description: t('imageHome.features.portraitBlur.description'),
-      path: '/image/portrait-blur',
+      path: '/image/blur-background',
       available: true,
     },
     {
