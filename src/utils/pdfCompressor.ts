@@ -1,13 +1,5 @@
-import * as pdfjsLib from 'pdfjs-dist';
-import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import i18n from '../i18n';
-
-// PDF.js worker 설정
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url
-).toString();
 
 export interface CompressOptions {
   quality: number; // 0.1 ~ 1.0
@@ -82,6 +74,15 @@ export const compressPdf = async (
   const originalSize = file.size;
 
   // 원본 PDF 로드
+  const pdfjsLib = await import('pdfjs-dist');
+
+  if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+      'pdfjs-dist/build/pdf.worker.min.mjs',
+      import.meta.url
+    ).toString();
+  }
+
   const arrayBuffer = await file.arrayBuffer();
   const loadingTask = pdfjsLib.getDocument({
     data: arrayBuffer,
@@ -98,6 +99,7 @@ export const compressPdf = async (
   });
 
   // 새 PDF 문서 생성
+  const { PDFDocument } = await import('pdf-lib');
   const compressedPdf = await PDFDocument.create();
 
   let totalCompressedSize = 0;

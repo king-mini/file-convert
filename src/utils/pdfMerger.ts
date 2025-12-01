@@ -1,4 +1,3 @@
-import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import i18n from '../i18n';
 
@@ -28,6 +27,8 @@ export const mergePdfs = async (
     total: files.length,
     status: i18n.t('common.status.pdfMergeStart'),
   });
+
+  const { PDFDocument } = await import('pdf-lib');
 
   // 병합된 PDF 문서 생성
   const mergedPdf = await PDFDocument.create();
@@ -72,6 +73,7 @@ export const mergePdfs = async (
 
 export const getPageCount = async (file: File): Promise<number> => {
   try {
+    const { PDFDocument } = await import('pdf-lib');
     const arrayBuffer = await file.arrayBuffer();
     const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
     return pdf.getPageCount();

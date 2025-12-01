@@ -1,4 +1,4 @@
-import { PDFDocument } from 'pdf-lib';
+import type { PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import i18n from '../i18n';
@@ -22,6 +22,7 @@ const createSinglePagePdf = async (
   sourcePdf: PDFDocument,
   pageIndex: number
 ): Promise<Uint8Array> => {
+  const { PDFDocument } = await import('pdf-lib');
   const newPdf = await PDFDocument.create();
   const [copiedPage] = await newPdf.copyPages(sourcePdf, [pageIndex]);
   newPdf.addPage(copiedPage);
@@ -33,6 +34,7 @@ const createRangePdf = async (
   startIndex: number,
   endIndex: number
 ): Promise<Uint8Array> => {
+  const { PDFDocument } = await import('pdf-lib');
   const newPdf = await PDFDocument.create();
   const pageIndices = Array.from(
     { length: endIndex - startIndex + 1 },
@@ -48,6 +50,7 @@ export const splitPdf = async (
   options: SplitOptions,
   onProgress?: (progress: SplitProgress) => void
 ): Promise<void> => {
+  const { PDFDocument } = await import('pdf-lib');
   const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, { password: options.password } as any);
 

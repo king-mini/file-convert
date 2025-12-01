@@ -1,4 +1,3 @@
-import { PDFDocument, degrees } from 'pdf-lib';
 import { saveAs } from 'file-saver';
 import i18n from '../i18n';
 
@@ -17,6 +16,7 @@ export const rotatePdf = async (
   password?: string,
   onProgress?: (progress: RotateProgress) => void
 ): Promise<void> => {
+  const { PDFDocument, degrees } = await import('pdf-lib');
   const arrayBuffer = await file.arrayBuffer();
   const pdfDoc = await PDFDocument.load(arrayBuffer, { password } as any);
 

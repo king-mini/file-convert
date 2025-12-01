@@ -1,4 +1,4 @@
-import { jsPDF } from 'jspdf';
+
 
 export type PageSize = 'A4' | 'Letter' | 'Auto';
 
@@ -40,6 +40,7 @@ export const convertImagesToPdf = async (
   }
 
   // PDF 문서 생성
+  const { jsPDF } = await import('jspdf');
   const pdf = new jsPDF({
     orientation: options.orientation,
     unit: 'mm',

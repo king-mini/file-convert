@@ -1,13 +1,6 @@
-import * as pdfjsLib from 'pdfjs-dist';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import i18n from '../i18n';
-
-// PDF.js worker 설정 - 로컬 파일 사용
-pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.mjs',
-  import.meta.url
-).toString();
 
 export interface ConvertOptions {
   quality: number; // 0.0 ~ 1.0
@@ -27,6 +20,15 @@ export const convertPdfToImages = async (
   options: ConvertOptions,
   onProgress?: (progress: ConvertProgress) => void
 ): Promise<void> => {
+  const pdfjsLib = await import('pdfjs-dist');
+
+  if (!pdfjsLib.GlobalWorkerOptions.workerSrc) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = new URL(
+      'pdfjs-dist/build/pdf.worker.min.mjs',
+      import.meta.url
+    ).toString();
+  }
+
   const arrayBuffer = await file.arrayBuffer();
   const loadingTask = pdfjsLib.getDocument({
     data: arrayBuffer,
