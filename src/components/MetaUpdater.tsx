@@ -11,7 +11,7 @@ const MetaUpdater = () => {
   // 경로별 메타 정보 결정
   const getMetaInfo = () => {
     const path = location.pathname;
-    
+
     if (path === '/privacy-policy') {
       return {
         title: t('meta.privacy.title'),
@@ -30,7 +30,7 @@ const MetaUpdater = () => {
         description: t('meta.licenses.description'),
       };
     }
-    
+
     // 주요 도구 페이지별 SEO 최적화된 메타 태그
     if (path === '/pdf/to-jpg') {
       return {
@@ -72,7 +72,81 @@ const MetaUpdater = () => {
         ogDescription: 'Blur photo backgrounds automatically with AI. Secure, fast, and free.',
       };
     }
-    
+    if (path === '/image/bg-remove') {
+      return {
+        title: 'Background Remover - Remove Image Background AI | Lokit',
+        description: 'Remove image background automatically with AI. Free online tool. Support JPG, PNG, WebP.',
+        ogTitle: 'Background Remover - Free Online AI Tool',
+        ogDescription: 'Remove image background automatically with AI. Secure, fast, and free.',
+      };
+    }
+    if (path === '/image/resize') {
+      return {
+        title: 'Image Resizer - Resize JPG, PNG, WebP | Lokit',
+        description: 'Resize images online. Change dimensions and file size. Free online image resizer tool.',
+        ogTitle: 'Image Resizer - Free Online Tool',
+        ogDescription: 'Resize images online instantly. Secure, fast, and free.',
+      };
+    }
+    if (path === '/image/compress') {
+      return {
+        title: 'Image Compressor - Reduce Image Size | Lokit',
+        description: 'Compress JPG, PNG, WebP images. Reduce file size without losing quality. Free online image compressor.',
+        ogTitle: 'Image Compressor - Free Online Tool',
+        ogDescription: 'Reduce image file size instantly. Secure, fast, and free.',
+      };
+    }
+    if (path === '/image/format') {
+      return {
+        title: 'Image Converter - Convert JPG, PNG, WebP | Lokit',
+        description: 'Convert image formats online. JPG to PNG, PNG to JPG, WebP support. Free online image converter.',
+        ogTitle: 'Image Converter - Free Online Tool',
+        ogDescription: 'Convert image formats instantly. Secure, fast, and free.',
+      };
+    }
+    if (path === '/image/crop') {
+      return {
+        title: 'Image Cropper - Crop Images Online | Lokit',
+        description: 'Crop images online. Cut specific areas of your photos. Free online image cropper.',
+        ogTitle: 'Image Cropper - Free Online Tool',
+        ogDescription: 'Crop images online instantly. Secure, fast, and free.',
+      };
+    }
+
+    // PDF Tools (Remaining)
+    if (path === '/pdf/to-text') {
+      return {
+        title: 'PDF to Text - Extract Text from PDF Online | Lokit',
+        description: 'Free online PDF to text converter. Extract text content from PDF files instantly. No signup required.',
+        ogTitle: 'PDF to Text Converter - Free Online Tool',
+        ogDescription: 'Extract text from PDF files instantly. Secure, fast, and free.',
+      };
+    }
+    if (path === '/pdf/image-to-pdf') {
+      return {
+        title: 'Image to PDF - Convert JPG, PNG to PDF | Lokit',
+        description: 'Convert images to PDF online. Support JPG, PNG, WebP. Merge multiple images into one PDF.',
+        ogTitle: 'Image to PDF Converter - Free Online Tool',
+        ogDescription: 'Convert images to PDF instantly. Secure, fast, and free.',
+      };
+    }
+    if (path === '/pdf/split') {
+      return {
+        title: 'Split PDF - Separate PDF Pages Online | Lokit',
+        description: 'Split PDF files online. Extract pages or split into multiple files. Free online PDF splitter.',
+        ogTitle: 'Split PDF - Free Online Tool',
+        ogDescription: 'Split PDF files instantly. Secure, fast, and free.',
+      };
+    }
+    if (path === '/pdf/rotate') {
+      return {
+        title: 'Rotate PDF - Rotate PDF Pages Permanently | Lokit',
+        description: 'Rotate PDF pages 90 or 180 degrees. Save permanently. Free online PDF rotator.',
+        ogTitle: 'Rotate PDF - Free Online Tool',
+        ogDescription: 'Rotate PDF pages instantly. Secure, fast, and free.',
+      };
+    }
+
     // 기본값
     return {
       title: 'Lokit - File Tools',
