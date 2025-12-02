@@ -6,7 +6,9 @@ const MetaUpdater = () => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
   const locale = t('locale');
-  const lang = (i18n.language || 'en').split('-')[0];
+  const searchParams = new URLSearchParams(location.search);
+  const langParam = searchParams.get('lang');
+  const lang = langParam || (i18n.language || 'en').split('-')[0];
 
   // 경로별 메타 정보 결정
   const getMetaInfo = () => {
@@ -200,6 +202,33 @@ const MetaUpdater = () => {
     }
 
     document.documentElement.setAttribute('lang', lang);
+
+    // Canonical URL
+    let canonicalUrl = document.querySelector('link[rel="canonical"]');
+    if (!canonicalUrl) {
+      canonicalUrl = document.createElement('link');
+      canonicalUrl.setAttribute('rel', 'canonical');
+      document.head.appendChild(canonicalUrl);
+    }
+    const canonicalPath = `${location.pathname}${lang === 'ko' ? '?lang=ko' : ''}`;
+    canonicalUrl.setAttribute('href', `https://lokit.tools${canonicalPath}`);
+
+    // Hreflang Tags
+    const updateHreflang = (hreflang: string, path: string) => {
+      let link = document.querySelector(`link[rel="alternate"][hreflang="${hreflang}"]`);
+      if (!link) {
+        link = document.createElement('link');
+        link.setAttribute('rel', 'alternate');
+        link.setAttribute('hreflang', hreflang);
+        document.head.appendChild(link);
+      }
+      link.setAttribute('href', `https://lokit.tools${path}`);
+    };
+
+    updateHreflang('ko', `${location.pathname}?lang=ko`);
+    updateHreflang('en', location.pathname);
+    updateHreflang('x-default', location.pathname);
+
   }, [metaInfo.title, metaInfo.description, metaInfo.ogTitle, metaInfo.ogDescription, locale, lang, location.pathname, t]);
 
   return null;
