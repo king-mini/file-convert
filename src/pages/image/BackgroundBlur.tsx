@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { blurBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './BackgroundBlur.css';
@@ -16,7 +17,8 @@ const BackgroundBlur = () => {
   const [modalIndex, setModalIndex] = useState(0); // 0: 원본, 1: 결과
   const [copied, setCopied] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const lang = (i18n.language || 'en').split('-')[0];
 
   // 모달 키보드 단축키 (ESC: 닫기, 좌우 방향키: 토글)
   useEffect(() => {
@@ -348,6 +350,14 @@ const BackgroundBlur = () => {
           </div>
         </div>
       )}
+
+      {/* Other Tools Section */}
+      <div className="other-tools">
+        <h2>{t('imageHome.heroTitle')}</h2>
+        <Link to="/image" className="view-all-link">
+          {lang === 'ko' ? '모든 이미지 도구 보기 →' : 'View all image tools →'}
+        </Link>
+      </div>
     </div>
   );
 };
