@@ -58,8 +58,29 @@ const ImageHome = () => {
     },
   ];
 
+  // Schema.org ItemList markup for SEO
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Free Online Image Tools",
+    "description": "6 free photo editing tools for professional results",
+    "numberOfItems": 6,
+    "itemListElement": features.map((feature, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": feature.title,
+      "description": feature.description,
+      "url": `https://lokit.tools${feature.path}`
+    }))
+  };
+
   return (
     <div className="home">
+      {/* Schema.org Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify(schemaMarkup)}
+      </script>
+
       {/* Hero Section */}
       <section className="hero">
         <h1 className="hero-title">{t('imageHome.heroTitle')}</h1>

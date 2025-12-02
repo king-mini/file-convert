@@ -95,8 +95,29 @@ const PdfHome = () => {
     [t]
   );
 
+  // Schema.org ItemList markup for SEO
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Free Online PDF Tools",
+    "description": "8 powerful tools to process PDFs securely in your browser",
+    "numberOfItems": 8,
+    "itemListElement": features.map((feature, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": feature.title,
+      "description": feature.description,
+      "url": `https://lokit.tools${feature.path}`
+    }))
+  };
+
   return (
     <div className="home">
+      {/* Schema.org Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify(schemaMarkup)}
+      </script>
+
       {/* Hero Section */}
       <section className="hero">
         <h1 className="hero-title">{t('pages.pdf.home.hero.title')}</h1>
