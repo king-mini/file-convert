@@ -68,10 +68,16 @@ const MetaUpdater = () => {
     }
     if (path === '/image/blur-background') {
       return {
-        title: 'Portrait Background Blur - AI Blur Photo Background | Lokit',
-        description: 'Free AI-powered portrait background blur tool. Blur backgrounds in people photos automatically. Perfect for portrait photography. Adjustable blur strength, no signup required.',
-        ogTitle: 'Portrait Background Blur - AI Photo Background Blur Tool',
-        ogDescription: 'Blur photo backgrounds for portraits automatically with AI. Keep people sharp, blur the background. Secure, fast, and free.',
+        title: lang === 'ko'
+          ? '무료 배경 흐림 도구 - 사진 배경 흐리기 | Lokit'
+          : 'Free Online Background Blur Tool - Blur Photo Background Instantly | Lokit',
+        description: lang === 'ko'
+          ? '온라인에서 사진 배경을 흐리게 하세요. 프로필 사진, 증명사진 배경을 전문적으로 처리합니다. 무료, 회원가입 불필요.'
+          : 'Blur photo backgrounds online. Perfect for portraits, profile photos, and headshots. Free, no signup required, 100% private.',
+        ogTitle: lang === 'ko' ? '무료 배경 흐림 도구' : 'Free Background Blur Tool',
+        ogDescription: lang === 'ko'
+          ? '프로필 사진 배경을 전문적으로 흐리게 처리하세요'
+          : 'Blur photo backgrounds for portraits automatically. Keep people sharp, blur the background.',
       };
     }
     if (path === '/image/bg-remove') {
@@ -112,6 +118,38 @@ const MetaUpdater = () => {
         description: 'Crop images online. Cut specific areas of your photos. Free online image cropper.',
         ogTitle: 'Image Cropper - Free Online Tool',
         ogDescription: 'Crop images online instantly. Secure, fast, and free.',
+      };
+    }
+
+    // Category Pages - PDF Tools
+    if (path === '/pdf') {
+      return {
+        title: lang === 'ko'
+          ? '무료 온라인 PDF 도구 - PDF 변환, 병합, 분할 | Lokit'
+          : 'Free Online PDF Tools - Convert, Merge & Split PDFs | Lokit',
+        description: lang === 'ko'
+          ? '무료 PDF 병합, 분할, 변환 도구. 8가지 기능으로 PDF를 온라인에서 빠르게 처리하세요. 회원가입 불필요, 100% 안전.'
+          : '8 free PDF tools: convert, merge, split, compress, and more. Process PDFs securely in your browser. No signup required.',
+        ogTitle: lang === 'ko' ? '무료 온라인 PDF 도구' : 'Free Online PDF Tools',
+        ogDescription: lang === 'ko'
+          ? 'PDF 변환, 병합, 분할, 압축 등 8가지 무료 도구'
+          : '8 powerful tools to convert, merge, split, and compress PDFs online',
+      };
+    }
+
+    // Category Pages - Image Tools
+    if (path === '/image') {
+      return {
+        title: lang === 'ko'
+          ? '무료 온라인 이미지 도구 - 배경 흐림, 배경 제거 등 | Lokit'
+          : 'Free Online Image Tools - Background Blur, Remove & More | Lokit',
+        description: lang === 'ko'
+          ? '배경 흐림, 배경 제거, 이미지 크기 변경, 압축 등 6가지 무료 사진 편집 도구. 회원가입 불필요, 100% 안전.'
+          : '6 free image tools: background blur, background remove, resize, compress, format convert, and crop. Edit in your browser.',
+        ogTitle: lang === 'ko' ? '무료 온라인 이미지 도구' : 'Free Online Image Tools',
+        ogDescription: lang === 'ko'
+          ? '배경 흐림, 배경 제거 등 6가지 무료 이미지 편집 도구'
+          : '6 free photo editing tools for professional results',
       };
     }
 

@@ -146,8 +146,8 @@ const ko = {
     },
   },
   imageHome: {
-    heroTitle: '🖼️ 이미지 편집',
-    heroSubtitle: '브라우저에서 빠르게 편집하세요',
+    heroTitle: '무료 온라인 이미지 도구 - 배경 흐림, 배경 제거 등',
+    heroSubtitle: '6가지 무료 사진 편집 도구로 빠르게 편집하세요',
     features: {
       portraitBlur: {
         title: 'Background Blur',
@@ -270,8 +270,8 @@ const ko = {
     pdf: {
       home: {
         hero: {
-          title: '📄 PDF 도구',
-          subtitle: '브라우저에서 안전하게 변환하세요',
+          title: '무료 온라인 PDF 도구 - PDF 변환, 병합, 분할',
+          subtitle: '8가지 기능으로 PDF를 온라인에서 빠르게 처리하세요',
         },
         features: {
           toJpg: {
@@ -531,8 +531,8 @@ const ko = {
     image: {
       portraitBlur: {
         hero: {
-          title: '🎭 Background Blur',
-          description: '인물 사진 배경 흐리기 - 피사체는 선명하게, 배경은 흐리게',
+          title: '무료 배경 흐림 도구 - 사진 배경 흐리기',
+          description: '프로필 사진, 증명사진 배경을 전문적으로 처리합니다. 무료, 회원가입 불필요',
         },
         upload: {
           hint: '이미지를 드래그하거나 클릭하여 선택하세요',

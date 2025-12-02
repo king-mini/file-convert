@@ -146,8 +146,8 @@ const en = {
     },
   },
   imageHome: {
-    heroTitle: '🖼️ Image Tools',
-    heroSubtitle: 'Edit quickly in your browser',
+    heroTitle: 'Free Online Image Tools - Background Blur, Remove & More',
+    heroSubtitle: '6 free photo editing tools for fast, professional results',
     features: {
       portraitBlur: {
         title: 'Background Blur',
@@ -270,8 +270,8 @@ const en = {
     pdf: {
       home: {
         hero: {
-          title: 'Free Online PDF Tools',
-          subtitle: 'Securely convert, merge, and split PDFs in your browser',
+          title: 'Free Online PDF Tools - Convert, Merge & Split PDFs',
+          subtitle: '8 powerful tools to process PDFs quickly and securely in your browser',
         },
         features: {
           toJpg: {
@@ -531,8 +531,8 @@ const en = {
     image: {
       portraitBlur: {
         hero: {
-          title: '🎭 Background Blur',
-          description: 'Blur background of portrait photos - keep people sharp',
+          title: 'Free Online Background Blur Tool - Blur Photo Background Instantly',
+          description: 'Perfect for portraits, profile photos, and headshots. Free, no signup required, 100% private',
         },
         upload: {
           hint: 'Drag or click to add an image',
