@@ -7,7 +7,7 @@ const BackgroundBlur = () => {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
-  const [blurAmount, setBlurAmount] = useState(8);
+  const [blurAmount, setBlurAmount] = useState(7);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
   const [dragOver, setDragOver] = useState(false);
@@ -43,8 +43,8 @@ const BackgroundBlur = () => {
       return;
     }
 
-    if (selectedFile.size > 10 * 1024 * 1024) {
-      setError(t('common.validation.maxImageSize', { limit: 10 }));
+    if (selectedFile.size > 25 * 1024 * 1024) {
+      setError(t('common.validation.maxImageSize', { limit: 25 }));
       return;
     }
 
@@ -247,8 +247,9 @@ const BackgroundBlur = () => {
               <label>{t('pages.image.portraitBlur.options.blurStrength', { value: blurAmount })}</label>
               <input
                 type="range"
-                min="5"
+                min="1"
                 max="50"
+                step="0.1"
                 value={blurAmount}
                 onChange={(e) => setBlurAmount(Number(e.target.value))}
                 disabled={processing}

@@ -536,7 +536,7 @@ const ko = {
         },
         upload: {
           hint: '이미지를 드래그하거나 클릭하여 선택하세요',
-          support: 'JPG, PNG, WebP (최대 10MB)',
+          support: 'JPG, PNG, WebP (최대 25MB)',
         },
         panels: {
           original: '원본',
@@ -571,7 +571,7 @@ const ko = {
         },
         upload: {
           hint: '이미지를 드래그하거나 클릭하여 선택하세요',
-          support: 'JPG, PNG, WebP (최대 10MB)',
+          support: 'JPG, PNG, WebP (최대 25MB)',
         },
         panels: {
           original: '원본',

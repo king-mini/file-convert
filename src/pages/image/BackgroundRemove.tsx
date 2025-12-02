@@ -14,7 +14,7 @@ const BackgroundRemove = () => {
   const [error, setError] = useState<string | null>(null);
   const [modalImage, setModalImage] = useState<string | null>(null);
   const [modalIndex, setModalIndex] = useState(0); // 0: 원본, 1: 결과
-  
+
   // 옵션
   const [modelSelection, setModelSelection] = useState<0 | 1>(1);
   const [edgeBlur, setEdgeBlur] = useState(3);
@@ -46,8 +46,8 @@ const BackgroundRemove = () => {
       return;
     }
 
-    if (selectedFile.size > 10 * 1024 * 1024) {
-      setError(t('common.validation.maxImageSize', { limit: 10 }));
+    if (selectedFile.size > 25 * 1024 * 1024) {
+      setError(t('common.validation.maxImageSize', { limit: 25 }));
       return;
     }
 
@@ -142,7 +142,7 @@ const BackgroundRemove = () => {
 
     if (result) URL.revokeObjectURL(result);
     setResult(null);
-    
+
     await handleProcess();
   }, [file, result, handleProcess]);
 
@@ -194,7 +194,7 @@ const BackgroundRemove = () => {
           <div className="image-compare">
             <div className="image-panel">
               <h3>{t('pages.image.backgroundRemove.panels.original')}</h3>
-              <div 
+              <div
                 className="image-container clickable"
                 onClick={() => {
                   if (preview) {
@@ -205,7 +205,7 @@ const BackgroundRemove = () => {
                 title={t('common.hints.viewLarge')}
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
-                <button 
+                <button
                   className="image-remove-btn"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -219,7 +219,7 @@ const BackgroundRemove = () => {
             </div>
             <div className="image-panel">
               <h3>{t('pages.image.backgroundRemove.panels.result')}</h3>
-              <div 
+              <div
                 className={`image-container transparent-bg ${result ? 'clickable' : ''}`}
                 onClick={() => result && setModalImage(result)}
                 title={result ? t('common.hints.viewLarge') : undefined}
@@ -328,7 +328,7 @@ const BackgroundRemove = () => {
               </button>
             ) : (
               <>
-                <button 
+                <button
                   className={`btn ${copied ? 'btn-copied' : 'btn-clipboard'}`}
                   onClick={handleCopyToClipboard}
                 >

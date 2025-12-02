@@ -536,7 +536,7 @@ const en = {
         },
         upload: {
           hint: 'Drag or click to add an image',
-          support: 'JPG, PNG, WebP (max 10MB)',
+          support: 'JPG, PNG, WebP (max 25MB)',
         },
         panels: {
           original: 'Original',
@@ -571,7 +571,7 @@ const en = {
         },
         upload: {
           hint: 'Drag or click to add an image',
-          support: 'JPG, PNG, WebP (max 10MB)',
+          support: 'JPG, PNG, WebP (max 25MB)',
         },
         panels: {
           original: 'Original',
