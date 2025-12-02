@@ -18,7 +18,8 @@ export const Header: React.FC = () => {
       <div className="top-bar-inner">
         <div className="top-bar-left">
           <NavLink to="/" className="logo">
-            🔄 Lokit
+            <img src="/lokit-logo.svg" alt="Lokit" style={{ width: '24px', height: '24px', marginRight: '8px', verticalAlign: 'middle' }} />
+            Lokit
           </NavLink>
         </div>
 
