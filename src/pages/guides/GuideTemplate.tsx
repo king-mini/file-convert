@@ -4,6 +4,7 @@ import './GuideTemplate.css';
 
 type GuideTemplateProps = {
   guideKey: string;
+  category?: 'image' | 'pdf';
 };
 
 type GuideContent = {
@@ -27,15 +28,17 @@ type GuideContent = {
   ctaViewAll: string;
 };
 
-const GuideTemplate = ({ guideKey }: GuideTemplateProps) => {
+const GuideTemplate = ({ guideKey, category = 'image' }: GuideTemplateProps) => {
   const { t } = useTranslation();
   const content = t(`guides.${guideKey}`, { returnObjects: true }) as GuideContent;
+  const categoryPath = category === 'pdf' ? '/pdf' : '/image';
+  const categoryLabel = category === 'pdf' ? t('breadcrumbs.pdfTools') : t('breadcrumbs.imageTools');
 
   return (
     <div className="guide-page">
       <div className="guide-hero">
         <div className="guide-breadcrumb">
-          <Link to="/image">{t('breadcrumbs.imageTools')}</Link>
+          <Link to={categoryPath}>{categoryLabel}</Link>
           <span aria-hidden="true">›</span>
           <Link to={content.toolPath}>{content.toolName}</Link>
           <span aria-hidden="true">›</span>

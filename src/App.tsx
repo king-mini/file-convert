@@ -30,6 +30,14 @@ const ImageResizeGuide = lazy(() => import('./pages/guides/ImageResizeGuide'));
 const ImageCompressGuide = lazy(() => import('./pages/guides/ImageCompressGuide'));
 const FormatConvertGuide = lazy(() => import('./pages/guides/FormatConvertGuide'));
 const ImageCropGuide = lazy(() => import('./pages/guides/ImageCropGuide'));
+const PdfToJpgGuide = lazy(() => import('./pages/guides/PdfToJpgGuide'));
+const PdfToPngGuide = lazy(() => import('./pages/guides/PdfToPngGuide'));
+const PdfToTextGuide = lazy(() => import('./pages/guides/PdfToTextGuide'));
+const ImageToPdfGuide = lazy(() => import('./pages/guides/ImageToPdfGuide'));
+const MergePdfGuide = lazy(() => import('./pages/guides/MergePdfGuide'));
+const SplitPdfGuide = lazy(() => import('./pages/guides/SplitPdfGuide'));
+const RotatePdfGuide = lazy(() => import('./pages/guides/RotatePdfGuide'));
+const CompressPdfGuide = lazy(() => import('./pages/guides/CompressPdfGuide'));
 
 // Policy
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -70,6 +78,14 @@ const App = () => {
             <Route path="guide/image-compress" element={<ImageCompressGuide />} />
             <Route path="guide/format-convert" element={<FormatConvertGuide />} />
             <Route path="guide/image-crop" element={<ImageCropGuide />} />
+            <Route path="guide/pdf-to-jpg" element={<PdfToJpgGuide />} />
+            <Route path="guide/pdf-to-png" element={<PdfToPngGuide />} />
+            <Route path="guide/pdf-to-text" element={<PdfToTextGuide />} />
+            <Route path="guide/image-to-pdf" element={<ImageToPdfGuide />} />
+            <Route path="guide/merge-pdf" element={<MergePdfGuide />} />
+            <Route path="guide/split-pdf" element={<SplitPdfGuide />} />
+            <Route path="guide/rotate-pdf" element={<RotatePdfGuide />} />
+            <Route path="guide/compress-pdf" element={<CompressPdfGuide />} />
 
             {/* Policy Routes */}
             <Route path="privacy-policy" element={<PrivacyPolicy />} />

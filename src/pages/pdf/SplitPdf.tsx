@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { splitPdf } from '../../utils/pdfSplitter';
 import type { SplitMode, SplitOptions, SplitProgress } from '../../utils/pdfSplitter';
 import PasswordModal from '../../components/PasswordModal';
+import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import './SplitPdf.css';
 
 const SplitPdf = () => {
@@ -135,6 +137,12 @@ const SplitPdf = () => {
 
   return (
     <div className="split-pdf">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.pdfSplit')}
+        categoryPath="/pdf"
+        categoryLabel={t('breadcrumbs.pdfTools')}
+        guidePath="/guide/split-pdf"
+      />
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.split.hero.title')}</h1>
@@ -287,6 +295,7 @@ const SplitPdf = () => {
           setSplitting(false);
         }}
       />
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

@@ -4,6 +4,8 @@ import { compressPdf, formatFileSize } from '../../utils/pdfCompressor';
 import type { CompressOptions, CompressProgress } from '../../utils/pdfCompressor';
 import { trackConversionStart, trackConversionComplete, trackConversionError } from '../../utils/analytics';
 import PasswordModal from '../../components/PasswordModal';
+import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import './CompressPdf.css';
 
 const CompressPdf = () => {
@@ -88,6 +90,12 @@ const CompressPdf = () => {
 
   return (
     <div className="compress-pdf">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.pdfCompress')}
+        categoryPath="/pdf"
+        categoryLabel={t('breadcrumbs.pdfTools')}
+        guidePath="/guide/compress-pdf"
+      />
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.compress.hero.title')}</h1>
@@ -202,6 +210,7 @@ const CompressPdf = () => {
           setCompressing(false);
         }}
       />
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

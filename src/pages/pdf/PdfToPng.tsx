@@ -4,6 +4,8 @@ import { convertPdfToPngImages } from '../../utils/pngConverter';
 import type { ConvertOptions, ConvertProgress } from '../../utils/pngConverter';
 import { trackConversionStart, trackConversionComplete, trackConversionError } from '../../utils/analytics';
 import PasswordModal from '../../components/PasswordModal';
+import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import './PdfToPng.css';
 
 const PdfToPng = () => {
@@ -91,6 +93,12 @@ const PdfToPng = () => {
 
   return (
     <div className="pdf-to-png">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.pdfToPng')}
+        categoryPath="/pdf"
+        categoryLabel={t('breadcrumbs.pdfTools')}
+        guidePath="/guide/pdf-to-png"
+      />
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.toPng.hero.title')}</h1>
@@ -232,6 +240,7 @@ const PdfToPng = () => {
           setConverting(false);
         }}
       />
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

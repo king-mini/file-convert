@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { convertImagesToPdf, createImagePreview } from '../../utils/imageToPdfConverter';
 import type { ImageFile, PageSize, ConvertOptions } from '../../utils/imageToPdfConverter';
 import { saveAs } from 'file-saver';
+import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import './ImageToPdf.css';
 
 const ImageToPdf = () => {
@@ -106,6 +108,12 @@ const ImageToPdf = () => {
 
   return (
     <div className="image-to-pdf">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.imageToPdf')}
+        categoryPath="/pdf"
+        categoryLabel={t('breadcrumbs.pdfTools')}
+        guidePath="/guide/image-to-pdf"
+      />
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.imageToPdf.hero.title')}</h1>
@@ -232,6 +240,7 @@ const ImageToPdf = () => {
         </div>
       )}
 
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

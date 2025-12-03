@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { extractTextFromPdf, downloadAsTextFile } from '../../utils/textExtractor';
 import type { ExtractProgress, ExtractedText } from '../../utils/textExtractor';
 import PasswordModal from '../../components/PasswordModal';
+import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import './PdfToText.css';
 
 const PdfToText = () => {
@@ -79,6 +81,12 @@ const PdfToText = () => {
 
   return (
     <div className="pdf-to-text">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.pdfToText')}
+        categoryPath="/pdf"
+        categoryLabel={t('breadcrumbs.pdfTools')}
+        guidePath="/guide/pdf-to-text"
+      />
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.toText.hero.title')}</h1>
@@ -186,6 +194,7 @@ const PdfToText = () => {
           setExtracting(false);
         }}
       />
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

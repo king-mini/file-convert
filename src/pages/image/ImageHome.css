@@ -112,40 +112,6 @@
   font-weight: 600;
 }
 
-/* Benefits Section */
-.benefits {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 4rem;
-  margin-top: 1rem;
-  padding: 0.75rem 1rem 0.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.benefit-card {
-  text-align: center;
-  min-width: 120px;
-}
-
-.benefit-icon {
-  font-size: 1.35rem;
-  margin-bottom: 0.25rem;
-}
-
-.benefit-card h3 {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.95);
-  margin-bottom: 0.1rem;
-}
-
-.benefit-card p {
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.75);
-  line-height: 1.2;
-}
-
 /* Responsive */
 
 /* 태블릿 */
@@ -180,9 +146,6 @@
     font-size: 0.68rem;
   }
 
-  .benefits {
-    gap: 3rem;
-  }
 }
 
 /* 좁은 태블릿 */
@@ -204,21 +167,6 @@
     font-size: 0.65rem;
   }
 
-  .benefits {
-    gap: 2.5rem;
-  }
-
-  .benefit-card {
-    min-width: 100px;
-  }
-
-  .benefit-card h3 {
-    font-size: 0.72rem;
-  }
-
-  .benefit-card p {
-    font-size: 0.62rem;
-  }
 }
 
 /* 모바일 - 좁은 화면 */
@@ -258,34 +206,6 @@
     font-size: 0.68rem;
   }
 
-  .benefits {
-    flex-direction: row;
-    justify-content: space-around;
-    gap: 1rem;
-    margin-top: 1rem;
-    padding: 0.75rem 0.5rem 0.5rem;
-  }
-
-  .benefit-card {
-    flex: 1;
-    min-width: auto;
-    padding: 0 0.25rem;
-  }
-
-  .benefit-icon {
-    font-size: 1.35rem;
-    margin-bottom: 0.3rem;
-  }
-
-  .benefit-card h3 {
-    font-size: 0.68rem;
-    line-height: 1.2;
-  }
-
-  .benefit-card p {
-    font-size: 0.58rem;
-    line-height: 1.2;
-  }
 }
 
 /* 아주 좁은 모바일 - 1열 */

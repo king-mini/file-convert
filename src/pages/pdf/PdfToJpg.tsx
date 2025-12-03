@@ -4,6 +4,8 @@ import { convertPdfToImages } from '../../utils/pdfConverter';
 import type { ConvertOptions, ConvertProgress } from '../../utils/pdfConverter';
 import { trackConversionStart, trackConversionComplete, trackConversionError } from '../../utils/analytics';
 import PasswordModal from '../../components/PasswordModal';
+import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import './PdfToJpg.css';
 
 const PdfToJpg = () => {
@@ -94,6 +96,12 @@ const PdfToJpg = () => {
 
   return (
     <div className="pdf-to-jpg">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.pdfToJpg')}
+        categoryPath="/pdf"
+        categoryLabel={t('breadcrumbs.pdfTools')}
+        guidePath="/guide/pdf-to-jpg"
+      />
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.toJpg.hero.title')}</h1>
@@ -239,6 +247,7 @@ const PdfToJpg = () => {
           setConverting(false);
         }}
       />
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

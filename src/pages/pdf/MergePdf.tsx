@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { mergePdfs, getPageCount } from '../../utils/pdfMerger';
 import type { PdfFile, MergeProgress } from '../../utils/pdfMerger';
 import PasswordModal from '../../components/PasswordModal';
+import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import './MergePdf.css';
 
 const MergePdf = () => {
@@ -140,6 +142,12 @@ const MergePdf = () => {
 
   return (
     <div className="merge-pdf">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.pdfMerge')}
+        categoryPath="/pdf"
+        categoryLabel={t('breadcrumbs.pdfTools')}
+        guidePath="/guide/merge-pdf"
+      />
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.merge.hero.title')}</h1>
@@ -264,6 +272,7 @@ const MergePdf = () => {
           setMerging(false);
         }}
       />
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

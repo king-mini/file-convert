@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import FeatureHighlights from '../../components/FeatureHighlights';
 import './PdfHome.css';
 
 interface FeatureCard {
@@ -74,26 +75,6 @@ const PdfHome = () => {
     ],
     [t]
   );
-  const benefits = useMemo(
-    () => [
-      {
-        icon: '✅',
-        title: t('pages.pdf.home.benefits.client.title'),
-        description: t('pages.pdf.home.benefits.client.description'),
-      },
-      {
-        icon: '🔒',
-        title: t('pages.pdf.home.benefits.privacy.title'),
-        description: t('pages.pdf.home.benefits.privacy.description'),
-      },
-      {
-        icon: '💰',
-        title: t('pages.pdf.home.benefits.free.title'),
-        description: t('pages.pdf.home.benefits.free.description'),
-      },
-    ],
-    [t]
-  );
 
   // Schema.org ItemList markup for SEO
   const schemaMarkup = {
@@ -148,16 +129,7 @@ const PdfHome = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="benefits">
-        {benefits.map((benefit) => (
-          <div key={benefit.title} className="benefit-card">
-            <div className="benefit-icon">{benefit.icon}</div>
-            <h3>{benefit.title}</h3>
-            <p>{benefit.description}</p>
-          </div>
-        ))}
-      </section>
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

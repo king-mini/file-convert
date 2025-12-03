@@ -204,6 +204,118 @@ const MetaUpdater = () => {
           : 'Cropping tips with a direct link to the Image Crop tool.',
       };
     }
+    if (path === '/guide/pdf-to-jpg') {
+      return {
+        title: lang === 'ko'
+          ? 'PDF → JPG 가이드 - 고화질 이미지 변환 | Lokit'
+          : 'PDF to JPG Guide - Export Pages as High-Quality Images | Lokit',
+        description: lang === 'ko'
+          ? '슬라이드와 영수증을 JPG로 바꾸는 단계별 방법과 도구 바로가기를 확인하세요.'
+          : 'Step-by-step instructions for turning PDF pages into JPG files with a direct link to the converter.',
+        ogTitle: lang === 'ko' ? 'PDF → JPG 가이드' : 'PDF to JPG Guide',
+        ogDescription: lang === 'ko'
+          ? 'JPG 품질·해상도 설정법과 도구 링크를 한 번에 제공합니다.'
+          : 'Quality tips plus a shortcut to the PDF to JPG tool.',
+      };
+    }
+    if (path === '/guide/pdf-to-png') {
+      return {
+        title: lang === 'ko'
+          ? 'PDF → PNG 가이드 - 투명 배경 변환 | Lokit'
+          : 'PDF to PNG Guide - Convert with Transparency | Lokit',
+        description: lang === 'ko'
+          ? '투명 배경과 해상도를 제어하면서 PDF를 PNG로 바꾸는 과정을 소개합니다.'
+          : 'Learn how to export PDF pages as crisp PNG files with optional transparency and a link to the tool.',
+        ogTitle: lang === 'ko' ? 'PDF → PNG 가이드' : 'PDF to PNG Guide',
+        ogDescription: lang === 'ko'
+          ? '아이콘·스티커 제작에 필요한 PNG 변환 팁을 제공합니다.'
+          : 'Tips for producing pixel-perfect PNG exports.',
+      };
+    }
+    if (path === '/guide/pdf-to-text') {
+      return {
+        title: lang === 'ko'
+          ? 'PDF → Text 가이드 - 텍스트 추출 | Lokit'
+          : 'PDF to Text Guide - Extract Editable Copy | Lokit',
+        description: lang === 'ko'
+          ? 'PDF에서 텍스트를 복사하고 TXT로 저장하는 과정을 단계별로 안내합니다.'
+          : 'Follow this guide to copy PDF text or download a TXT file with a link to the extraction tool.',
+        ogTitle: lang === 'ko' ? 'PDF → Text 가이드' : 'PDF to Text Guide',
+        ogDescription: lang === 'ko'
+          ? '텍스트 추출 팁과 도구 바로가기를 제공합니다.'
+          : 'Extraction best practices plus a shortcut to the tool.',
+      };
+    }
+    if (path === '/guide/image-to-pdf') {
+      return {
+        title: lang === 'ko'
+          ? '이미지 → PDF 가이드 - 사진 묶음 만들기 | Lokit'
+          : 'Image to PDF Guide - Package Photos into One File | Lokit',
+        description: lang === 'ko'
+          ? '이미지를 순서대로 정리하고 PDF로 내보내는 방법을 안내합니다.'
+          : 'How to reorder, configure, and export multiple images into a single PDF with tool access.',
+        ogTitle: lang === 'ko' ? '이미지 → PDF 가이드' : 'Image to PDF Guide',
+        ogDescription: lang === 'ko'
+          ? '이미지 묶음을 PDF로 만드는 팁과 도구 링크.'
+          : 'Packaging tips and a link to the Image to PDF tool.',
+      };
+    }
+    if (path === '/guide/merge-pdf') {
+      return {
+        title: lang === 'ko'
+          ? 'PDF 병합 가이드 - 브라우저에서 한 번에 | Lokit'
+          : 'Merge PDF Guide - Combine Files Securely | Lokit',
+        description: lang === 'ko'
+          ? '여러 PDF를 순서대로 정리하고 합치는 방법과 도구 링크를 제공합니다.'
+          : 'Learn how to reorder and merge PDFs entirely in the browser with a direct tool link.',
+        ogTitle: lang === 'ko' ? 'PDF 병합 가이드' : 'Merge PDF Guide',
+        ogDescription: lang === 'ko'
+          ? '병합 팁과 PDF 병합 도구 바로가기를 함께 확인하세요.'
+          : 'Merging checklist plus a shortcut to the Merge PDF tool.',
+      };
+    }
+    if (path === '/guide/split-pdf') {
+      return {
+        title: lang === 'ko'
+          ? 'PDF 분할 가이드 - 페이지 범위 추출 | Lokit'
+          : 'Split PDF Guide - Extract the Pages You Need | Lokit',
+        description: lang === 'ko'
+          ? '범위/추출 모드를 활용해 필요한 페이지만 나누는 과정을 안내합니다.'
+          : 'Step-by-step instructions for splitting or extracting PDF pages with a link to the tool.',
+        ogTitle: lang === 'ko' ? 'PDF 분할 가이드' : 'Split PDF Guide',
+        ogDescription: lang === 'ko'
+          ? '분할 팁과 PDF 분할 도구 바로가기 제공.'
+          : 'Splitting tips and a shortcut to the Split PDF tool.',
+      };
+    }
+    if (path === '/guide/rotate-pdf') {
+      return {
+        title: lang === 'ko'
+          ? 'PDF 회전 가이드 - 스캔본 방향 맞추기 | Lokit'
+          : 'Rotate PDF Guide - Fix Upside-Down Scans | Lokit',
+        description: lang === 'ko'
+          ? '잘못 스캔된 페이지를 90°/180°로 돌리는 방법과 도구 링크를 제공합니다.'
+          : 'Learn how to rotate PDFs locally and keep scans readable, plus a link to the rotation tool.',
+        ogTitle: lang === 'ko' ? 'PDF 회전 가이드' : 'Rotate PDF Guide',
+        ogDescription: lang === 'ko'
+          ? '회전 팁과 도구 바로가기를 확인하세요.'
+          : 'Rotation best practices plus a shortcut to the Rotate PDF tool.',
+      };
+    }
+    if (path === '/guide/compress-pdf') {
+      return {
+        title: lang === 'ko'
+          ? 'PDF 압축 가이드 - 용량 줄이고 품질 지키기 | Lokit'
+          : 'Compress PDF Guide - Shrink Files Without Losing Clarity | Lokit',
+        description: lang === 'ko'
+          ? '이메일·LMS 제한을 통과하도록 PDF 용량을 줄이는 방법과 도구 링크를 제공합니다.'
+          : 'Guide to balancing PDF size and quality with direct access to the compression tool.',
+        ogTitle: lang === 'ko' ? 'PDF 압축 가이드' : 'Compress PDF Guide',
+        ogDescription: lang === 'ko'
+          ? '압축 팁과 PDF 압축 도구 바로가기 제공.'
+          : 'Compression checklist plus a shortcut to the Compress PDF tool.',
+      };
+    }
 
     // Category Pages - PDF Tools
     if (path === '/pdf') {

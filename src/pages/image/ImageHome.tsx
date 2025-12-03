@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import FeatureHighlights from '../../components/FeatureHighlights';
 import './ImageHome.css';
 
 interface FeatureCard {
@@ -111,24 +112,7 @@ const ImageHome = () => {
         </div>
       </section>
 
-      {/* Benefits Section */}
-      <section className="benefits">
-        <div className="benefit-card">
-          <div className="benefit-icon">✅</div>
-          <h3>{t('hub.features.client.title')}</h3>
-          <p>{t('hub.features.client.desc')}</p>
-        </div>
-        <div className="benefit-card">
-          <div className="benefit-icon">🔒</div>
-          <h3>{t('hub.features.privacy.title')}</h3>
-          <p>{t('hub.features.privacy.desc')}</p>
-        </div>
-        <div className="benefit-card">
-          <div className="benefit-icon">💰</div>
-          <h3>{t('hub.features.free.title')}</h3>
-          <p>{t('hub.features.free.desc')}</p>
-        </div>
-      </section>
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

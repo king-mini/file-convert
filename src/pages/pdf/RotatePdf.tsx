@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { rotatePdf } from '../../utils/pdfRotator';
 import type { RotationAngle, RotateProgress } from '../../utils/pdfRotator';
 import PasswordModal from '../../components/PasswordModal';
+import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import './RotatePdf.css';
 
 const RotatePdf = () => {
@@ -102,6 +104,12 @@ const RotatePdf = () => {
 
   return (
     <div className="rotate-pdf">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.pdfRotate')}
+        categoryPath="/pdf"
+        categoryLabel={t('breadcrumbs.pdfTools')}
+        guidePath="/guide/rotate-pdf"
+      />
       {/* 페이지 헤더 */}
       <div className="page-header">
         <h1>{t('pages.pdf.rotate.hero.title')}</h1>
@@ -245,6 +253,7 @@ const RotatePdf = () => {
           setRotating(false);
         }}
       />
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };
