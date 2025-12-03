@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import FeatureHighlights from '../../components/FeatureHighlights';
 import { removeBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import type { RemoveBackgroundOptions } from '../../utils/imageProcessor';
 import './BackgroundRemove.css';
@@ -372,6 +373,8 @@ const BackgroundRemove = () => {
           </div>
         </div>
       )}
+
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

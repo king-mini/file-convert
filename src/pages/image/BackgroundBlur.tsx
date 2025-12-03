@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import FeatureHighlights from '../../components/FeatureHighlights';
 import { blurBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './BackgroundBlur.css';
 
@@ -17,8 +18,7 @@ const BackgroundBlur = () => {
   const [modalIndex, setModalIndex] = useState(0); // 0: 원본, 1: 결과
   const [copied, setCopied] = useState(false);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
-  const { t, i18n } = useTranslation();
-  const lang = (i18n.language || 'en').split('-')[0];
+  const { t } = useTranslation();
 
   // 모달 키보드 단축키 (ESC: 닫기, 좌우 방향키: 토글)
   useEffect(() => {
@@ -149,6 +149,19 @@ const BackgroundBlur = () => {
 
   return (
     <div className="background-blur">
+      <div className="breadcrumb">
+        <Link to="/image" className="breadcrumb-link">
+          {t('breadcrumbs.imageTools')}
+        </Link>
+        <span className="breadcrumb-separator" aria-hidden="true">›</span>
+        <span className="breadcrumb-current">{t('breadcrumbs.backgroundBlur')}</span>
+        <div className="breadcrumb-actions">
+          <Link to="/guide/blur-background" className="breadcrumb-cta">
+            {t('pages.image.portraitBlur.guideLink')}
+          </Link>
+        </div>
+      </div>
+
       <div className="page-header">
         <h1>{t('pages.image.portraitBlur.hero.title')}</h1>
         <p>{t('pages.image.portraitBlur.hero.description')}</p>
@@ -351,13 +364,7 @@ const BackgroundBlur = () => {
         </div>
       )}
 
-      {/* Other Tools Section */}
-      <div className="other-tools">
-        <h2>{t('imageHome.heroTitle')}</h2>
-        <Link to="/image" className="view-all-link">
-          {lang === 'ko' ? '모든 이미지 도구 보기 →' : 'View all image tools →'}
-        </Link>
-      </div>
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

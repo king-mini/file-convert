@@ -120,6 +120,90 @@ const MetaUpdater = () => {
         ogDescription: 'Crop images online instantly. Secure, fast, and free.',
       };
     }
+    if (path === '/guide/blur-background') {
+      return {
+        title: lang === 'ko'
+          ? '배경 흐리기 가이드 - 단계별 튜토리얼 | Lokit'
+          : 'How to Blur Background Online - Step-by-Step Guide | Lokit',
+        description: lang === 'ko'
+          ? '프로필·증명사진 배경 흐리기를 단계별로 따라하세요. 스크린샷과 팁, 도구 바로가기 포함.'
+          : 'Follow this step-by-step guide to blur photo backgrounds online with screenshots, tips, and a link to the Background Blur tool.',
+        ogTitle: lang === 'ko' ? '배경 흐리기 가이드' : 'Background Blur Guide',
+        ogDescription: lang === 'ko'
+          ? '배경 흐림 튜토리얼과 도구 링크로 바로 처리하세요.'
+          : 'Tutorial for blurring backgrounds with a direct link to the tool.',
+      };
+    }
+    if (path === '/guide/background-remove') {
+      return {
+        title: lang === 'ko'
+          ? '배경 제거 가이드 - 투명 PNG 만들기 | Lokit'
+          : 'Background Remove Guide - Create Transparent PNGs | Lokit',
+        description: lang === 'ko'
+          ? 'AI로 배경을 지우고 PNG로 내보내는 방법을 정리했습니다. 상품 사진, 프로필 컷에 활용하세요.'
+          : 'Learn how to remove image backgrounds with AI and export clean PNG cutouts for products or profiles.',
+        ogTitle: lang === 'ko' ? '배경 제거 가이드' : 'Background Remove Guide',
+        ogDescription: lang === 'ko'
+          ? '컷아웃 팁과 도구 바로가기를 한 번에 확인하세요.'
+          : 'Follow the walkthrough and jump straight into the Background Remove tool.',
+      };
+    }
+    if (path === '/guide/image-resize') {
+      return {
+        title: lang === 'ko'
+          ? '이미지 리사이즈 가이드 - SNS/웹 규격 맞추기 | Lokit'
+          : 'Image Resize Guide - Match SNS & Web Dimensions | Lokit',
+        description: lang === 'ko'
+          ? '링크드인, 쇼핑몰, 블로그 등 채널별 권장 크기를 맞추는 과정을 안내합니다.'
+          : 'Step-by-step checklist for resizing images for LinkedIn, shops, and blogs without losing quality.',
+        ogTitle: lang === 'ko' ? '이미지 리사이즈 가이드' : 'Image Resize Guide',
+        ogDescription: lang === 'ko'
+          ? '리사이즈 플로우와 도구 링크를 함께 제공합니다.'
+          : 'Resize workflow plus a direct link to the Image Resize tool.',
+      };
+    }
+    if (path === '/guide/image-compress') {
+      return {
+        title: lang === 'ko'
+          ? '이미지 압축 가이드 - 용량 줄이고 품질 지키기 | Lokit'
+          : 'Image Compress Guide - Shrink Files Without Losing Quality | Lokit',
+        description: lang === 'ko'
+          ? '웹/이메일 업로드 전 꼭 거쳐야 할 압축 방법을 정리했습니다.'
+          : 'Optimize images for the web, email, and LMS submissions in minutes.',
+        ogTitle: lang === 'ko' ? '이미지 압축 가이드' : 'Image Compress Guide',
+        ogDescription: lang === 'ko'
+          ? '품질 유지 팁과 도구를 함께 안내합니다.'
+          : 'Compression tips plus the Image Compress tool link.',
+      };
+    }
+    if (path === '/guide/format-convert') {
+      return {
+        title: lang === 'ko'
+          ? '포맷 변환 가이드 - JPG/PNG/WebP 전환 | Lokit'
+          : 'Format Convert Guide - JPG/PNG/WebP Workflow | Lokit',
+        description: lang === 'ko'
+          ? '투명 배경 유지, 용량 최적화 등 상황별 포맷 선택법을 제공합니다.'
+          : 'Decide when to use JPG, PNG, or WebP and convert your assets instantly.',
+        ogTitle: lang === 'ko' ? '포맷 변환 가이드' : 'Format Convert Guide',
+        ogDescription: lang === 'ko'
+          ? '포맷 선택 기준과 도구 사용법을 확인하세요.'
+          : 'Format tips plus a shortcut to the Format Convert tool.',
+      };
+    }
+    if (path === '/guide/image-crop') {
+      return {
+        title: lang === 'ko'
+          ? '이미지 자르기 가이드 - 안전한 구도 만들기 | Lokit'
+          : 'Image Crop Guide - Frame Shots for Every Channel | Lokit',
+        description: lang === 'ko'
+          ? 'SNS·광고·상품 페이지에서 필요한 비율과 구도 체크리스트를 제공합니다.'
+          : 'Crop images to precise ratios for social, ads, and product detail pages.',
+        ogTitle: lang === 'ko' ? '이미지 자르기 가이드' : 'Image Crop Guide',
+        ogDescription: lang === 'ko'
+          ? '크롭 노하우와 Image Crop 도구를 함께 살펴보세요.'
+          : 'Cropping tips with a direct link to the Image Crop tool.',
+      };
+    }
 
     // Category Pages - PDF Tools
     if (path === '/pdf') {

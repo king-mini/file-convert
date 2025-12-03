@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Lokit Guides Wireframe</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #0f172a;
+    }
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 96px;
+    }
+    .hero {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 20px;
+      padding: 48px;
+      color: white;
+      margin-bottom: 32px;
+      box-shadow: 0 30px 60px rgba(15, 23, 42, 0.45);
+    }
+    .hero h1 {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+    .hero p {
+      margin: 0;
+      opacity: 0.9;
+    }
+    .guide-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .guide-card {
+      background: white;
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+    }
+    .guide-card h2 {
+      margin: 0;
+      font-size: 22px;
+      color: #111827;
+    }
+    .guide-card p {
+      margin: 0;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .chip {
+      background: #eef2ff;
+      color: #3730a3;
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .cta-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+    .cta {
+      text-decoration: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 600;
+      border: 1px solid #c7d2fe;
+      color: #4338ca;
+    }
+    .cta.primary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border: none;
+      box-shadow: 0 12px 22px rgba(99, 102, 241, 0.35);
+    }
+    .section {
+      margin-top: 48px;
+      background: white;
+      padding: 32px;
+      border-radius: 18px;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
+    }
+    .section h3 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+    .step-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .step {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px dashed #dbeafe;
+    }
+    .step strong {
+      display: block;
+      color: #111827;
+      margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="hero">
+      <p>Guide Hub</p>
+      <h1>이미지 편집 가이드 모음</h1>
+      <p>각 가이드는 개별 키워드를 타겟으로 하고, 하단 CTA로 관련 도구로 이동합니다.</p>
+    </div>
+
+    <div class="guide-grid">
+      <article class="guide-card">
+        <div class="chip-row">
+          <span class="chip">how to blur background</span>
+          <span class="chip">profile photo tips</span>
+        </div>
+        <h2>배경 흐리기 가이드</h2>
+        <p>프로필/증명사진 배경을 단계별로 흐리는 방법을 설명하고, 끝에서 Background Blur 도구로 유도합니다.</p>
+        <div class="cta-row">
+          <a class="cta primary" href="#">가이드 열기</a>
+          <a class="cta" href="#">도구 바로가기</a>
+        </div>
+      </article>
+
+      <article class="guide-card">
+        <div class="chip-row">
+          <span class="chip">remove background</span>
+          <span class="chip">product photo</span>
+        </div>
+        <h2>배경 제거 가이드</h2>
+        <p>제품/인물 사진 배경 제거 케이스, 실패 사례, 결과물 예시를 담아 Background Remove로 연결합니다.</p>
+        <div class="cta-row">
+          <a class="cta primary" href="#">가이드 열기</a>
+          <a class="cta" href="#">도구 바로가기</a>
+        </div>
+      </article>
+
+      <article class="guide-card">
+        <div class="chip-row">
+          <span class="chip">resize image</span>
+          <span class="chip">sns sizes</span>
+        </div>
+        <h2>이미지 크기 조절 가이드</h2>
+        <p>플랫폼별 권장 크기 표, 해상도 개념, 압축 팁을 다루고 Image Resize 도구로 이동시킵니다.</p>
+        <div class="cta-row">
+          <a class="cta primary" href="#">가이드 열기</a>
+          <a class="cta" href="#">도구 바로가기</a>
+        </div>
+      </article>
+    </div>
+
+    <section class="section">
+      <h3>가이드 상세 레이아웃(예시)</h3>
+      <p>가이드 본문은 Steps → Tips → CTA 순으로 구성해 자연스럽게 도구 페이지로 이동합니다.</p>
+      <div class="step-list">
+        <div class="step">
+          <strong>Step 1</strong>
+          이미지를 업로드하고 규격을 맞추는 방법 안내
+        </div>
+        <div class="step">
+          <strong>Step 2</strong>
+          옵션(예: Blur 강도, Edge smoothing) 설명
+        </div>
+        <div class="step">
+          <strong>Step 3</strong>
+          작업 후 결과 저장/활용 팁 + CTA
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

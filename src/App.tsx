@@ -24,6 +24,12 @@ const ImageResize = lazy(() => import('./pages/image/ImageResize'));
 const ImageCompress = lazy(() => import('./pages/image/ImageCompress'));
 const FormatConvert = lazy(() => import('./pages/image/FormatConvert'));
 const ImageCrop = lazy(() => import('./pages/image/ImageCrop'));
+const BackgroundBlurGuide = lazy(() => import('./pages/guides/BackgroundBlurGuide'));
+const BackgroundRemoveGuide = lazy(() => import('./pages/guides/BackgroundRemoveGuide'));
+const ImageResizeGuide = lazy(() => import('./pages/guides/ImageResizeGuide'));
+const ImageCompressGuide = lazy(() => import('./pages/guides/ImageCompressGuide'));
+const FormatConvertGuide = lazy(() => import('./pages/guides/FormatConvertGuide'));
+const ImageCropGuide = lazy(() => import('./pages/guides/ImageCropGuide'));
 
 // Policy
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -58,6 +64,12 @@ const App = () => {
             <Route path="image/compress" element={<ImageCompress />} />
             <Route path="image/format" element={<FormatConvert />} />
             <Route path="image/crop" element={<ImageCrop />} />
+            <Route path="guide/blur-background" element={<BackgroundBlurGuide />} />
+            <Route path="guide/background-remove" element={<BackgroundRemoveGuide />} />
+            <Route path="guide/image-resize" element={<ImageResizeGuide />} />
+            <Route path="guide/image-compress" element={<ImageCompressGuide />} />
+            <Route path="guide/format-convert" element={<FormatConvertGuide />} />
+            <Route path="guide/image-crop" element={<ImageCropGuide />} />
 
             {/* Policy Routes */}
             <Route path="privacy-policy" element={<PrivacyPolicy />} />

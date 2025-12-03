@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import FeatureHighlights from '../../components/FeatureHighlights';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './FormatConvert.css';
 
@@ -333,6 +334,8 @@ const FormatConvert = () => {
           </div>
         </div>
       )}
+
+      <FeatureHighlights className="seo-highlights" />
     </div>
   );
 };

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Tool Page Wireframe</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #0f172a;
+    }
+    .page {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 36px 20px 96px;
+    }
+    .card {
+      border-radius: 18px;
+      padding: 24px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 25px 50px rgba(15, 23, 42, 0.1);
+      margin-bottom: 20px;
+    }
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: #475569;
+    }
+    .breadcrumb a {
+      color: #4338ca;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .breadcrumb .guide-link {
+      margin-left: auto;
+      font-size: 0.85rem;
+      padding: 6px 12px;
+      background: #eef2ff;
+      border-radius: 999px;
+      color: #4338ca;
+      text-decoration: none;
+      border: 1px solid #c7d2fe;
+    }
+    .hero {
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 20px;
+      padding: 48px 32px;
+      margin-bottom: 20px;
+      box-shadow: 0 25px 45px rgba(76, 29, 149, 0.35);
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 36px;
+    }
+    .hero p {
+      margin: 0;
+      opacity: 0.9;
+    }
+    .guide-inline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .guide-inline strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #0f172a;
+    }
+    .guide-inline p {
+      margin: 0;
+      color: #475569;
+      font-size: 0.95rem;
+    }
+    .guide-inline a {
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .related {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+    .related-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 14px;
+      padding: 16px;
+      text-decoration: none;
+      color: #111827;
+      background: #f9fafb;
+    }
+    .related-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #1e293b;
+    }
+    .related-card p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="breadcrumb card">
+      <a href="#">이미지 도구</a>
+      <span>›</span>
+      <span>Background Blur</span>
+      <a class="guide-link" href="#">처음이면 가이드 보기</a>
+    </div>
+
+    <div class="hero">
+      <h1>무료 배경 흐림 도구</h1>
+      <p>프로필/증명사진 배경을 브라우저에서 즉시 흐려보세요.</p>
+    </div>
+
+    <div class="card guide-inline">
+      <div>
+        <strong>단계별 가이드</strong>
+        <p>이미지를 올리기 전, 1분 튜토리얼을 보고 설정값을 이해하세요.</p>
+      </div>
+      <a href="#">가이드 열기</a>
+    </div>
+
+    <div class="card" style="min-height:200px;">
+      <p>⬆️ 실제 업로드/옵션 UI가 들어갈 영역</p>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0;">관련 도구 & 가이드</h3>
+      <div class="related">
+        <a class="related-card" href="#">
+          <strong>배경 제거 가이드</strong>
+          <p>제품 사진 배경을 깨끗하게 삭제하는 튜토리얼.</p>
+        </a>
+        <a class="related-card" href="#">
+          <strong>Background Remove 도구</strong>
+          <p>AI로 배경을 자동 제거하고 PNG로 저장.</p>
+        </a>
+        <a class="related-card" href="#">
+          <strong>Image Resize 도구</strong>
+          <p>SNS/이력서 규격에 맞춰 쉽게 크기 조절.</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

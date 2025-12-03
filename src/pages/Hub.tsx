@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import FeatureHighlights from '../components/FeatureHighlights';
 import './Hub.css';
 
 const Hub = () => {
@@ -37,26 +38,9 @@ const Hub = () => {
         </div>
       </section>
 
-      <section className="hub-features">
-        <div className="feature-item">
-          <div className="feature-icon">✅</div>
-          <h3>{t('hub.features.client.title')}</h3>
-          <p>{t('hub.features.client.desc')}</p>
-        </div>
-        <div className="feature-item">
-          <div className="feature-icon">🔒</div>
-          <h3>{t('hub.features.privacy.title')}</h3>
-          <p>{t('hub.features.privacy.desc')}</p>
-        </div>
-        <div className="feature-item">
-          <div className="feature-icon">💰</div>
-          <h3>{t('hub.features.free.title')}</h3>
-          <p>{t('hub.features.free.desc')}</p>
-        </div>
-      </section>
+      <FeatureHighlights />
     </div>
   );
 };
 
 export default Hub;
-
