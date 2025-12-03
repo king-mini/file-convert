@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './ImageResize.css';
 
@@ -218,6 +219,10 @@ const ImageResize = () => {
 
   return (
     <div className="image-resize">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.imageResize')}
+        guidePath="/guide/image-resize"
+      />
       <div className="page-header">
         <h1>{t('pages.image.imageResize.hero.title')}</h1>
         <p>{t('pages.image.imageResize.hero.description')}</p>

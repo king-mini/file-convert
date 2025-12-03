@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import { removeBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import type { RemoveBackgroundOptions } from '../../utils/imageProcessor';
 import './BackgroundRemove.css';
@@ -149,6 +150,10 @@ const BackgroundRemove = () => {
 
   return (
     <div className="background-remove">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.backgroundRemove')}
+        guidePath="/guide/background-remove"
+      />
       <div className="page-header">
         <h1>{t('pages.image.backgroundRemove.hero.title')}</h1>
         <p>{t('pages.image.backgroundRemove.hero.description')}</p>

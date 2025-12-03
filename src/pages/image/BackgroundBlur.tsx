@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import { blurBackground, formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './BackgroundBlur.css';
 
@@ -149,18 +149,10 @@ const BackgroundBlur = () => {
 
   return (
     <div className="background-blur">
-      <div className="breadcrumb">
-        <Link to="/image" className="breadcrumb-link">
-          {t('breadcrumbs.imageTools')}
-        </Link>
-        <span className="breadcrumb-separator" aria-hidden="true">›</span>
-        <span className="breadcrumb-current">{t('breadcrumbs.backgroundBlur')}</span>
-        <div className="breadcrumb-actions">
-          <Link to="/guide/blur-background" className="breadcrumb-cta">
-            {t('pages.image.portraitBlur.guideLink')}
-          </Link>
-        </div>
-      </div>
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.backgroundBlur')}
+        guidePath="/guide/blur-background"
+      />
 
       <div className="page-header">
         <h1>{t('pages.image.portraitBlur.hero.title')}</h1>

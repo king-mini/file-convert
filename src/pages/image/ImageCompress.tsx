@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './ImageCompress.css';
 
@@ -159,6 +160,10 @@ const ImageCompress = () => {
 
   return (
     <div className="image-compress">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.imageCompress')}
+        guidePath="/guide/image-compress"
+      />
       <div className="page-header">
         <h1>{t('pages.image.imageCompress.hero.title')}</h1>
         <p>{t('pages.image.imageCompress.hero.description')}</p>

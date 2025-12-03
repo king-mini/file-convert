@@ -13,11 +13,14 @@ const en = {
       selectImages: 'Choose images',
       otherImage: '🖼️ Pick another image',
       copy: '📋 Copy',
-      copied: '✓ Copied',
+      copied: '✅ Copied',
       save: '💾 Save',
-      retry: '🔄 Apply again',
+      retry: '🔁 Apply again',
       cancel: 'Cancel',
       submit: 'Submit',
+    },
+    links: {
+      seeGuide: 'See guide',
     },
     validation: {
       pdfOnly: 'Only PDF files are supported.',
@@ -100,6 +103,11 @@ const en = {
   breadcrumbs: {
     imageTools: 'Image Tools',
     backgroundBlur: 'Background Blur',
+    backgroundRemove: 'Background Remove',
+    imageResize: 'Image Resize',
+    imageCompress: 'Image Compress',
+    formatConvert: 'Format Convert',
+    imageCrop: 'Image Crop',
   },
   meta: {
     description: 'Lokit - Free online PDF & Image tools. Convert PDF to Word, JPG, PNG. Merge, Split, Compress PDF files securely in your browser. No signup required.',

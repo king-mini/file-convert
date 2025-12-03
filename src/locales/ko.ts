@@ -13,11 +13,14 @@ const ko = {
       selectImages: '이미지 선택',
       otherImage: '🖼️ 다른 이미지',
       copy: '📋 복사',
-      copied: '✓ 복사됨',
+      copied: '✅ 복사됨',
       save: '💾 저장',
-      retry: '🔄 다시 적용',
+      retry: '🔁 다시 적용',
       cancel: '취소',
       submit: '확인',
+    },
+    links: {
+      seeGuide: '가이드 보기',
     },
     validation: {
       pdfOnly: 'PDF 파일만 업로드 가능합니다.',
@@ -100,6 +103,11 @@ const ko = {
   breadcrumbs: {
     imageTools: '이미지 도구',
     backgroundBlur: 'Background Blur',
+    backgroundRemove: 'Background Remove',
+    imageResize: 'Image Resize',
+    imageCompress: 'Image Compress',
+    formatConvert: 'Format Convert',
+    imageCrop: 'Image Crop',
   },
   meta: {
     description: 'Lokit - 빠르고 안전한 PDF & 이미지 도구. 브라우저에서 바로 변환하세요.',

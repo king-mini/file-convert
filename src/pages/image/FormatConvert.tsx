@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './FormatConvert.css';
 
@@ -163,6 +164,10 @@ const FormatConvert = () => {
 
   return (
     <div className="format-convert">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.formatConvert')}
+        guidePath="/guide/format-convert"
+      />
       <div className="page-header">
         <h1>{t('pages.image.formatConvert.hero.title')}</h1>
         <p>{t('pages.image.formatConvert.hero.description')}</p>

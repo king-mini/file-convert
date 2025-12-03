@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../../components/FeatureHighlights';
+import ToolBreadcrumb from '../../components/ToolBreadcrumb';
 import { formatFileSize, copyImageToClipboard } from '../../utils/imageProcessor';
 import './ImageCrop.css';
 
@@ -292,6 +293,10 @@ const ImageCrop = () => {
 
   return (
     <div className="image-crop">
+      <ToolBreadcrumb
+        currentLabel={t('breadcrumbs.imageCrop')}
+        guidePath="/guide/image-crop"
+      />
       <div className="page-header">
         <h1>{t('pages.image.imageCrop.hero.title')}</h1>
         <p>{t('pages.image.imageCrop.hero.description')}</p>

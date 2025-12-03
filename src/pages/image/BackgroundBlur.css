@@ -6,55 +6,6 @@
   gap: 1.5rem;
 }
 
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #e5e7eb;
-  font-size: 0.95rem;
-}
-
-.breadcrumb-link {
-  color: #eef2ff;
-  text-decoration: none;
-}
-
-.breadcrumb-link:hover {
-  text-decoration: underline;
-}
-
-.breadcrumb-separator {
-  color: #cbd5e1;
-}
-
-.breadcrumb-current {
-  color: #f8fafc;
-  font-weight: 600;
-}
-
-.breadcrumb-actions {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.breadcrumb-cta {
-  padding: 0.45rem 0.9rem;
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  border-radius: 999px;
-  text-decoration: none;
-  font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-.breadcrumb-cta:hover {
-  background: rgba(255, 255, 255, 0.22);
-  transform: translateY(-1px);
-}
-
 /* 페이지 헤더 */
 .page-header {
   text-align: center;
@@ -581,10 +532,4 @@
 
 .seo-highlights {
   margin-top: 1.25rem;
-}
-
-@media (max-width: 640px) {
-  .breadcrumb-cta {
-    display: none;
-  }
 }
