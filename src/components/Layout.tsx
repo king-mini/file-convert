@@ -1,7 +1,9 @@
+import { Suspense } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from './Header';
 import MetaUpdater from './MetaUpdater';
+import Loading from './Loading';
 import './Layout.css';
 
 const Layout = () => {
@@ -12,7 +14,9 @@ const Layout = () => {
       <MetaUpdater />
       <Header />
       <main className="layout-main">
-        <Outlet />
+        <Suspense fallback={<Loading />}>
+          <Outlet />
+        </Suspense>
       </main>
       <footer className="footer">
         <p>{t('footer.notice')}</p>
