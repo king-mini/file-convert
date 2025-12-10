@@ -13,6 +13,21 @@ const MetaUpdater = () => {
   const getMetaInfo = () => {
     const path = location.pathname;
 
+    if (path === '/') {
+      return {
+        title: lang === 'ko'
+          ? 'Lokit - 무료 온라인 PDF 및 이미지 도구'
+          : 'Lokit - Free Online PDF Converter & Image Tools',
+        description: lang === 'ko'
+          ? '무료 PDF 변환, 병합, 분할, 압축 및 이미지 배경 제거, 흐림 효과 도구. 설치 없이 브라우저에서 안전하게 파일을 편집하세요.'
+          : 'Free online PDF & Image tools. Convert, merge, split, compress PDFs and edit images securely in your browser. No signup required.',
+        ogTitle: lang === 'ko' ? 'Lokit - 무료 온라인 파일 도구' : 'Lokit - Free Online File Tools',
+        ogDescription: lang === 'ko'
+          ? 'PDF 변환, 이미지 편집을 위한 무료 온라인 도구 모음'
+          : 'All-in-one free online tools for PDF and Images.',
+      };
+    }
+
     if (path === '/privacy-policy') {
       return {
         title: t('meta.privacy.title'),
