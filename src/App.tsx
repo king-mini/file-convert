@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import Loading from './components/Loading';
 
@@ -91,17 +91,6 @@ const App = () => {
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms" element={<Terms />} />
             <Route path="licenses" element={<Licenses />} />
-
-            {/* Redirects - Old URLs to New URLs */}
-            <Route path="pdf-to-jpg" element={<Navigate to="/pdf/to-jpg" replace />} />
-            <Route path="pdf-to-png" element={<Navigate to="/pdf/to-png" replace />} />
-            <Route path="pdf-to-text" element={<Navigate to="/pdf/to-text" replace />} />
-            <Route path="image-to-pdf" element={<Navigate to="/pdf/image-to-pdf" replace />} />
-            <Route path="merge-pdf" element={<Navigate to="/pdf/merge" replace />} />
-            <Route path="split-pdf" element={<Navigate to="/pdf/split" replace />} />
-            <Route path="rotate-pdf" element={<Navigate to="/pdf/rotate" replace />} />
-            <Route path="compress-pdf" element={<Navigate to="/pdf/compress" replace />} />
-            <Route path="image/portrait-blur" element={<Navigate to="/image/blur-background" replace />} />
           </Route>
         </Routes>
       </Suspense>

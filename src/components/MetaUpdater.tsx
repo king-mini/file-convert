@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-
 const MetaUpdater = () => {
   const { t, i18n } = useTranslation();
   const location = useLocation();
@@ -434,35 +433,6 @@ const MetaUpdater = () => {
       const alternate = lang === 'ko' ? 'en-US' : 'ko-KR';
       ogAlternate.setAttribute('content', alternate.replace('-', '_'));
     }
-
-    document.documentElement.setAttribute('lang', lang);
-
-    // Canonical URL
-    let canonicalUrl = document.querySelector('link[rel="canonical"]');
-    if (!canonicalUrl) {
-      canonicalUrl = document.createElement('link');
-      canonicalUrl.setAttribute('rel', 'canonical');
-      document.head.appendChild(canonicalUrl);
-    }
-    const canonicalPath = `${location.pathname}${lang === 'ko' ? '?lang=ko' : ''}`;
-    canonicalUrl.setAttribute('href', `https://lokit.tools${canonicalPath}`);
-
-    // Hreflang Tags
-    const updateHreflang = (hreflang: string, path: string) => {
-      let link = document.querySelector(`link[rel="alternate"][hreflang="${hreflang}"]`);
-      if (!link) {
-        link = document.createElement('link');
-        link.setAttribute('rel', 'alternate');
-        link.setAttribute('hreflang', hreflang);
-        document.head.appendChild(link);
-      }
-      link.setAttribute('href', `https://lokit.tools${path}`);
-    };
-
-    updateHreflang('ko', `${location.pathname}?lang=ko`);
-    updateHreflang('en', location.pathname);
-    updateHreflang('x-default', location.pathname);
-
   }, [metaInfo.title, metaInfo.description, metaInfo.ogTitle, metaInfo.ogDescription, locale, lang, location.pathname, t]);
 
   return null;

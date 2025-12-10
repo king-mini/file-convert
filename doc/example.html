@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Online Background Blur Tool - Blur Photo Background Instantly</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 30px;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .back-button:hover {
+            opacity: 0.8;
+        }
+        .back-button:before {
+            content: "← ";
+            margin-right: 8px;
+        }
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+        header p {
+            font-size: 18px;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+        .main-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .main-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .main-section p {
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .use-cases-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .use-cases-section h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        .use-cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .use-case-item {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .use-case-item p {
+            color: #555;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        .comparison-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .comparison-section h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        .comparison-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        @media (max-width: 768px) {
+            .comparison-box {
+                grid-template-columns: 1fr;
+            }
+        }
+        .comparison-card {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+        }
+        .comparison-card.active {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+        .comparison-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .comparison-active {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .comparison-desc {
+            color: #666;
+            line-height: 1.7;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .comparison-list {
+            list-style: none;
+        }
+        .comparison-list li {
+            padding: 8px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        .comparison-list li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        .faq-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .faq-section h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        .faq-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .faq-question {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .faq-answer {
+            color: #666;
+            line-height: 1.7;
+            font-size: 15px;
+        }
+        .cta-section {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: #667eea;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+        .cta-button:hover {
+            background: #764ba2;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .feature-card {
+            text-align: center;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .feature-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .feature-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        .other-tools {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .other-tools h2 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        .other-tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .other-tool-link {
+            display: block;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            text-decoration: none;
+            color: #333;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+            text-align: center;
+            font-weight: 500;
+        }
+        .other-tool-link:hover {
+            border-color: #667eea;
+            background: #f5f5ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 백 버튼 -->
+        <a href="#" class="back-button">Image Tools</a>
+
+        <!-- 헤더 -->
+        <header>
+            <h1>😊 Free Online Background Blur Tool</h1>
+            <p>Blur Photo Background Instantly</p>
+            <p>온라인에서 사진 배경을 흐리게 하세요. 초상화, 프로필 사진, 증명사진 배경을 전문적으로 처리합니다.</p>
+            <p style="font-size: 14px; opacity: 0.8;">무료, 회원가입 불필요, 완벽한 보안</p>
+        </header>
+
+        <!-- 메인 설명 -->
+        <div class="main-section">
+            <h2>Background Blur란?</h2>
+            <p>Background Blur는 사진의 배경을 흐리게 처리하여 주인공(사람)을 돋보이게 만드는 온라인 도구입니다. 전문적인 사진편집 소프트웨어 없이도 브라우저에서 바로 배경 흐림 효과를 적용할 수 있습니다.</p>
+            <p>프로필 사진, 초상화, 증명사진 등 어떤 사진이든 자동으로 사람을 인식하고 배경만 흐리게 만들어줍니다.</p>
+            
+            <div class="features-grid" style="margin-top: 30px;">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-title">1초 만에 처리</div>
+                    <div class="feature-desc">AI 기반의 빠른 배경 흐림 처리</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-title">정확한 인식</div>
+                    <div class="feature-desc">사람을 자동으로 감지하고 배경만 흐림</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-title">모든 기기에서 사용</div>
+                    <div class="feature-desc">PC, 태블릿, 스마트폰 모두 지원</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 사용 사례 -->
+        <div class="use-cases-section">
+            <h2>📌 Background Blur가 필요한 상황들</h2>
+            <div class="use-cases-grid">
+                <div class="use-case-item">
+                    <p><strong>프로필 사진</strong> - 링크드인, 페이스북, 인스타그램 프로필 사진을 전문적으로</p>
+                </div>
+                <div class="use-case-item">
+                    <p><strong>증명사진</strong> - 깔끔한 배경의 증명사진 준비</p>
+                </div>
+                <div class="use-case-item">
+                    <p><strong>이력서 사진</strong> - 깔끔하고 전문적인 이력서 사진</p>
+                </div>
+                <div class="use-case-item">
+                    <p><strong>포트폴리오</strong> - 개인 포트폴리오나 웹사이트용 사진</p>
+                </div>
+                <div class="use-case-item">
+                    <p><strong>이벤트 사진</strong> - 웨딩, 파티, 행사 사진 배경 처리</p>
+                </div>
+                <div class="use-case-item">
+                    <p><strong>SNS 콘텐츠</strong> - 유튜브, 블로그, 틱톡 프로필 사진</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Background Blur vs Background Remove -->
+        <div class="comparison-section">
+            <h2>🔍 Background Blur vs Background Remove</h2>
+            <p style="color: #666; margin-bottom: 30px;">비슷해 보이지만 다른 두 도구의 차이를 알아보세요</p>
+            
+            <div class="comparison-box">
+                <div class="comparison-card active">
+                    <div class="comparison-active">현재 도구</div>
+                    <div class="comparison-title">Background Blur</div>
+                    <div class="comparison-desc">배경을 "흐리게" 처리합니다 (배경이 남아있음)</div>
+                    <ul class="comparison-list">
+                        <li>배경이 완전히 제거되지 않음</li>
+                        <li>더 자연스러운 효과</li>
+                        <li>프로필 사진에 최적</li>
+                        <li>증명사진에 적합</li>
+                        <li>원본 사진이 변형되지 않음</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <div class="comparison-title">Background Remove</div>
+                    <div class="comparison-desc">배경을 "완전히 제거"합니다 (투명 배경)</div>
+                    <ul class="comparison-list">
+                        <li>배경이 투명색으로 변환</li>
+                        <li>더 깔끔한 효과</li>
+                        <li>제품 사진에 최적</li>
+                        <li>투명 배경이 필요할 때</li>
+                        <li>PNG 형식 권장</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p style="background: #f9f9f9; padding: 20px; border-radius: 8px; color: #666; line-height: 1.8;">
+                <strong>언제 어떤 도구를 쓸까?</strong><br>
+                • 프로필 사진, 증명사진, 이력서 → Background Blur<br>
+                • 제품 사진, 투명 배경 필요 → Background Remove
+            </p>
+        </div>
+
+        <!-- FAQ -->
+        <div class="faq-section">
+            <h2>❓ 자주 묻는 질문</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">이 도구는 정말 무료인가요?</div>
+                <div class="faq-answer">네, 완전히 무료입니다. 회원가입도 필요 없고, 숨은 비용도 없습니다. 무제한으로 사용할 수 있습니다.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">내 사진이 어디에 저장되나요?</div>
+                <div class="faq-answer">당신의 사진은 당신의 기기에서만 처리됩니다. 서버에 업로드되지 않으므로 완벽하게 안전합니다. 작업이 끝나면 사진을 다운로드하고 삭제하면 됩니다.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">얼마나 빠른가요?</div>
+                <div class="faq-answer">대부분의 사진은 1-3초 내에 처리됩니다. 사진 크기와 기기 사양에 따라 달라질 수 있습니다.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">어떤 이미지 형식을 지원하나요?</div>
+                <div class="faq-answer">JPG, PNG, WebP 형식을 지원합니다. 최대 25MB 크기의 파일을 처리할 수 있습니다.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">배경 흐림 강도를 조절할 수 있나요?</div>
+                <div class="faq-answer">네, 슬라이더를 통해 흐림 강도를 조절할 수 있습니다. 약한 흐림부터 강한 흐림까지 자유롭게 선택할 수 있습니다.</div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">배경 흐림이 제대로 안 되면?</div>
+                <div class="faq-answer">사람과 배경의 경계가 명확할수록 더 잘 작동합니다. 조명이 밝고 명확한 사진일수록 결과가 좋습니다.</div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2>지금 시작하세요</h2>
+            <p style="color: #666; margin: 15px 0;">사진을 선택하거나 드래그 앤 드롭으로 배경을 흐리게 만들어보세요</p>
+            <a href="#" class="cta-button">Background Blur 시작하기</a>
+        </div>
+
+        <!-- 다른 도구 -->
+        <div class="other-tools" style="margin-top: 30px;">
+            <h2>📚 다른 이미지 도구도 확인해보세요</h2>
+            <div class="other-tools-grid">
+                <a href="#" class="other-tool-link">✨ Background Remove</a>
+                <a href="#" class="other-tool-link">📐 Image Resize</a>
+                <a href="#" class="other-tool-link">🗜️ Image Compress</a>
+                <a href="#" class="other-tool-link">🔄 Format Convert</a>
+                <a href="#" class="other-tool-link">✂️ Image Crop</a>
+                <a href="#" class="other-tool-link">← Image Tools</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

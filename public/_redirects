@@ -1,1 +1,13 @@
-/* /index.html 200
+# Legacy URL Redirects
+/pdf-to-jpg  /pdf/to-jpg  301
+/pdf-to-png  /pdf/to-png  301
+/pdf-to-text  /pdf/to-text  301
+/image-to-pdf  /pdf/image-to-pdf  301
+/merge-pdf  /pdf/merge  301
+/split-pdf  /pdf/split  301
+/rotate-pdf  /pdf/rotate  301
+/compress-pdf  /pdf/compress  301
+/image/portrait-blur  /image/blur-background  301
+
+# SPA Fallback (Must be last)
+/*  /index.html  200
