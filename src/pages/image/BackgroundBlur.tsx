@@ -147,8 +147,26 @@ const BackgroundBlur = () => {
     await handleProcess();
   }, [file, result, handleProcess]);
 
+  const schemaMarkup = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Background Blur",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "image": "https://lokit.tools/og-default.png",
+    "description": t('pages.image.portraitBlur.hero.description')
+  };
+
   return (
     <div className="background-blur">
+      <script type="application/ld+json">
+        {JSON.stringify(schemaMarkup)}
+      </script>
       <ToolBreadcrumb
         currentLabel={t('breadcrumbs.backgroundBlur')}
         guidePath="/guide/blur-background"

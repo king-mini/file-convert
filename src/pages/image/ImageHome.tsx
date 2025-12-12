@@ -71,7 +71,8 @@ const ImageHome = () => {
       "position": index + 1,
       "name": feature.title,
       "description": feature.description,
-      "url": `https://lokit.tools${feature.path}`
+      "url": `https://lokit.tools${feature.path}`,
+      "image": `https://lokit.tools/og-default.png`
     }))
   };
 

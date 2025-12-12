@@ -401,6 +401,7 @@ const MetaUpdater = () => {
     return {
       title: 'Lokit - File Tools',
       description: t('meta.description'),
+      ogImage: '/og-default.png', // Default image
     };
   };
 
@@ -433,6 +434,20 @@ const MetaUpdater = () => {
     }
     ogDescription.setAttribute('content', metaInfo.ogDescription || metaInfo.description);
 
+    let ogImage = document.querySelector('meta[property="og:image"]');
+    if (!ogImage) {
+      ogImage = document.createElement('meta');
+      ogImage.setAttribute('property', 'og:image');
+      document.head.appendChild(ogImage);
+    }
+    // Use the provided ogImage or a default. 
+    // Ideally this should be an absolute URL.
+    const imageUrl = metaInfo.ogImage 
+      ? (metaInfo.ogImage.startsWith('http') ? metaInfo.ogImage : `https://lokit.tools${metaInfo.ogImage}`)
+      : 'https://lokit.tools/lokit-logo.svg'; // Fallback to logo if nothing else
+    ogImage.setAttribute('content', imageUrl);
+
+
     const ogUrl = document.querySelector('meta[property="og:url"]');
     if (ogUrl) {
       ogUrl.setAttribute('content', `https://lokit.tools${location.pathname}`);
@@ -448,7 +463,7 @@ const MetaUpdater = () => {
       const alternate = lang === 'ko' ? 'en-US' : 'ko-KR';
       ogAlternate.setAttribute('content', alternate.replace('-', '_'));
     }
-  }, [metaInfo.title, metaInfo.description, metaInfo.ogTitle, metaInfo.ogDescription, locale, lang, location.pathname, t]);
+  }, [metaInfo.title, metaInfo.description, metaInfo.ogTitle, metaInfo.ogDescription, metaInfo.ogImage, locale, lang, location.pathname, t]);
 
   return null;
 };
