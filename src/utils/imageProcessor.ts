@@ -83,7 +83,7 @@ const loadMediaPipeScript = (): Promise<void> =>
     }
 
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675466837/selfie_segmentation.js';
     script.onload = () => resolve();
     script.onerror = () => reject(new Error('MediaPipe 로드 실패'));
     document.head.appendChild(script);
@@ -113,7 +113,7 @@ const loadFaceDetectionScript = (): Promise<void> =>
     }
 
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229/face_detection.js';
     script.onload = () => resolve();
     script.onerror = () => reject(new Error('FaceDetection 로드 실패'));
     document.head.appendChild(script);
@@ -403,7 +403,7 @@ export const blurBackground = async (
     step = 'initSegmentation';
     const segmentation = new window.SelfieSegmentation({
       locateFile: (path: string) =>
-        `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${path}`,
+        `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675466837/${path}`,
     });
 
     // iOS는 빠른 모델 사용 (메모리 절약)
@@ -552,7 +552,7 @@ export const removeBackground = async (
   // 4. MediaPipe Selfie Segmentation 초기화
   const segmentation = new window.SelfieSegmentation({
     locateFile: (path: string) =>
-      `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${path}`,
+      `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675466837/${path}`,
   });
 
   // iOS는 항상 빠른 모델 사용 (메모리 절약)
@@ -729,7 +729,7 @@ const processFace = async (
     // 3. FaceDetection 초기화
     step = 'initFaceDetection';
     const faceDetection = new window.FaceDetection({
-      locateFile: (path: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${path}`,
+      locateFile: (path: string) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection@0.4.1646425229/${path}`,
     });
 
     faceDetection.setOptions({
@@ -741,9 +741,26 @@ const processFace = async (
 
     // 4. 감지 실행
     step = 'runDetection';
+
+    // 모듈 초기화 확인
+    if (!faceDetection.send) {
+      throw new Error('FaceDetection module not fully initialized');
+    }
+
     const results = await new Promise<FaceDetectionResults>((resolve, reject) => {
       faceDetection.onResults(resolve);
-      faceDetection.send({ image: detectCanvas }).catch(reject);
+
+      // 타임아웃 설정 (10초)
+      const timeoutId = setTimeout(() => {
+        reject(new Error('Detection timed out (10s)'));
+      }, 10000);
+
+      faceDetection.send({ image: detectCanvas })
+        .then(() => clearTimeout(timeoutId))
+        .catch((e) => {
+          clearTimeout(timeoutId);
+          reject(new Error(`FaceDetection send failed: ${e.message}`));
+        });
     });
 
     onProgress?.(60);

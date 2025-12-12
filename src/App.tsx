@@ -69,8 +69,8 @@ const App = () => {
           {/* Image Routes */}
           <Route path="image" element={<ImageHome />} />
           <Route path="image/blur-background" element={<BackgroundBlur />} />
-          <Route path="image/blur-face" element={<BlurFace />} />
-          <Route path="image/redact" element={<RedactImage />} />
+          {/* <Route path="image/blur-face" element={<BlurFace />} /> */}
+          {/* <Route path="image/redact" element={<RedactImage />} /> */}
           <Route path="image/bg-remove" element={<BackgroundRemove />} />
           <Route path="image/resize" element={<ImageResize />} />
           <Route path="image/compress" element={<ImageCompress />} />
@@ -90,8 +90,15 @@ const App = () => {
           <Route path="guide/split-pdf" element={<SplitPdfGuide />} />
           <Route path="guide/rotate-pdf" element={<RotatePdfGuide />} />
           <Route path="guide/compress-pdf" element={<CompressPdfGuide />} />
-          <Route path="guide/blur-face" element={<BlurFaceGuide />} />
-          <Route path="guide/redact" element={<RedactImageGuide />} />
+          {/* Dev Only Routes */}
+          {!import.meta.env.PROD && (
+            <>
+              <Route path="image/blur-face" element={<BlurFace />} />
+              <Route path="image/redact" element={<RedactImage />} />
+              <Route path="guide/blur-face" element={<BlurFaceGuide />} />
+              <Route path="guide/redact" element={<RedactImageGuide />} />
+            </>
+          )}
 
           {/* Policy Routes */}
           <Route path="privacy-policy" element={<PrivacyPolicy />} />

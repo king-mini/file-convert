@@ -27,14 +27,14 @@ const ImageHome = () => {
       icon: '😶',
       description: t('imageHome.features.blurFace.description'),
       path: '/image/blur-face',
-      available: true,
+      available: !import.meta.env.PROD, // Dev only
     },
     {
       title: t('imageHome.features.redactImage.title'),
       icon: '⬛',
       description: t('imageHome.features.redactImage.description'),
       path: '/image/redact',
-      available: true,
+      available: !import.meta.env.PROD, // Dev only
     },
     {
       title: t('imageHome.features.backgroundRemove.title'),
