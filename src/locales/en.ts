@@ -174,6 +174,14 @@ const en = {
         title: 'Background Blur',
         description: 'Blur background for portraits',
       },
+      blurFace: {
+        title: 'Blur Face',
+        description: 'Automatically hide faces',
+      },
+      redactImage: {
+        title: 'Redact Text',
+        description: 'Pixelate sensitive info',
+      },
       backgroundRemove: {
         title: 'Background Remove',
         description: 'Remove image backgrounds',
@@ -550,6 +558,62 @@ const en = {
       },
     },
     image: {
+      redactImage: {
+        hero: {
+          title: 'Redact Text & Pixelate Image Online',
+          description: 'Securely hide sensitive information, credit cards, and license plates. 100% private.',
+        },
+        upload: {
+          hint: 'Drag or click to add an image',
+          support: 'JPG, PNG, WebP (max 25MB)',
+        },
+        panels: {
+          original: 'Original',
+          result: 'Redacted',
+        },
+        placeholders: {
+          result: 'The redacted image will appear here',
+        },
+        options: {
+          blurStrength: 'Pixelation strength',
+          rangeSoft: 'Low',
+          rangeStrong: 'High',
+        },
+        progress: {
+          label: 'Redacting image...',
+        },
+        actions: {
+          apply: '✨ Redact Image',
+        },
+      },
+      blurFace: {
+        hero: {
+          title: 'Blur Face in Photo Online',
+          description: 'Automatically hide faces in photos for privacy. Secure client-side processing.',
+        },
+        upload: {
+          hint: 'Drag or click to add a photo',
+          support: 'JPG, PNG, WebP (max 25MB)',
+        },
+        panels: {
+          original: 'Original',
+          result: 'Result',
+        },
+        placeholders: {
+          result: 'The blurred faces will appear here',
+        },
+        options: {
+          blurStrength: 'Blur amount',
+          rangeSoft: 'Soft',
+          rangeStrong: 'Strong',
+        },
+        progress: {
+          label: 'Blurring faces...',
+        },
+        actions: {
+          apply: '✨ Blur Faces',
+        },
+      },
       portraitBlur: {
         hero: {
           title: 'Free Online Background Blur Tool - Blur Photo Background Instantly',
@@ -1000,6 +1064,78 @@ const en = {
       finalCtaTitle: 'Frame your story',
       finalCtaSubtitle: 'Consistent crops keep brands recognizable everywhere.',
       cardDescription: 'Cropping handbook for social, ads, and commerce.',
+    },
+    blurFace: {
+      shortTitle: 'Blur Face Guide',
+      toolName: 'Blur Face',
+      toolPath: '/image/blur-face',
+      title: 'Blur Faces for Privacy',
+      subtitle: 'Automatically detect and blur faces in your photos to protect identity.',
+      stepsTitle: 'How to blur faces',
+      stepsSubtitle: 'Simple steps to anonymize people in your images.',
+      steps: [
+        'Upload your photo that contains faces.',
+        'The tool automatically detects faces (adjust strength if needed).',
+        'Preview the blurred result instantly.',
+        'Download the privacy-protected image.',
+      ],
+      useCasesTitle: 'When to blur faces',
+      useCasesSubtitle: 'Protecting privacy in public and private photos.',
+      useCases: [
+        'Sharing street photography on social media',
+        'Anonymizing children or bystanders',
+        'Compliance with privacy regulations',
+        'News and journalism safety',
+      ],
+      tipsTitle: 'Privacy tips',
+      tipsSubtitle: 'Ensure complete anonymity.',
+      tips: [
+        'Check that all faces are correctly detected.',
+        'Increase blur strength if the person is still recognizable.',
+        'Remember that clothing or tattoos can also identify people.',
+        'Metadata (EXIF) is preserved unless you remove it separately.',
+      ],
+      ctaUseTool: 'Blur Faces Now',
+      ctaViewAll: 'Browse all tools',
+      finalCtaTitle: 'Secure your photos',
+      finalCtaSubtitle: 'Keep identities private with a single click.',
+      cardDescription: 'Protect identity by blurring faces.',
+    },
+    redactImage: {
+      shortTitle: 'Redact Image Guide',
+      toolName: 'Redact Image',
+      toolPath: '/image/redact',
+      title: 'Redact Sensitive Info',
+      subtitle: 'Pixelate or blur sensitive text, license plates, and details.',
+      stepsTitle: 'How to redact images',
+      stepsSubtitle: 'Hide secrets before sharing.',
+      steps: [
+        'Upload the image containing sensitive info.',
+        'Apply pixelation or blur to the target areas.',
+        'Verify the information is unreadable.',
+        'Download the safe version.',
+      ],
+      useCasesTitle: 'Redaction use cases',
+      useCasesSubtitle: 'Clean up documents and photos.',
+      useCases: [
+        'Hiding credit card numbers or addresses',
+        'Blurring license plates in car photos',
+        'Redacting names in document screenshots',
+        'Removing watermarks or logos (if permitted)',
+      ],
+      tipsTitle: 'Redaction tips',
+      tipsSubtitle: 'Make sure it is really gone.',
+      tips: [
+        'Pixelation is often safer than blur for text.',
+        'Ensure the "undo" is not possible on the exported image (we flatten it).',
+        'Check for reflections that might reveal info.',
+        'Double-check before publishing.',
+      ],
+      ctaUseTool: 'Redact Image Now',
+      ctaViewAll: 'Browse all tools',
+      finalCtaTitle: 'Share safely',
+      finalCtaSubtitle: 'Remove sensitive data before hitting send.',
+      cardDescription: 'Pixelate text and hide sensitive details.',
     },
     pdfToJpg: {
       shortTitle: 'PDF to JPG Guide',

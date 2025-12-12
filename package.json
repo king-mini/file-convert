@@ -37,11 +37,15 @@
 			"/pdf/image-to-pdf",
 			"/image",
 			"/image/blur-background",
+			"/image/blur-face",
+			"/image/redact",
 			"/image/bg-remove",
 			"/image/resize",
 			"/image/compress",
 			"/image/format",
-			"/image/crop"
+			"/image/crop",
+			"/guide/blur-face",
+			"/guide/redact"
 		]
 	},
 	"dependencies": {

@@ -174,6 +174,14 @@ const ko = {
         title: 'Background Blur',
         description: '인물 사진 배경 흐리기',
       },
+      blurFace: {
+        title: '얼굴 가리기',
+        description: '사진 속 얼굴 모자이크',
+      },
+      redactImage: {
+        title: '이미지 검열',
+        description: '텍스트 및 정보 가리기',
+      },
       backgroundRemove: {
         title: 'Background Remove',
         description: '이미지 배경 제거',
@@ -550,6 +558,62 @@ const ko = {
       },
     },
     image: {
+      redactImage: {
+        hero: {
+          title: '이미지 모자이크 & 텍스트 가리기',
+          description: '신용카드, 주민등록번호, 민감한 정보를 안전하게 가리세요. 100% 개인정보 보호.',
+        },
+        upload: {
+          hint: '이미지를 드래그하거나 클릭하여 선택하세요',
+          support: 'JPG, PNG, WebP (최대 25MB)',
+        },
+        panels: {
+          original: '원본',
+          result: '결과',
+        },
+        placeholders: {
+          result: '모자이크 처리된 결과가 여기에 표시됩니다',
+        },
+        options: {
+          blurStrength: '모자이크 강도',
+          rangeSoft: '약하게',
+          rangeStrong: '강하게',
+        },
+        progress: {
+          label: '이미지 가리는 중...',
+        },
+        actions: {
+          apply: '✨ 이미지 가리기',
+        },
+      },
+      blurFace: {
+        hero: {
+          title: '얼굴 모자이크 처리 - 사진 얼굴 가리기',
+          description: '사진 속 얼굴을 자동으로 흐리게 처리하여 프라이버시를 보호하세요.',
+        },
+        upload: {
+          hint: '사진을 드래그하거나 클릭하여 선택하세요',
+          support: 'JPG, PNG, WebP (최대 25MB)',
+        },
+        panels: {
+          original: '원본',
+          result: '결과',
+        },
+        placeholders: {
+          result: '얼굴이 가려진 결과가 여기에 표시됩니다',
+        },
+        options: {
+          blurStrength: '블러 강도',
+          rangeSoft: '약하게',
+          rangeStrong: '강하게',
+        },
+        progress: {
+          label: '얼굴 블러 처리 중...',
+        },
+        actions: {
+          apply: '✨ 얼굴 가리기',
+        },
+      },
       portraitBlur: {
         hero: {
           title: '무료 배경 흐림 도구 - 사진 배경 흐리기',
@@ -1000,6 +1064,78 @@ const ko = {
       finalCtaTitle: '브랜드 톤에 맞는 구도',
       finalCtaSubtitle: '일관된 프레이밍으로 모든 채널을 맞춰보세요.',
       cardDescription: '플랫폼별 크롭 규칙과 팁을 한 번에 제공합니다.',
+    },
+    blurFace: {
+      shortTitle: '얼굴 가리기 가이드',
+      toolName: '얼굴 가리기',
+      toolPath: '/image/blur-face',
+      title: '사진 속 얼굴 자동 보호',
+      subtitle: '자동으로 얼굴을 감지해 흐리게 처리합니다.',
+      stepsTitle: '사용 방법',
+      stepsSubtitle: '몇 번의 클릭으로 신원을 보호하세요.',
+      steps: [
+        '얼굴이 포함된 사진을 업로드합니다.',
+        '자동 감지된 얼굴을 확인하고 흐림 강도를 조절합니다.',
+        '결과를 미리보기로 확인합니다.',
+        '보호된 이미지를 다운로드합니다.',
+      ],
+      useCasesTitle: '활용 사례',
+      useCasesSubtitle: '공개된 장소나 SNS 공유 시 유용합니다.',
+      useCases: [
+        '뉴스 보도나 블로그 포스팅 시 초상권 보호',
+        '단체 사진에서 일부 인원 가리기',
+        '미성년 자녀의 얼굴 보호',
+        '공공장소 촬영물 업로드 전 정리',
+      ],
+      tipsTitle: '보안 팁',
+      tipsSubtitle: '완벽한 익명성을 위해 확인하세요.',
+      tips: [
+        '모든 얼굴이 감지되었는지 확인하세요.',
+        '식별이 불가능할 정도로 강도를 높이세요.',
+        '특이한 옷차림이나 문신도 주의하세요.',
+        'EXIF 정보는 별도로 제거하지 않으면 유지됩니다.',
+      ],
+      ctaUseTool: '얼굴 가리기 시작',
+      ctaViewAll: '모든 도구 보기',
+      finalCtaTitle: '안전하게 공유하세요',
+      finalCtaSubtitle: '클릭 한 번으로 프라이버시를 지킵니다.',
+      cardDescription: '얼굴을 흐리게 하여 신원을 보호합니다.',
+    },
+    redactImage: {
+      shortTitle: '이미지 검열 가이드',
+      toolName: '이미지 검열',
+      toolPath: '/image/redact',
+      title: '민감 정보 안전하게 가리기',
+      subtitle: '텍스트, 차량 번호판, 개인정보를 픽셀화합니다.',
+      stepsTitle: '검열 방법',
+      stepsSubtitle: '공유 전 비밀을 숨기세요.',
+      steps: [
+        '민감한 정보가 있는 이미지를 업로드합니다.',
+        '픽셀화 또는 블러 효과를 적용합니다.',
+        '정보가 읽을 수 없는지 확인합니다.',
+        '안전한 이미지를 저장합니다.',
+      ],
+      useCasesTitle: '활용 사례',
+      useCasesSubtitle: '문서와 사진을 깔끔하게 정리합니다.',
+      useCases: [
+        '신분증, 카드, 주소 등 개인정보 숨기기',
+        '차량 번호판 가리기',
+        '스크린샷 내 민감한 대화 내용 삭제',
+        '로고나 워터마크 제거 (허용된 경우)',
+      ],
+      tipsTitle: '검열 팁',
+      tipsSubtitle: '확실하게 지워졌는지 체크하세요.',
+      tips: [
+        '텍스트는 픽셀화가 블러보다 안전할 수 있습니다.',
+        '저장된 이미지는 되돌릴 수 없도록 평탄화됩니다.',
+        '거울이나 유리에 비친 정보도 확인하세요.',
+        '업로드 전 한 번 더 검토하세요.',
+      ],
+      ctaUseTool: '이미지 검열 시작',
+      ctaViewAll: '모든 도구 보기',
+      finalCtaTitle: '안심하고 공유하세요',
+      finalCtaSubtitle: '전송 버튼 누르기 전에 중요 정보를 삭제하세요.',
+      cardDescription: '텍스트와 민감한 세부 정보를 픽셀화합니다.',
     },
     pdfToJpg: {
       shortTitle: 'PDF → JPG 가이드',

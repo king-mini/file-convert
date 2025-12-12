@@ -23,6 +23,20 @@ const ImageHome = () => {
       available: true,
     },
     {
+      title: t('imageHome.features.blurFace.title'),
+      icon: '😶',
+      description: t('imageHome.features.blurFace.description'),
+      path: '/image/blur-face',
+      available: true,
+    },
+    {
+      title: t('imageHome.features.redactImage.title'),
+      icon: '⬛',
+      description: t('imageHome.features.redactImage.description'),
+      path: '/image/redact',
+      available: true,
+    },
+    {
       title: t('imageHome.features.backgroundRemove.title'),
       icon: '✨',
       description: t('imageHome.features.backgroundRemove.description'),
@@ -64,8 +78,8 @@ const ImageHome = () => {
     "@context": "https://schema.org",
     "@type": "ItemList",
     "name": "Free Online Image Tools",
-    "description": "6 free photo editing tools for professional results",
-    "numberOfItems": 6,
+    "description": "8 free photo editing tools for professional results",
+    "numberOfItems": 8,
     "itemListElement": features.map((feature, index) => ({
       "@type": "ListItem",
       "position": index + 1,

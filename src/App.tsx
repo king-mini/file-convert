@@ -18,6 +18,8 @@ const CompressPdf = lazy(() => import('./pages/pdf/CompressPdf'));
 // Image
 const ImageHome = lazy(() => import('./pages/image/ImageHome'));
 const BackgroundBlur = lazy(() => import('./pages/image/BackgroundBlur'));
+const BlurFace = lazy(() => import('./pages/image/BlurFace'));
+const RedactImage = lazy(() => import('./pages/image/RedactImage'));
 const BackgroundRemove = lazy(() => import('./pages/image/BackgroundRemove'));
 const ImageResize = lazy(() => import('./pages/image/ImageResize'));
 const ImageCompress = lazy(() => import('./pages/image/ImageCompress'));
@@ -37,6 +39,8 @@ const MergePdfGuide = lazy(() => import('./pages/guides/MergePdfGuide'));
 const SplitPdfGuide = lazy(() => import('./pages/guides/SplitPdfGuide'));
 const RotatePdfGuide = lazy(() => import('./pages/guides/RotatePdfGuide'));
 const CompressPdfGuide = lazy(() => import('./pages/guides/CompressPdfGuide'));
+const BlurFaceGuide = lazy(() => import('./pages/guides/BlurFaceGuide'));
+const RedactImageGuide = lazy(() => import('./pages/guides/RedactImageGuide'));
 
 // Policy
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -65,6 +69,8 @@ const App = () => {
           {/* Image Routes */}
           <Route path="image" element={<ImageHome />} />
           <Route path="image/blur-background" element={<BackgroundBlur />} />
+          <Route path="image/blur-face" element={<BlurFace />} />
+          <Route path="image/redact" element={<RedactImage />} />
           <Route path="image/bg-remove" element={<BackgroundRemove />} />
           <Route path="image/resize" element={<ImageResize />} />
           <Route path="image/compress" element={<ImageCompress />} />
@@ -84,6 +90,8 @@ const App = () => {
           <Route path="guide/split-pdf" element={<SplitPdfGuide />} />
           <Route path="guide/rotate-pdf" element={<RotatePdfGuide />} />
           <Route path="guide/compress-pdf" element={<CompressPdfGuide />} />
+          <Route path="guide/blur-face" element={<BlurFaceGuide />} />
+          <Route path="guide/redact" element={<RedactImageGuide />} />
 
           {/* Policy Routes */}
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
