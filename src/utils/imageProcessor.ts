@@ -83,7 +83,7 @@ const loadMediaPipeScript = (): Promise<void> =>
     }
 
     const script = document.createElement('script');
-    script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675466837/selfie_segmentation.js';
+    script.src = 'https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js';
     script.onload = () => resolve();
     script.onerror = () => reject(new Error('MediaPipe 로드 실패'));
     document.head.appendChild(script);
@@ -403,7 +403,7 @@ export const blurBackground = async (
     step = 'initSegmentation';
     const segmentation = new window.SelfieSegmentation({
       locateFile: (path: string) =>
-        `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675466837/${path}`,
+        `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${path}`,
     });
 
     // iOS는 빠른 모델 사용 (메모리 절약)
@@ -552,7 +552,7 @@ export const removeBackground = async (
   // 4. MediaPipe Selfie Segmentation 초기화
   const segmentation = new window.SelfieSegmentation({
     locateFile: (path: string) =>
-      `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation@0.1.1675466837/${path}`,
+      `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${path}`,
   });
 
   // iOS는 항상 빠른 모델 사용 (메모리 절약)
