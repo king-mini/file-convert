@@ -79,8 +79,8 @@ const ImageHome = () => {
     "@type": "ItemList",
     "name": "Free Online Image Tools",
     "description": "8 free photo editing tools for professional results",
-    "numberOfItems": 8,
-    "itemListElement": features.map((feature, index) => ({
+    "numberOfItems": features.filter(f => f.available).length,
+    "itemListElement": features.filter(f => f.available).map((feature, index) => ({
       "@type": "ListItem",
       "position": index + 1,
       "name": feature.title,
@@ -106,7 +106,7 @@ const ImageHome = () => {
       {/* Feature Grid */}
       <section className="features">
         <div className="feature-grid">
-          {features.map((feature) => (
+          {features.filter(f => f.available).map((feature) => (
             <div key={feature.path} className="feature-card-wrapper">
               {feature.available ? (
                 <Link to={feature.path} className="feature-card">
