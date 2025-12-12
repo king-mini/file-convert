@@ -25,6 +25,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? 'PDF 변환, 이미지 편집을 위한 무료 온라인 도구 모음'
           : 'All-in-one free online tools for PDF and Images.',
+        ogImage: '/og-home.png',
       };
     }
 
@@ -47,6 +48,16 @@ const MetaUpdater = () => {
       };
     }
 
+    // PDF Pages - Apply og-pdf.png to all PDF routes
+    if (path.startsWith('/pdf') || path.startsWith('/guide/pdf')) {
+      // We can set a default first, then specific overrides if needed.
+      // However, the current structure uses specific if blocks. 
+      // I'll add ogImage to each specific return or handle it generally.
+      // Let's modify the specific blocks to include ogImage: '/og-pdf.png' 
+      // OR simpler: set a defaultOgImage variable at the start of getMetaInfo?
+      // Let's stick to modifying the specific blocks for clarity and safety in this file structure.
+    }
+
     // 주요 도구 페이지별 SEO 최적화된 메타 태그
     if (path === '/pdf/to-jpg') {
       return {
@@ -54,6 +65,7 @@ const MetaUpdater = () => {
         description: 'Free online PDF to JPG converter. Convert PDF pages to high-quality JPG images with adjustable quality and resolution. No signup required, 100% secure.',
         ogTitle: 'PDF to JPG Converter - Free Online Tool',
         ogDescription: 'Convert PDF to JPG images instantly in your browser. Secure, fast, and free.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/pdf/to-png') {
@@ -62,6 +74,7 @@ const MetaUpdater = () => {
         description: 'Free online PDF to PNG converter. Convert PDF pages to PNG images with optional transparency support. High quality, no signup required.',
         ogTitle: 'PDF to PNG Converter - Free Online Tool',
         ogDescription: 'Convert PDF to PNG images with transparency support. Secure, fast, and free.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/pdf/compress') {
@@ -70,6 +83,7 @@ const MetaUpdater = () => {
         description: 'Free online PDF compressor. Reduce PDF file size while maintaining quality. Adjustable compression settings, no signup required.',
         ogTitle: 'Compress PDF - Free Online PDF Compression Tool',
         ogDescription: 'Reduce PDF file size instantly. Secure, fast, and free compression tool.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/pdf/merge') {
@@ -78,6 +92,7 @@ const MetaUpdater = () => {
         description: 'Free online PDF merger. Combine multiple PDF files into one document. Reorder pages, no signup required, 100% secure.',
         ogTitle: 'Merge PDF - Free Online PDF Merger Tool',
         ogDescription: 'Combine multiple PDF files into one. Secure, fast, and free.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/image/blur-background') {
@@ -230,6 +245,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? 'JPG 품질·해상도 설정법과 도구 링크를 한 번에 제공합니다.'
           : 'Quality tips plus a shortcut to the PDF to JPG tool.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/guide/pdf-to-png') {
@@ -244,6 +260,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '아이콘·스티커 제작에 필요한 PNG 변환 팁을 제공합니다.'
           : 'Tips for producing pixel-perfect PNG exports.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/guide/pdf-to-text') {
@@ -258,6 +275,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '텍스트 추출 팁과 도구 바로가기를 제공합니다.'
           : 'Extraction best practices plus a shortcut to the tool.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/guide/image-to-pdf') {
@@ -272,6 +290,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '이미지 묶음을 PDF로 만드는 팁과 도구 링크.'
           : 'Packaging tips and a link to the Image to PDF tool.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/guide/merge-pdf') {
@@ -286,6 +305,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '병합 팁과 PDF 병합 도구 바로가기를 함께 확인하세요.'
           : 'Merging checklist plus a shortcut to the Merge PDF tool.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/guide/split-pdf') {
@@ -300,6 +320,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '분할 팁과 PDF 분할 도구 바로가기 제공.'
           : 'Splitting tips and a shortcut to the Split PDF tool.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/guide/rotate-pdf') {
@@ -314,6 +335,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '회전 팁과 도구 바로가기를 확인하세요.'
           : 'Rotation best practices plus a shortcut to the Rotate PDF tool.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/guide/compress-pdf') {
@@ -328,6 +350,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '압축 팁과 PDF 압축 도구 바로가기 제공.'
           : 'Compression checklist plus a shortcut to the Compress PDF tool.',
+        ogImage: '/og-pdf.png',
       };
     }
 
@@ -344,6 +367,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? 'PDF 변환, 병합, 분할, 압축 등 8가지 무료 도구'
           : '8 powerful tools to convert, merge, split, and compress PDFs online',
+        ogImage: '/og-pdf.png',
       };
     }
 
@@ -370,6 +394,7 @@ const MetaUpdater = () => {
         description: 'Free online PDF to text converter. Extract text content from PDF files instantly. No signup required.',
         ogTitle: 'PDF to Text Converter - Free Online Tool',
         ogDescription: 'Extract text from PDF files instantly. Secure, fast, and free.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/pdf/image-to-pdf') {
@@ -378,6 +403,7 @@ const MetaUpdater = () => {
         description: 'Convert images to PDF online. Support JPG, PNG, WebP. Merge multiple images into one PDF.',
         ogTitle: 'Image to PDF Converter - Free Online Tool',
         ogDescription: 'Convert images to PDF instantly. Secure, fast, and free.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/pdf/split') {
@@ -386,6 +412,7 @@ const MetaUpdater = () => {
         description: 'Split PDF files online. Extract pages or split into multiple files. Free online PDF splitter.',
         ogTitle: 'Split PDF - Free Online Tool',
         ogDescription: 'Split PDF files instantly. Secure, fast, and free.',
+        ogImage: '/og-pdf.png',
       };
     }
     if (path === '/pdf/rotate') {
@@ -394,6 +421,7 @@ const MetaUpdater = () => {
         description: 'Rotate PDF pages 90 or 180 degrees. Save permanently. Free online PDF rotator.',
         ogTitle: 'Rotate PDF - Free Online Tool',
         ogDescription: 'Rotate PDF pages instantly. Secure, fast, and free.',
+        ogImage: '/og-pdf.png',
       };
     }
 
@@ -401,7 +429,7 @@ const MetaUpdater = () => {
     return {
       title: 'Lokit - File Tools',
       description: t('meta.description'),
-      ogImage: '/og-default.png', // Default image
+      ogImage: '/og-default.png', // Default image (Person photo)
     };
   };
 
@@ -442,7 +470,7 @@ const MetaUpdater = () => {
     }
     // Use the provided ogImage or a default. 
     // Ideally this should be an absolute URL.
-    const imageUrl = metaInfo.ogImage 
+    const imageUrl = metaInfo.ogImage
       ? (metaInfo.ogImage.startsWith('http') ? metaInfo.ogImage : `https://lokit.tools${metaInfo.ogImage}`)
       : 'https://lokit.tools/lokit-logo.svg'; // Fallback to logo if nothing else
     ogImage.setAttribute('content', imageUrl);
