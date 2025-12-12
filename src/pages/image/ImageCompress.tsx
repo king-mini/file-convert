@@ -91,7 +91,7 @@ const ImageCompress = () => {
       canvas.width = targetWidth;
       canvas.height = targetHeight;
       const ctx = canvas.getContext('2d')!;
-      
+
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = 'high';
       ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
@@ -215,14 +215,14 @@ const ImageCompress = () => {
                 onClick={() => preview && setModalImage(preview)}
               >
                 {preview && <img src={preview} alt="원본 이미지" />}
-            <button 
-              className="image-remove-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleNewImage();
-              }}
-              title={t('common.hints.chooseAnother')}
-            >
+                <button
+                  className="image-remove-btn"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleNewImage();
+                  }}
+                  title={t('common.hints.chooseAnother')}
+                >
                   ✕
                 </button>
               </div>
@@ -232,7 +232,7 @@ const ImageCompress = () => {
                 {t('pages.image.imageCompress.panels.result')}
                 {compressedSize > 0 && (
                   <span className="compression-badge">
-                    {formatFileSize(compressedSize)} (-{getCompressionRatio()}%)
+                    {formatFileSize(compressedSize)} ({getCompressionRatio() > 0 ? '-' : '+'}{Math.abs(getCompressionRatio())}%)
                   </span>
                 )}
               </h3>
@@ -261,8 +261,8 @@ const ImageCompress = () => {
                   {quality >= 80
                     ? t('pages.image.imageCompress.options.qualityHints.high')
                     : quality >= 50
-                    ? t('pages.image.imageCompress.options.qualityHints.medium')
-                    : t('pages.image.imageCompress.options.qualityHints.low')}
+                      ? t('pages.image.imageCompress.options.qualityHints.medium')
+                      : t('pages.image.imageCompress.options.qualityHints.low')}
                 </span>
               </label>
               <input
@@ -328,7 +328,9 @@ const ImageCompress = () => {
                 </div>
                 <div className="stat">
                   <span className="stat-label">{t('pages.image.imageCompress.stats.saved')}</span>
-                  <span className="stat-value success">-{getCompressionRatio()}%</span>
+                  <span className={`stat-value ${getCompressionRatio() >= 0 ? 'success' : 'error'}`}>
+                    {getCompressionRatio() > 0 ? '-' : (getCompressionRatio() < 0 ? '+' : '')}{Math.abs(getCompressionRatio())}%
+                  </span>
                 </div>
               </div>
             )}

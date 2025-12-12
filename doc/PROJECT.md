@@ -49,7 +49,9 @@ Lokit은 **100% 클라이언트 사이드**에서 동작하는 파일 변환 도
     ├── /image/resize           → Image Resize
     ├── /image/compress         → Image Compress
     ├── /image/format            → Format Convert
-    └── /image/crop              → Image Crop
+    ├── /image/crop              → Image Crop
+    ├── /image/blur-face         → Blur Face
+    └── /image/redact            → Redact Image
 ```
 
 ### 라우팅 구조
@@ -114,6 +116,7 @@ src/
 | **jszip** | ZIP 파일 생성 | ~100KB |
 | **file-saver** | 파일 다운로드 | ~50KB |
 | **@mediapipe/selfie_segmentation** | 인물 세그멘테이션 | ~2MB |
+| **@mediapipe/face_detection** | 얼굴 감지 | ~1MB |
 
 ### 배포
 
@@ -155,10 +158,14 @@ src/
 
 ### 이미지 도구
 
-#### Portrait Blur / Background Remove
-- **라이브러리**: `@mediapipe/selfie_segmentation`
-- **방법**: MediaPipe로 인물 마스크 생성 → Canvas에서 배경 처리
+#### Portrait Blur / Background Remove / Face Blur
+- **라이브러리**: `@mediapipe/selfie_segmentation`, `@mediapipe/face_detection`
+- **방법**: MediaPipe로 인물/얼굴 마스크 생성 → Canvas에서 블러/제거 처리
 - **특징**: 100% 클라이언트 사이드, 실시간 처리 가능
+
+#### Redact Image (Pixelate)
+- **라이브러리**: Canvas API
+- **방법**: 선택 영역 또는 감지된 얼굴 영역을 픽셀화 처리
 
 #### Image Resize / Compress / Format Convert / Crop
 - **라이브러리**: Canvas API (네이티브)
@@ -235,6 +242,7 @@ Node version: 18 이상
 
 - 한국어 (ko)
 - 영어 (en)
+- 스페인어 (es)
 
 ### 구현 방식
 

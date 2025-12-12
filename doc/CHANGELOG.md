@@ -138,7 +138,9 @@
 
 **기술 스택:**
 - MediaPipe Selfie Segmentation 도입
+- MediaPipe Selfie Segmentation 도입
 - Canvas API 활용
+- **Fix**: MediaPipe Initialization Error (Aborted) 해결 (Version Pinning)
 
 ---
 
