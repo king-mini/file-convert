@@ -25,7 +25,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? 'PDF 변환, 이미지 편집을 위한 무료 온라인 도구 모음'
           : 'All-in-one free online tools for PDF and Images.',
-        ogImage: '/og-home.png',
+        ogImage: '/og-home.jpg',
       };
     }
 
@@ -421,7 +421,7 @@ const MetaUpdater = () => {
         description: 'Rotate PDF pages 90 or 180 degrees. Save permanently. Free online PDF rotator.',
         ogTitle: 'Rotate PDF - Free Online Tool',
         ogDescription: 'Rotate PDF pages instantly. Secure, fast, and free.',
-        ogImage: '/og-pdf.png',
+        ogImage: '/og-pdf.jpg',
       };
     }
 
@@ -429,7 +429,7 @@ const MetaUpdater = () => {
     return {
       title: 'Lokit - File Tools',
       description: t('meta.description'),
-      ogImage: '/og-default.png', // Default image (Person photo)
+      ogImage: '/og-default.jpg', // Default image (Person photo)
     };
   };
 
