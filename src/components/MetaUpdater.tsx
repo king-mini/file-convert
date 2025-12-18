@@ -107,6 +107,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '프로필 사진 배경을 전문적으로 흐리게 처리하세요'
           : 'Blur photo backgrounds for portraits automatically. Keep people sharp, blur the background.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/image/bg-remove') {
@@ -115,6 +116,7 @@ const MetaUpdater = () => {
         description: 'Remove image background automatically with AI. Free online tool. Support JPG, PNG, WebP.',
         ogTitle: 'Background Remover - Free Online AI Tool',
         ogDescription: 'Remove image background automatically with AI. Secure, fast, and free.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/image/resize') {
@@ -123,6 +125,7 @@ const MetaUpdater = () => {
         description: 'Resize images online. Change dimensions and file size. Free online image resizer tool.',
         ogTitle: 'Image Resizer - Free Online Tool',
         ogDescription: 'Resize images online instantly. Secure, fast, and free.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/image/compress') {
@@ -131,6 +134,7 @@ const MetaUpdater = () => {
         description: 'Compress JPG, PNG, WebP images. Reduce file size without losing quality. Free online image compressor.',
         ogTitle: 'Image Compressor - Free Online Tool',
         ogDescription: 'Reduce image file size instantly. Secure, fast, and free.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/image/format') {
@@ -139,6 +143,7 @@ const MetaUpdater = () => {
         description: 'Convert image formats online. JPG to PNG, PNG to JPG, WebP support. Free online image converter.',
         ogTitle: 'Image Converter - Free Online Tool',
         ogDescription: 'Convert image formats instantly. Secure, fast, and free.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/image/crop') {
@@ -147,6 +152,7 @@ const MetaUpdater = () => {
         description: 'Crop images online. Cut specific areas of your photos. Free online image cropper.',
         ogTitle: 'Image Cropper - Free Online Tool',
         ogDescription: 'Crop images online instantly. Secure, fast, and free.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/guide/blur-background') {
@@ -161,6 +167,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '배경 흐림 튜토리얼과 도구 링크로 바로 처리하세요.'
           : 'Tutorial for blurring backgrounds with a direct link to the tool.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/guide/background-remove') {
@@ -175,6 +182,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '컷아웃 팁과 도구 바로가기를 한 번에 확인하세요.'
           : 'Follow the walkthrough and jump straight into the Background Remove tool.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/guide/image-resize') {
@@ -189,6 +197,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '리사이즈 플로우와 도구 링크를 함께 제공합니다.'
           : 'Resize workflow plus a direct link to the Image Resize tool.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/guide/image-compress') {
@@ -203,6 +212,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '품질 유지 팁과 도구를 함께 안내합니다.'
           : 'Compression tips plus the Image Compress tool link.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/guide/format-convert') {
@@ -217,6 +227,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '포맷 선택 기준과 도구 사용법을 확인하세요.'
           : 'Format tips plus a shortcut to the Format Convert tool.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/guide/image-crop') {
@@ -231,6 +242,7 @@ const MetaUpdater = () => {
         ogDescription: lang === 'ko'
           ? '크롭 노하우와 Image Crop 도구를 함께 살펴보세요.'
           : 'Cropping tips with a direct link to the Image Crop tool.',
+        ogImage: '/og-default.jpg',
       };
     }
     if (path === '/guide/pdf-to-jpg') {
@@ -380,10 +392,10 @@ const MetaUpdater = () => {
         description: lang === 'ko'
           ? '배경 흐림, 배경 제거, 이미지 크기 변경, 압축 등 6가지 무료 사진 편집 도구. 회원가입 불필요, 100% 안전.'
           : '6 free image tools: background blur, background remove, resize, compress, format convert, and crop. Edit in your browser.',
-        ogTitle: lang === 'ko' ? '무료 온라인 이미지 도구' : 'Free Online Image Tools',
         ogDescription: lang === 'ko'
           ? '배경 흐림, 배경 제거 등 6가지 무료 이미지 편집 도구'
           : '6 free photo editing tools for professional results',
+        ogImage: '/og-default.jpg',
       };
     }
 
@@ -472,7 +484,7 @@ const MetaUpdater = () => {
     // Ideally this should be an absolute URL.
     const imageUrl = metaInfo.ogImage
       ? (metaInfo.ogImage.startsWith('http') ? metaInfo.ogImage : `https://lokit.tools${metaInfo.ogImage}`)
-      : 'https://lokit.tools/lokit-logo.svg'; // Fallback to logo if nothing else
+      : 'https://lokit.tools/og-default.jpg'; // Fallback to default photo instead of SVG logo
     ogImage.setAttribute('content', imageUrl);
 
 
