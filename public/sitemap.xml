@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <!-- English Pages -->
+  
+  <!-- ==================== ENGLISH ==================== -->
+  
+  <!-- Home -->
   <url>
     <loc>https://lokit.tools/en/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/" />
-    <xhtml:link rel="alternate" hreflang="es" href="https://lokit.tools/es/" />
     <lastmod>2025-12-23</lastmod>
     <priority>1.0</priority>
   </url>
+  
+  <!-- PDF Tools -->
   <url>
     <loc>https://lokit.tools/en/pdf</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf" />
@@ -35,6 +39,13 @@
     <loc>https://lokit.tools/en/pdf/to-text</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/to-text" />
     <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/to-text" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/pdf/image-to-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/image-to-pdf" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
@@ -66,13 +77,8 @@
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
-  <url>
-    <loc>https://lokit.tools/en/pdf/image-to-pdf</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/image-to-pdf" />
-    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/image-to-pdf" />
-    <lastmod>2025-12-23</lastmod>
-    <priority>0.8</priority>
-  </url>
+  
+  <!-- Image Tools -->
   <url>
     <loc>https://lokit.tools/en/image</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/image" />
@@ -122,8 +128,133 @@
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
-
-  <!-- Portuguese (Brazil) Pages -->
+  
+  <!-- English Guides -->
+  <url>
+    <loc>https://lokit.tools/en/guide/blur-background</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/blur-background" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/blur-background" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/background-remove</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/background-remove" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/background-remove" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/image-resize</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/image-resize" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/image-resize" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/image-compress</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/image-compress" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/image-compress" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/format-convert</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/format-convert" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/format-convert" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/image-crop</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/image-crop" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/image-crop" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/pdf-to-jpg</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/pdf-to-jpg" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/pdf-to-jpg" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/pdf-to-png</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/pdf-to-png" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/pdf-to-png" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/pdf-to-text</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/pdf-to-text" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/pdf-to-text" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/image-to-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/image-to-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/merge-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/merge-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/merge-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/split-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/split-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/split-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/rotate-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/rotate-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/rotate-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/guide/compress-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/compress-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/compress-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- English Policy Pages -->
+  <url>
+    <loc>https://lokit.tools/en/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/privacy-policy" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/terms" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/terms" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/en/licenses</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/licenses" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/licenses" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- ==================== PORTUGUESE (BRAZIL) ==================== -->
+  
+  <!-- Home -->
   <url>
     <loc>https://lokit.tools/pt/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/" />
@@ -131,84 +262,244 @@
     <lastmod>2025-12-23</lastmod>
     <priority>1.0</priority>
   </url>
+  
+  <!-- PDF Tools -->
   <url>
     <loc>https://lokit.tools/pt/pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/pdf/to-jpg</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/to-jpg" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/to-jpg" />
     <lastmod>2025-12-23</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/pdf/to-png</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/to-png" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/to-png" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/pdf/to-text</loc>
-    <lastmod>2025-12-23</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lokit.tools/pt/pdf/merge</loc>
-    <lastmod>2025-12-23</lastmod>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://lokit.tools/pt/pdf/split</loc>
-    <lastmod>2025-12-23</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lokit.tools/pt/pdf/rotate</loc>
-    <lastmod>2025-12-23</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://lokit.tools/pt/pdf/compress</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/to-text" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/to-text" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/pdf/image-to-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/image-to-pdf" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://lokit.tools/pt/pdf/merge</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/merge" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/merge" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/pdf/split</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/split" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/split" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/pdf/rotate</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/rotate" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/rotate" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/pdf/compress</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/pdf/compress" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/pdf/compress" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Image Tools -->
+  <url>
     <loc>https://lokit.tools/pt/image</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/image" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/image" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/image/blur-background</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/image/blur-background" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/image/blur-background" />
     <lastmod>2025-12-23</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/image/bg-remove</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/image/bg-remove" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/image/bg-remove" />
     <lastmod>2025-12-23</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/image/resize</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/image/resize" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/image/resize" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/image/compress</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/image/compress" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/image/compress" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/image/format</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/image/format" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/image/format" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://lokit.tools/pt/image/crop</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/image/crop" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/image/crop" />
     <lastmod>2025-12-23</lastmod>
     <priority>0.8</priority>
   </url>
+  
+  <!-- Portuguese Guides -->
+  <url>
+    <loc>https://lokit.tools/pt/guide/blur-background</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/blur-background" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/blur-background" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/background-remove</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/background-remove" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/background-remove" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/image-resize</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/image-resize" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/image-resize" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/image-compress</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/image-compress" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/image-compress" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/format-convert</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/format-convert" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/format-convert" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/image-crop</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/image-crop" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/image-crop" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/pdf-to-jpg</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/pdf-to-jpg" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/pdf-to-jpg" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/pdf-to-png</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/pdf-to-png" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/pdf-to-png" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/pdf-to-text</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/pdf-to-text" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/pdf-to-text" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/image-to-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/image-to-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/image-to-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/merge-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/merge-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/merge-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/split-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/split-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/split-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/rotate-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/rotate-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/rotate-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/guide/compress-pdf</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/guide/compress-pdf" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/guide/compress-pdf" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Portuguese Policy Pages -->
+  <url>
+    <loc>https://lokit.tools/pt/privacy-policy</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/privacy-policy" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/terms</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/terms" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/terms" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://lokit.tools/pt/licenses</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://lokit.tools/en/licenses" />
+    <xhtml:link rel="alternate" hreflang="pt" href="https://lokit.tools/pt/licenses" />
+    <lastmod>2025-12-23</lastmod>
+    <priority>0.3</priority>
+  </url>
+  
 </urlset>

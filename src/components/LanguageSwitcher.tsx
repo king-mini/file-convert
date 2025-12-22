@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
-import { availableLanguages, langToUrlCode } from '../i18n';
+import { availableLanguages } from '../i18n';
 import './LanguageSwitcher.css';
 
 export const LanguageSwitcher: React.FC = () => {

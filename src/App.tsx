@@ -68,7 +68,21 @@ const LanguageWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 // 브라우저 언어에 따라 기본 언어로 리다이렉트
+// ?lang= 쿼리 파라미터가 있으면 해당 언어로 리다이렉트
 const DefaultRedirect = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const queryLang = searchParams.get('lang');
+
+  // ?lang= 쿼리 파라미터 처리
+  if (queryLang) {
+    const validLangs = ['en', 'pt', 'es', 'ko'];
+    const targetLang = validLangs.includes(queryLang) ? queryLang : 'en';
+    // 프로덕션에서는 한국어 비활성화
+    const finalLang = (targetLang === 'ko' && import.meta.env.PROD) ? 'en' : targetLang;
+    return <Navigate to={`/${finalLang}`} replace />;
+  }
+
+  // 브라우저 언어 기반 리다이렉트
   const browserLang = navigator.language?.toLowerCase() || '';
   let targetLang = 'en';
 
@@ -80,6 +94,21 @@ const DefaultRedirect = () => {
 };
 
 const App = () => {
+  // ?lang= 쿼리 파라미터가 있으면 리다이렉트
+  const searchParams = new URLSearchParams(window.location.search);
+  const queryLang = searchParams.get('lang');
+
+  if (queryLang) {
+    const validLangs = ['en', 'pt', 'es', 'ko'];
+    let targetLang = validLangs.includes(queryLang) ? queryLang : 'en';
+    if (targetLang === 'ko' && import.meta.env.PROD) targetLang = 'en';
+
+    const pathname = window.location.pathname;
+    const pathWithoutLang = pathname.replace(/^\/(en|pt|es|ko)/, '') || '/';
+    const newPath = `/${targetLang}${pathWithoutLang === '/' ? '' : pathWithoutLang}`;
+    window.location.replace(newPath);
+    return null;
+  }
   return (
     <BrowserRouter>
       <Routes>
