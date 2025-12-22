@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './GuideTemplate.css';
 
@@ -30,9 +30,17 @@ type GuideContent = {
 
 const GuideTemplate = ({ guideKey, category = 'image' }: GuideTemplateProps) => {
   const { t } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const langPrefix = lang ? `/${lang}` : '/en';
+
   const content = t(`guides.${guideKey}`, { returnObjects: true }) as GuideContent;
-  const categoryPath = category === 'pdf' ? '/pdf' : '/image';
+  const categoryPath = category === 'pdf' ? `${langPrefix}/pdf` : `${langPrefix}/image`;
   const categoryLabel = category === 'pdf' ? t('breadcrumbs.pdfTools') : t('breadcrumbs.imageTools');
+
+  // toolPath에 언어 prefix 추가
+  const fullToolPath = content.toolPath?.startsWith('/')
+    ? `${langPrefix}${content.toolPath}`
+    : `${langPrefix}/${content.toolPath}`;
 
   return (
     <div className="guide-page">
@@ -40,17 +48,17 @@ const GuideTemplate = ({ guideKey, category = 'image' }: GuideTemplateProps) => 
         <div className="guide-breadcrumb">
           <Link to={categoryPath}>{categoryLabel}</Link>
           <span aria-hidden="true">›</span>
-          <Link to={content.toolPath}>{content.toolName}</Link>
+          <Link to={fullToolPath}>{content.toolName}</Link>
           <span aria-hidden="true">›</span>
           <span className="guide-current">{content.shortTitle}</span>
         </div>
         <h1>{content.title}</h1>
         <p className="guide-subtitle">{content.subtitle}</p>
         <div className="guide-cta-group">
-          <Link className="guide-cta-primary" to={content.toolPath}>
+          <Link className="guide-cta-primary" to={fullToolPath}>
             {content.ctaUseTool}
           </Link>
-          <Link className="guide-cta-secondary" to="/image">
+          <Link className="guide-cta-secondary" to={categoryPath}>
             {content.ctaViewAll}
           </Link>
         </div>
@@ -104,10 +112,10 @@ const GuideTemplate = ({ guideKey, category = 'image' }: GuideTemplateProps) => 
             <p>{content.finalCtaSubtitle}</p>
           </div>
           <div className="guide-cta-group">
-            <Link className="guide-cta-primary" to={content.toolPath}>
+            <Link className="guide-cta-primary" to={fullToolPath}>
               {content.ctaUseTool}
             </Link>
-            <Link className="guide-cta-secondary" to="/image">
+            <Link className="guide-cta-secondary" to={categoryPath}>
               {content.ctaViewAll}
             </Link>
           </div>

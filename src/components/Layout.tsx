@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Header from './Header';
 import MetaUpdater from './MetaUpdater';
@@ -8,6 +8,8 @@ import './Layout.css';
 
 const Layout = () => {
   const { t } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const langPrefix = lang ? `/${lang}` : '/en';
 
   return (
     <div className="layout">
@@ -21,11 +23,11 @@ const Layout = () => {
       <footer className="footer">
         <p>{t('footer.notice')}</p>
         <div className="footer-links">
-          <Link to="/privacy-policy">{t('footer.privacy')}</Link>
+          <Link to={`${langPrefix}/privacy-policy`}>{t('footer.privacy')}</Link>
           <span className="footer-separator">·</span>
-          <Link to="/terms">{t('footer.terms')}</Link>
+          <Link to={`${langPrefix}/terms`}>{t('footer.terms')}</Link>
           <span className="footer-separator">·</span>
-          <Link to="/licenses">{t('footer.licenses')}</Link>
+          <Link to={`${langPrefix}/licenses`}>{t('footer.licenses')}</Link>
         </div>
       </footer>
     </div>
@@ -33,4 +35,3 @@ const Layout = () => {
 };
 
 export default Layout;
-

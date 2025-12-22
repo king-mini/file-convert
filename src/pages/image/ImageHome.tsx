@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../../components/FeatureHighlights';
 import './ImageHome.css';
@@ -13,62 +13,64 @@ interface FeatureCard {
 
 const ImageHome = () => {
   const { t } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const langPrefix = lang ? `/${lang}` : '/en';
 
   const features: FeatureCard[] = [
     {
       title: t('imageHome.features.portraitBlur.title'),
       icon: '🎭',
       description: t('imageHome.features.portraitBlur.description'),
-      path: '/image/blur-background',
+      path: 'image/blur-background',
       available: true,
     },
     {
       title: t('imageHome.features.blurFace.title'),
       icon: '😶',
       description: t('imageHome.features.blurFace.description'),
-      path: '/image/blur-face',
+      path: 'image/blur-face',
       available: !import.meta.env.PROD, // Dev only
     },
     {
       title: t('imageHome.features.redactImage.title'),
       icon: '⬛',
       description: t('imageHome.features.redactImage.description'),
-      path: '/image/redact',
+      path: 'image/redact',
       available: !import.meta.env.PROD, // Dev only
     },
     {
       title: t('imageHome.features.backgroundRemove.title'),
       icon: '✨',
       description: t('imageHome.features.backgroundRemove.description'),
-      path: '/image/bg-remove',
+      path: 'image/bg-remove',
       available: true,
     },
     {
       title: t('imageHome.features.imageResize.title'),
       icon: '📐',
       description: t('imageHome.features.imageResize.description'),
-      path: '/image/resize',
+      path: 'image/resize',
       available: true,
     },
     {
       title: t('imageHome.features.imageCompress.title'),
       icon: '🗜️',
       description: t('imageHome.features.imageCompress.description'),
-      path: '/image/compress',
+      path: 'image/compress',
       available: true,
     },
     {
       title: t('imageHome.features.formatConvert.title'),
       icon: '🔄',
       description: t('imageHome.features.formatConvert.description'),
-      path: '/image/format',
+      path: 'image/format',
       available: true,
     },
     {
       title: t('imageHome.features.imageCrop.title'),
       icon: '✂️',
       description: t('imageHome.features.imageCrop.description'),
-      path: '/image/crop',
+      path: 'image/crop',
       available: true,
     },
   ];
@@ -85,7 +87,7 @@ const ImageHome = () => {
       "position": index + 1,
       "name": feature.title,
       "description": feature.description,
-      "url": `https://lokit.tools${feature.path}`,
+      "url": `https://lokit.tools${langPrefix}/${feature.path}`,
       "image": `https://lokit.tools/og-default.png`
     }))
   };
@@ -109,7 +111,7 @@ const ImageHome = () => {
           {features.filter(f => f.available).map((feature) => (
             <div key={feature.path} className="feature-card-wrapper">
               {feature.available ? (
-                <Link to={feature.path} className="feature-card">
+                <Link to={`${langPrefix}/${feature.path}`} className="feature-card">
                   <div className="feature-icon">{feature.icon}</div>
                   <h3 className="feature-title">{feature.title}</h3>
                   <p className="feature-description">{feature.description}</p>

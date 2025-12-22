@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../../components/FeatureHighlights';
@@ -14,62 +14,65 @@ interface FeatureCard {
 
 const PdfHome = () => {
   const { t } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const langPrefix = lang ? `/${lang}` : '/en';
+
   const features: FeatureCard[] = useMemo(
     () => [
       {
         title: t('pages.pdf.home.features.toJpg.title'),
         icon: '🖼️',
         description: t('pages.pdf.home.features.toJpg.description'),
-        path: '/pdf/to-jpg',
+        path: 'pdf/to-jpg',
         available: true,
       },
       {
         title: t('pages.pdf.home.features.toPng.title'),
         icon: '🎨',
         description: t('pages.pdf.home.features.toPng.description'),
-        path: '/pdf/to-png',
+        path: 'pdf/to-png',
         available: true,
       },
       {
         title: t('pages.pdf.home.features.toText.title'),
         icon: '📝',
         description: t('pages.pdf.home.features.toText.description'),
-        path: '/pdf/to-text',
+        path: 'pdf/to-text',
         available: true,
       },
       {
         title: t('pages.pdf.home.features.imageToPdf.title'),
         icon: '🖼️',
         description: t('pages.pdf.home.features.imageToPdf.description'),
-        path: '/pdf/image-to-pdf',
+        path: 'pdf/image-to-pdf',
         available: true,
       },
       {
         title: t('pages.pdf.home.features.merge.title'),
         icon: '🔗',
         description: t('pages.pdf.home.features.merge.description'),
-        path: '/pdf/merge',
+        path: 'pdf/merge',
         available: true,
       },
       {
         title: t('pages.pdf.home.features.split.title'),
         icon: '✂️',
         description: t('pages.pdf.home.features.split.description'),
-        path: '/pdf/split',
+        path: 'pdf/split',
         available: true,
       },
       {
         title: t('pages.pdf.home.features.rotate.title'),
         icon: '🔄',
         description: t('pages.pdf.home.features.rotate.description'),
-        path: '/pdf/rotate',
+        path: 'pdf/rotate',
         available: true,
       },
       {
         title: t('pages.pdf.home.features.compress.title'),
         icon: '📦',
         description: t('pages.pdf.home.features.compress.description'),
-        path: '/pdf/compress',
+        path: 'pdf/compress',
         available: true,
       },
     ],
@@ -88,7 +91,7 @@ const PdfHome = () => {
       "position": index + 1,
       "name": feature.title,
       "description": feature.description,
-      "url": `https://lokit.tools${feature.path}`
+      "url": `https://lokit.tools${langPrefix}/${feature.path}`
     }))
   };
 
@@ -111,7 +114,7 @@ const PdfHome = () => {
           {features.map((feature) => (
             <div key={feature.path} className="feature-card-wrapper">
               {feature.available ? (
-                <Link to={feature.path} className="feature-card">
+                <Link to={`${langPrefix}/${feature.path}`} className="feature-card">
                   <div className="feature-icon">{feature.icon}</div>
                   <h3 className="feature-title">{feature.title}</h3>
                   <p className="feature-description">{feature.description}</p>
@@ -135,4 +138,3 @@ const PdfHome = () => {
 };
 
 export default PdfHome;
-

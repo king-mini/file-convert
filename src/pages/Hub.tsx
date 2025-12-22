@@ -1,10 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import FeatureHighlights from '../components/FeatureHighlights';
 import './Hub.css';
 
 const Hub = () => {
   const { t } = useTranslation();
+  const { lang } = useParams<{ lang: string }>();
+  const langPrefix = lang ? `/${lang}` : '/en';
 
   return (
     <div className="hub">
@@ -14,7 +16,7 @@ const Hub = () => {
 
       <section className="categories">
         <div className="category-grid">
-          <Link to="/pdf" className="category-card">
+          <Link to={`${langPrefix}/pdf`} className="category-card">
             <div className="category-icon">📄</div>
             <div className="category-content">
               <div className="category-header">
@@ -25,7 +27,7 @@ const Hub = () => {
             </div>
           </Link>
 
-          <Link to="/image" className="category-card">
+          <Link to={`${langPrefix}/image`} className="category-card">
             <div className="category-icon">🖼️</div>
             <div className="category-content">
               <div className="category-header">

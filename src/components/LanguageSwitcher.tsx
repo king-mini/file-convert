@@ -1,29 +1,48 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { availableLanguages } from '../i18n';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { availableLanguages, langToUrlCode } from '../i18n';
 import './LanguageSwitcher.css';
-
-type Language = 'ko' | 'en';
 
 export const LanguageSwitcher: React.FC = () => {
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { lang } = useParams<{ lang: string }>();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
-  const currentLang = (i18n.language?.startsWith('ko') ? 'ko' : 'en') satisfies Language;
 
-  const applyLanguage = (lang: Language) => {
-    i18n.changeLanguage(lang);
-    localStorage.setItem('lokit_lang', lang);
-    setOpen(false);
+  // 현재 언어를 URL 기반으로 판단
+  const getCurrentLangCode = (): string => {
+    if (lang === 'pt') return 'pt';
+    if (lang === 'es') return 'es';
+    if (lang === 'ko') return 'ko';
+    return 'en';
   };
 
-  // 초기 언어 복원
-  useEffect(() => {
-    const saved = localStorage.getItem('lokit_lang') as Language | null;
-    if (saved && saved !== currentLang) {
-      i18n.changeLanguage(saved);
+  const currentLang = getCurrentLangCode();
+
+  const applyLanguage = (langCode: string) => {
+    // i18n 언어 코드로 변환 (pt -> pt-BR)
+    const i18nLang = langCode === 'pt' ? 'pt-BR' : langCode;
+
+    // i18n 언어 변경
+    i18n.changeLanguage(i18nLang);
+    localStorage.setItem('lokit_lang', i18nLang);
+
+    // URL 경로에서 현재 언어 부분만 교체
+    const pathParts = location.pathname.split('/');
+    if (pathParts.length >= 2 && ['en', 'pt', 'es', 'ko'].includes(pathParts[1])) {
+      pathParts[1] = langCode === 'pt-BR' ? 'pt' : langCode;
+    } else {
+      // 언어 prefix가 없는 경우 (예: / 루트)
+      pathParts.splice(1, 0, langCode === 'pt-BR' ? 'pt' : langCode);
     }
-  }, [i18n]);
+
+    const newPath = pathParts.join('/') || '/';
+    navigate(newPath);
+    setOpen(false);
+  };
 
   // 바깥 클릭 / ESC 처리
   useEffect(() => {
@@ -73,7 +92,7 @@ export const LanguageSwitcher: React.FC = () => {
             role="option"
             data-lang={lang.code}
             className={`lang-option ${currentLang === lang.code ? 'lang-option-active' : ''}`}
-            onClick={() => applyLanguage(lang.code as Language)}
+            onClick={() => applyLanguage(lang.code)}
           >
             {lang.label}
           </li>
@@ -82,4 +101,3 @@ export const LanguageSwitcher: React.FC = () => {
     </div>
   );
 };
-

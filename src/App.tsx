@@ -1,6 +1,9 @@
 import { lazy } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import Layout from './components/Layout';
+import { urlCodeToLang } from './i18n';
 
 const Hub = lazy(() => import('./pages/Hub'));
 
@@ -47,11 +50,44 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Licenses = lazy(() => import('./pages/Licenses'));
 
+// 언어 변경을 감지하고 i18n에 적용하는 래퍼 컴포넌트
+const LanguageWrapper = ({ children }: { children: React.ReactNode }) => {
+  const { lang } = useParams<{ lang: string }>();
+  const { i18n } = useTranslation();
+
+  useEffect(() => {
+    if (lang) {
+      const i18nLang = urlCodeToLang(lang);
+      if (i18n.language !== i18nLang) {
+        i18n.changeLanguage(i18nLang);
+      }
+    }
+  }, [lang, i18n]);
+
+  return <>{children}</>;
+};
+
+// 브라우저 언어에 따라 기본 언어로 리다이렉트
+const DefaultRedirect = () => {
+  const browserLang = navigator.language?.toLowerCase() || '';
+  let targetLang = 'en';
+
+  if (browserLang.startsWith('pt')) targetLang = 'pt';
+  else if (browserLang.startsWith('es')) targetLang = 'es';
+  else if (browserLang.startsWith('ko') && !import.meta.env.PROD) targetLang = 'ko';
+
+  return <Navigate to={`/${targetLang}`} replace />;
+};
+
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        {/* Root redirect based on browser language */}
+        <Route path="/" element={<DefaultRedirect />} />
+
+        {/* Language-prefixed routes */}
+        <Route path="/:lang" element={<LanguageWrapper><Layout /></LanguageWrapper>}>
           {/* Hub - Main Page */}
           <Route index element={<Hub />} />
 
@@ -69,8 +105,6 @@ const App = () => {
           {/* Image Routes */}
           <Route path="image" element={<ImageHome />} />
           <Route path="image/blur-background" element={<BackgroundBlur />} />
-          {/* <Route path="image/blur-face" element={<BlurFace />} /> */}
-          {/* <Route path="image/redact" element={<RedactImage />} /> */}
           <Route path="image/bg-remove" element={<BackgroundRemove />} />
           <Route path="image/resize" element={<ImageResize />} />
           <Route path="image/compress" element={<ImageCompress />} />
@@ -90,6 +124,7 @@ const App = () => {
           <Route path="guide/split-pdf" element={<SplitPdfGuide />} />
           <Route path="guide/rotate-pdf" element={<RotatePdfGuide />} />
           <Route path="guide/compress-pdf" element={<CompressPdfGuide />} />
+
           {/* Dev Only Routes */}
           {!import.meta.env.PROD && (
             <>
@@ -105,6 +140,11 @@ const App = () => {
           <Route path="terms" element={<Terms />} />
           <Route path="licenses" element={<Licenses />} />
         </Route>
+
+        {/* Legacy URL redirects (for SEO - redirect old URLs to /en/) */}
+        <Route path="/pdf/*" element={<Navigate to={`/en/pdf/${window.location.pathname.replace('/pdf/', '')}`} replace />} />
+        <Route path="/image/*" element={<Navigate to={`/en/image/${window.location.pathname.replace('/image/', '')}`} replace />} />
+        <Route path="/guide/*" element={<Navigate to={`/en/guide/${window.location.pathname.replace('/guide/', '')}`} replace />} />
       </Routes>
     </BrowserRouter>
   );
