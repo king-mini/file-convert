@@ -227,7 +227,7 @@ const ImageCrop = () => {
       canvas.width = Math.round(sw);
       canvas.height = Math.round(sh);
       const ctx = canvas.getContext('2d')!;
-      
+
       ctx.drawImage(img, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
 
       const blob = await new Promise<Blob>((resolve, reject) => {
@@ -338,7 +338,7 @@ const ImageCrop = () => {
         <div className="editor">
           <div className="crop-container" ref={containerRef}>
             <img ref={imageRef} src={preview || ''} alt="원본" className="crop-image" />
-            <button 
+            <button
               className="image-remove-btn"
               onClick={handleNewImage}
               title={t('common.hints.chooseAnother')}
@@ -384,7 +384,9 @@ const ImageCrop = () => {
                     className={`ratio-btn ${aspectRatio === ratio ? 'active' : ''}`}
                     onClick={() => setAspectRatio(ratio)}
                   >
-                    {t(`pages.image.imageCrop.options.buttons.${ratio}`)}
+                    {ratio === 'free'
+                      ? t('pages.image.imageCrop.options.buttons.free')
+                      : ratio}
                   </button>
                 ))}
               </div>
@@ -471,4 +473,6 @@ const ImageCrop = () => {
 };
 
 export default ImageCrop;
+
+
 

@@ -1,15 +1,13 @@
 import { Suspense } from 'react';
-import { Outlet, Link, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import MetaUpdater from './MetaUpdater';
 import Loading from './Loading';
+import Footer from './Footer';
 import './Layout.css';
 
-const Layout = () => {
-  const { t } = useTranslation();
-  const { lang } = useParams<{ lang: string }>();
-  const langPrefix = lang ? `/${lang}` : '/en';
+const Layout = ({ children }: { children?: React.ReactNode }) => {
+  // lang logic removed as it was only for Footer
 
   return (
     <div className="layout">
@@ -17,19 +15,10 @@ const Layout = () => {
       <Header />
       <main className="layout-main">
         <Suspense fallback={<Loading />}>
-          <Outlet />
+          {children || <Outlet />}
         </Suspense>
       </main>
-      <footer className="footer">
-        <p>{t('footer.notice')}</p>
-        <div className="footer-links">
-          <Link to={`${langPrefix}/privacy-policy`}>{t('footer.privacy')}</Link>
-          <span className="footer-separator">·</span>
-          <Link to={`${langPrefix}/terms`}>{t('footer.terms')}</Link>
-          <span className="footer-separator">·</span>
-          <Link to={`${langPrefix}/licenses`}>{t('footer.licenses')}</Link>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

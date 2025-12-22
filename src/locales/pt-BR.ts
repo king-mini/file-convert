@@ -418,11 +418,11 @@ const ptBR = {
                 actions: { convert: '🔄 Converter' },
             },
             imageCrop: {
-                hero: { title: '✂️ Cortar Imagem', description: 'Corte a área que você precisa' },
+                hero: { title: '✂️ Recortar Imagem', description: 'Recorte a área que você precisa' },
                 upload: { hint: 'Arraste ou clique', support: 'JPG, PNG, WebP (máx 50MB)' },
                 options: { ratio: 'Proporção', buttons: { free: 'Livre', '1:1': '1:1', '4:3': '4:3', '16:9': '16:9', '3:2': '3:2', '2:3': '2:3' } },
                 panels: { result: 'Resultado ({{width}} × {{height}})' },
-                actions: { crop: '✂️ Cortar', recrop: '✂️ Cortar novamente' },
+                actions: { crop: '✂️ Recortar', recrop: '✂️ Recortar Novamente' },
             },
             blurFace: {
                 hero: { title: 'Desfocar Rosto em Foto', description: 'Oculte rostos automaticamente para privacidade.' },
@@ -442,6 +442,7 @@ const ptBR = {
                 progress: { label: 'Censurando...' },
                 actions: { apply: '✨ Censurar Imagem' },
             },
+
         },
     },
     guides: {

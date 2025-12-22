@@ -49,6 +49,7 @@ const RedactImageGuide = lazy(() => import('./pages/guides/RedactImageGuide'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/Terms'));
 const Licenses = lazy(() => import('./pages/Licenses'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // 언어 변경을 감지하고 i18n에 적용하는 래퍼 컴포넌트
 const LanguageWrapper = ({ children }: { children: React.ReactNode }) => {
@@ -114,6 +115,9 @@ const App = () => {
       <Routes>
         {/* Root redirect based on browser language */}
         <Route path="/" element={<DefaultRedirect />} />
+
+        {/* Static 404 page for crawlers and fallback */}
+        <Route path="/404.html" element={<NotFound />} />
 
         {/* Language-prefixed routes */}
         <Route path="/:lang" element={<LanguageWrapper><Layout /></LanguageWrapper>}>
