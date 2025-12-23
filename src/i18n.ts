@@ -3,7 +3,9 @@ import { initReactI18next } from 'react-i18next';
 import ko from './locales/ko';
 import en from './locales/en';
 import es from './locales/es';
+
 import ptBR from './locales/pt-BR';
+import id from './locales/id';
 
 // Production 환경에서는 한국어 숨김
 const isProduction = import.meta.env.PROD;
@@ -11,7 +13,9 @@ const isProduction = import.meta.env.PROD;
 export const availableLanguages = [
   { code: 'en', label: 'English' },
   { code: 'pt', label: 'Português' },
+
   { code: 'es', label: 'Español' },
+  { code: 'id', label: 'Bahasa Indonesia' },
   ...(isProduction ? [] : [{ code: 'ko', label: '한국어' }]),
 ];
 
@@ -19,7 +23,7 @@ export const availableLanguages = [
 const resolveUrlLanguage = (): string | null => {
   if (typeof window === 'undefined') return null;
   const pathLang = window.location.pathname.split('/')[1];
-  if (['en', 'pt', 'es', 'ko'].includes(pathLang)) {
+  if (['en', 'pt', 'es', 'ko', 'id'].includes(pathLang)) {
     return pathLang === 'pt' ? 'pt-BR' : pathLang;
   }
   return null;
@@ -28,7 +32,7 @@ const resolveUrlLanguage = (): string | null => {
 const resolveStoredLanguage = () => {
   if (typeof window === 'undefined') return null;
   const stored = window.localStorage.getItem('lokit_lang');
-  return stored === 'ko' || stored === 'en' || stored === 'es' || stored === 'pt-BR' ? stored : null;
+  return stored === 'ko' || stored === 'en' || stored === 'es' || stored === 'pt-BR' || stored === 'id' ? stored : null;
 };
 
 const resolveBrowserLanguage = () => {
@@ -36,7 +40,9 @@ const resolveBrowserLanguage = () => {
   const lang = navigator.language?.toLowerCase() || '';
   if (lang.startsWith('ko')) return 'ko';
   if (lang.startsWith('pt')) return 'pt-BR';
+
   if (lang.startsWith('es')) return 'es';
+  if (lang.startsWith('id')) return 'id';
   return 'en';
 };
 
@@ -67,13 +73,16 @@ const resources = {
   'pt-BR': {
     translation: ptBR,
   },
+  id: {
+    translation: id,
+  },
 };
 
 i18n.use(initReactI18next).init({
   resources,
   lng: resolveLanguage(),
   fallbackLng: 'en',
-  supportedLngs: ['ko', 'en', 'es', 'pt-BR'],
+  supportedLngs: ['ko', 'en', 'es', 'pt-BR', 'id'],
   interpolation: {
     escapeValue: false,
   },

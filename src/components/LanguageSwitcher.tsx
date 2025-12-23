@@ -17,6 +17,7 @@ export const LanguageSwitcher: React.FC = () => {
     if (lang === 'pt') return 'pt';
     if (lang === 'es') return 'es';
     if (lang === 'ko') return 'ko';
+    if (lang === 'id') return 'id';
     return 'en';
   };
 
@@ -32,7 +33,7 @@ export const LanguageSwitcher: React.FC = () => {
 
     // URL 경로에서 현재 언어 부분만 교체
     const pathParts = location.pathname.split('/');
-    if (pathParts.length >= 2 && ['en', 'pt', 'es', 'ko'].includes(pathParts[1])) {
+    if (pathParts.length >= 2 && ['en', 'pt', 'es', 'ko', 'id'].includes(pathParts[1])) {
       pathParts[1] = langCode === 'pt-BR' ? 'pt' : langCode;
     } else {
       // 언어 prefix가 없는 경우 (예: / 루트)
