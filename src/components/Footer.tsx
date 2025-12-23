@@ -15,6 +15,8 @@ const Footer = () => {
                 <Link to={`${langPrefix}/terms`}>{t('footer.terms')}</Link>
                 <span className="footer-separator">·</span>
                 <Link to={`${langPrefix}/licenses`}>{t('footer.licenses')}</Link>
+                <span className="footer-separator">·</span>
+                <span className="footer-version">v{import.meta.env.PACKAGE_VERSION}</span>
             </div>
         </footer>
     );
